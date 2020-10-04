@@ -19,6 +19,7 @@ export class AuthService {
 	}
 
 	async login(user: any): Promise<any> {
+		console.log('invoeks');
 		const payload = { email: user.email, sub: user.id };
 
 		return {
