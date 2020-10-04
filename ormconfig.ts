@@ -6,7 +6,7 @@ module.exports = {
 	password: 'postgres',
 	database: 'test',
 	synchronize: false,
-	logging: true,
+	logging: false,
 	entities: [
 		// 'src/**/*.entity.ts',
 		'dist/**/*.entity.js',

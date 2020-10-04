@@ -8,14 +8,13 @@ import { JwtStrategy } from './jwt.strategy';
 import { UsersModule } from '../users/users.module';
 require('dotenv').config();
 
-console.log('JWT_SECRET', process.env.JWT_SECRET);
 @Module({
 	imports: [
 		UsersModule,
 		PassportModule,
 		JwtModule.register({
 			signOptions: {
-				expiresIn: '60s',
+				expiresIn: '600s',
 			},
 			secretOrPrivateKey: process.env.JWT_SECRET,
 		}),

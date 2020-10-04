@@ -9,7 +9,6 @@ export class AuthService {
 
 	async validateUser(email: string, pass: string): Promise<any> {
 		const user = await this.usersService.findOne(email);
-		console.log(email, user);
 
 		if (user && bcrypt.compare(pass, user.password)) {
 			const { password, ...result } = user;
@@ -19,7 +18,6 @@ export class AuthService {
 	}
 
 	async login(user: any): Promise<any> {
-		console.log('invoeks');
 		const payload = { email: user.email, sub: user.id };
 
 		return {
