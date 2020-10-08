@@ -1,21 +1,38 @@
+import { IsNotEmpty, MinLength } from 'class-validator';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity('User')
 export class User {
 	@PrimaryGeneratedColumn()
-	id: number;
+	idUser: number;
 
-	@Column()
-	password: string;
-
-	@Column()
+	@IsNotEmpty()
+	@Column({
+		length: 30,
+	})
 	firstName: string;
 
-	@Column()
+	@IsNotEmpty()
+	@Column({
+		length: 50,
+	})
 	lastName: string;
 
-	@Column()
+	@IsNotEmpty()
+	@Column({ length: 50 })
 	email: string;
+
+	@IsNotEmpty()
+	@MinLength(6)
+	@Column({
+		length: 50,
+	})
+	password: string;
+
+	@Column({
+		default: false,
+	})
+	isAdmin: boolean;
 
 	@Column({
 		type: 'timestamp',
