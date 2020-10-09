@@ -1,5 +1,5 @@
 export interface EditUserDto {
-  id: number;
-  firstName: string;
-  lastName: string;
+	idUser: number;
+	firstName: string;
+	lastName: string;
 }

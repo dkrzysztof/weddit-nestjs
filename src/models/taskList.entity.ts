@@ -1,12 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Wedding } from './wedding.entity';
 
 @Entity('TaskList')
 export class TaskList {
 	@PrimaryGeneratedColumn()
 	idTaskList: number;
 
-	@Column()
-	idWedding: number;
+	@ManyToOne(
+		type => Wedding,
+		wedding => wedding.taskLists,
+	)
+	wedding: Wedding;
 
 	@Column('text')
 	description: string;

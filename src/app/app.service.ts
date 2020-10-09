@@ -12,10 +12,4 @@ export class AppService {
 	getTest(): string {
 		return 'test';
 	}
-
-	@Post('auth/register')
-	async register(@Body() createUserDto: CreateUserDto) {
-		// async register(@Request() req) {
-		return await this.userService.createUser(createUserDto);
-	}
 }

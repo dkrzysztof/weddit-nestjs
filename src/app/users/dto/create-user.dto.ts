@@ -9,7 +9,6 @@ export class CreateUserDto {
 	lastName: string;
 
 	@IsEmail()
-	@Validate(UniqueEmail)
 	email: string;
 
 	@MinLength(6)

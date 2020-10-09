@@ -1,10 +1,17 @@
 import { IsNotEmpty } from 'class-validator';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Wedding } from './wedding.entity';
 
 @Entity('Drink')
 export class Drink {
 	@PrimaryGeneratedColumn()
 	idDrink: number;
+
+	@ManyToOne(
+		type => Wedding,
+		wedding => wedding.drinks,
+	)
+	wedding: Wedding;
 
 	@IsNotEmpty()
 	@Column({

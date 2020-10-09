@@ -1,5 +1,8 @@
+import { Exclude } from 'class-transformer/decorators';
 import { IsNotEmpty, MinLength } from 'class-validator';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, ManyToOne, OneToMany, Unique } from 'typeorm';
+import { UserWedding } from './userWedding.entity';
+import { Wedding } from './wedding.entity';
 
 @Entity('User')
 export class User {
@@ -19,13 +22,14 @@ export class User {
 	lastName: string;
 
 	@IsNotEmpty()
-	@Column({ length: 50 })
+	@Column({ length: 50, unique: true })
 	email: string;
 
 	@IsNotEmpty()
 	@MinLength(6)
 	@Column({
-		length: 50,
+		length: 60,
+		unique: true,
 	})
 	password: string;
 
@@ -34,10 +38,19 @@ export class User {
 	})
 	isAdmin: boolean;
 
+	@Exclude()
+	public currentHashedRefreshToken?: string;
+
 	@Column({
 		type: 'timestamp',
 		name: 'created_at',
 		default: () => 'CURRENT_TIMESTAMP',
 	})
 	createdAt: Date;
+
+	@OneToMany(
+		type => UserWedding,
+		userWedding => userWedding.users,
+	)
+	userWeddings: UserWedding[];
 }

@@ -1,6 +1,6 @@
 export interface GetUsersDto {
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
+	idUser: number;
+	firstName: string;
+	lastName: string;
+	email: string;
 }

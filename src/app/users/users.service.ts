@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DeleteResult } from 'typeorm';
 import { User } from '../../models/user.entity';
@@ -7,6 +7,7 @@ import { GetUserDto } from './dto/get-user.dto';
 import { EditUserDto } from './dto/edit-user.dto';
 import { GetUsersDto } from './dto/get-users.dto';
 import * as bcrypt from 'bcrypt';
+import { CheckEmailAvailabilityDto } from './dto/check-email-availability.dto';
 
 @Injectable()
 export class UserService {
@@ -23,13 +24,19 @@ export class UserService {
 	async createUser(user: CreateUserDto): Promise<GetUserDto> {
 		const { password, ...userData } = user;
 
-		const salt = await bcrypt.genSalt(10);
-		const hashedPassword = await bcrypt.hash(password, salt);
-		return this.userRepository.save({ ...userData, password: hashedPassword });
+		const emailAlreadyTaken: boolean = !!(await this.userRepository.findOne({ email: userData.email }));
+
+		if (!emailAlreadyTaken) {
+			const salt = await bcrypt.genSalt(10);
+			const hashedPassword = await bcrypt.hash(password, salt);
+			return this.userRepository.save({ ...userData, password: hashedPassword });
+		}
+
+		throw new BadRequestException('Email already assigned to an account!');
 	}
 
 	async editUser(id: number, user: EditUserDto): Promise<GetUserDto> {
-		const { id: userToEditId, ...userEditedData } = user;
+		const { idUser: userToEditId, ...userEditedData } = user;
 		const foundUser = await this.userRepository.findOne(id);
 
 		Object.assign(foundUser, userEditedData);
@@ -38,10 +45,18 @@ export class UserService {
 	}
 
 	async deleteUser(id: number): Promise<DeleteResult> {
-		return this.userRepository.delete({ id });
+		return this.userRepository.delete({ idUser: id });
 	}
 
 	async findOne(email: string): Promise<User | undefined> {
 		return this.userRepository.findOne({ email });
+	}
+
+	async checkIfEmailIsAvailable(email: string): Promise<CheckEmailAvailabilityDto> {
+		const emailAlreadyTaken: boolean = !!(await this.userRepository.findOne({ email }));
+
+		return {
+			isTaken: emailAlreadyTaken,
+		} as CheckEmailAvailabilityDto;
 	}
 }

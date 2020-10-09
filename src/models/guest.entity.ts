@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { GuestType } from './guestType.entity';
+import { Wedding } from './wedding.entity';
 
 @Entity('Guest')
 export class Guest {
@@ -30,6 +32,15 @@ export class Guest {
 	@Column('smallint')
 	numberSeat: number;
 
-	@Column('integer')
-	idGuestEnum: number;
+	@ManyToOne(
+		type => GuestType,
+		guest => guest.idGuestEntity,
+	)
+	idGuestType: number;
+
+	@ManyToOne(
+		type => Wedding,
+		wedding => wedding.idWedding,
+	)
+	wedding: Wedding;
 }
