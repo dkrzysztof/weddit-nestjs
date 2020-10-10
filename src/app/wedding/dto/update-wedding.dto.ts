@@ -1,14 +1,14 @@
 import { Type } from 'class-transformer';
-import { IsBoolean, IsDate, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString, IsDate, IsNotEmpty, IsBoolean, IsNumber } from 'class-validator';
 
-export class CreateWeddingPlanDto {
-	@IsNotEmpty()
+export class UpdateWeddingDto {
+	@IsOptional()
 	@IsString()
 	name: string;
 
 	@Type(() => Date)
 	@IsDate()
-	@IsNotEmpty()
+	@IsOptional()
 	dateOfWedding: Date;
 
 	@IsOptional()

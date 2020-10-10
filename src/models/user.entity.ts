@@ -1,6 +1,16 @@
 import { Exclude } from 'class-transformer/decorators';
 import { IsNotEmpty, MinLength } from 'class-validator';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, ManyToOne, OneToMany, Unique } from 'typeorm';
+import {
+	Entity,
+	PrimaryGeneratedColumn,
+	Column,
+	ManyToMany,
+	JoinTable,
+	ManyToOne,
+	OneToMany,
+	Unique,
+	JoinColumn,
+} from 'typeorm';
 import { UserWedding } from './userWedding.entity';
 import { Wedding } from './wedding.entity';
 
@@ -52,5 +62,6 @@ export class User {
 		type => UserWedding,
 		userWedding => userWedding.users,
 	)
+	@JoinColumn()
 	userWeddings: UserWedding[];
 }

@@ -18,37 +18,37 @@ export class Wedding {
 	@Column('date')
 	dateOfWedding: Date;
 
-	@Column('time')
+	@Column('time', { nullable: true })
 	hourOfWedding: Date;
 
-	@Column('time')
+	@Column('time', { nullable: true })
 	hourOfChurchService: Date;
 
-	@Column('bool')
+	@Column('bool', { nullable: true })
 	hasAfters: boolean;
 
-	@Column('text')
+	@Column('text', { nullable: true })
 	address: string;
 
-	@Column('smallint')
+	@Column('smallint', { nullable: true })
 	tablesTotalCount: number;
 
-	@Column('smallint')
+	@Column('smallint', { nullable: true })
 	tableNumberOfMarried: number;
 
-	@Column('decimal')
+	@Column('decimal', { nullable: true })
 	sumCostTask: number;
 
-	@Column('decimal')
+	@Column('decimal', { nullable: true })
 	sumCostDrink: number;
 
-	@Column('decimal')
+	@Column('decimal', { nullable: true })
 	sumCost: number;
 
-	@Column('decimal')
+	@Column('decimal', { nullable: true })
 	budget: number;
 
-	@Column('decimal')
+	@Column('decimal', { nullable: true })
 	exceedBudget: number;
 
 	@OneToMany(

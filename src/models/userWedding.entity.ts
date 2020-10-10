@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, JoinTable, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './user.entity';
 import { Wedding } from './wedding.entity';
 
@@ -11,13 +11,13 @@ export class UserWedding {
 		type => User,
 		user => user.userWeddings,
 	)
-	users: User;
+	users!: User;
 
 	@ManyToOne(
 		type => Wedding,
 		wedding => wedding.userWeddings,
 	)
-	wedding: Wedding;
+	wedding!: Wedding;
 
 	@Column('boolean')
 	editPermission: boolean;
