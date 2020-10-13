@@ -6,6 +6,7 @@ import { UserWedding } from '../../models/userWedding.entity';
 import { Wedding } from '../../models/wedding.entity';
 import { appendOrCreateArray } from '../../utilities/empty-array-checkout.utility';
 import { transactionWrapper } from '../../utilities/transaction-wrapper.utility';
+import { updateAllObjectKeyValues } from '../../utilities/update-all-keys.utilities';
 import { JwtPayload } from '../interfaces/jwt-payload.interface';
 import { CreateWeddingPlanDto } from './dto/create-wedding-plan.dto';
 import { GetWeddingDto } from './dto/get-wedding.dto';
@@ -55,11 +56,7 @@ export class WeddingService {
 		if (await this.checkIfUserHasPermission(userPayload, idWedding, true)) {
 			const wedding = await this.weddingRepository.findOne({ idWedding });
 
-			for (let key of Object.keys(wedding)) {
-				if (updateWeddingDto[key] != null) {
-					wedding[key] = updateWeddingDto[key];
-				}
-			}
+			updateAllObjectKeyValues(updateWeddingDto, wedding);
 
 			return await this.weddingRepository.save(wedding);
 		} else {
@@ -78,7 +75,7 @@ export class WeddingService {
 		});
 
 		const user = await weddingPermissions.find((value, index) => {
-			console.log(index, value);
+			// console.log(index, value);
 			return value.users.idUser === userPayload.idUser;
 		});
 
@@ -89,17 +86,25 @@ export class WeddingService {
 		}
 	}
 
-	async getWeddingDetails(userPayload: JwtPayload, idWedding: number): Promise<GetWeddingDto> {
+	async getWeddingDetails(userPayload: JwtPayload, idWedding: number): Promise<any> {
 		if (await this.checkIfUserHasPermission(userPayload, idWedding, false)) {
-			let wedding = await this.weddingRepository.findOne({ idWedding }, { relations: ['userWeddings'] });
-			// wedding.userWeddings = wedding.userWeddings.filter(val => val.users.idUser === userPayload.idUser);
+			let weddingDetails = await this.weddingRepository
+				.createQueryBuilder('wedding')
+				.leftJoinAndSelect('wedding.userWeddings', 'userWedding')
+				.where('wedding.idWedding = :idWedding', { idWedding })
+				.leftJoin('userWedding.users', 'users')
+				.andWhere('users.idUser = :idUser', { idUser: userPayload.idUser })
+				.getOne();
 
-			let usersWeddings = await this.userWeddingRepository.find({
-				where: { users: { idUser: userPayload.idUser }, wedding: { idWedding } },
-			});
+			const { userWeddings } = weddingDetails;
 
-			return wedding;
+			let weddingDetailsDto = Object.assign({}, weddingDetails, { userWedding: { ...userWeddings.pop() } });
+			delete weddingDetailsDto.userWeddings;
+
+			return weddingDetailsDto;
 		}
 		throw new ForbiddenException('You have no access to this resource!');
 	}
+
+	async updateUserPermission(userPayload: JwtPayload, idWedding: number): Promise<any> {}
 }

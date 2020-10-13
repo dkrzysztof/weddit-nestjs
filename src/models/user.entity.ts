@@ -61,6 +61,7 @@ export class User {
 	@OneToMany(
 		type => UserWedding,
 		userWedding => userWedding.users,
+		{ cascade: true },
 	)
 	@JoinColumn()
 	userWeddings: UserWedding[];

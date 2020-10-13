@@ -4,10 +4,16 @@ import { Guest } from './guest.entity';
 @Entity('GuestType')
 export class GuestType {
 	@PrimaryGeneratedColumn()
-	idGuestEntity: number;
+	idGuestType: number;
 
 	@Column({
 		length: 50,
 	})
 	name: string;
+
+	@OneToMany(
+		type => Guest,
+		guest => guest.guestType,
+	)
+	guests: Guest[];
 }

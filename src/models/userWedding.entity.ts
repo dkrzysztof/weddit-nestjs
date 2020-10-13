@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { Column, Entity, JoinColumn, JoinTable, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './user.entity';
 import { Wedding } from './wedding.entity';
@@ -5,6 +6,7 @@ import { Wedding } from './wedding.entity';
 @Entity('UserWedding')
 export class UserWedding {
 	@PrimaryGeneratedColumn()
+	@Exclude()
 	idUserWedding: number;
 
 	@ManyToOne(

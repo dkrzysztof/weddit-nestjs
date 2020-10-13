@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, RelationId } from 'typeorm';
 import { GuestType } from './guestType.entity';
 import { Wedding } from './wedding.entity';
 
@@ -6,9 +6,6 @@ import { Wedding } from './wedding.entity';
 export class Guest {
 	@PrimaryGeneratedColumn()
 	idGuest: number;
-
-	@Column()
-	idWedding: number;
 
 	@Column({
 		length: 30,
@@ -20,27 +17,27 @@ export class Guest {
 	})
 	lastName: string;
 
-	@Column()
+	@Column({ nullable: true, default: false })
 	confirmed: boolean;
 
-	@Column()
+	@Column({ nullable: true, default: false })
 	confirmedAfters: boolean;
 
-	@Column('smallint')
+	@Column('smallint', { nullable: true })
 	numberTable: number;
 
-	@Column('smallint')
+	@Column('smallint', { nullable: true })
 	numberSeat: number;
 
 	@ManyToOne(
 		type => GuestType,
-		guest => guest.idGuestEntity,
+		guestType => guestType.guests,
 	)
-	idGuestType: number;
+	guestType!: GuestType;
 
 	@ManyToOne(
 		type => Wedding,
-		wedding => wedding.idWedding,
+		wedding => wedding.guests,
 	)
-	wedding: Wedding;
+	wedding!: Wedding;
 }

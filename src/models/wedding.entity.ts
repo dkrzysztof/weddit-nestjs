@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Drink } from './drink.entity';
 import { Guest } from './guest.entity';
 import { TaskList } from './taskList.entity';
@@ -54,24 +54,30 @@ export class Wedding {
 	@OneToMany(
 		type => Drink,
 		drink => drink.wedding,
+		{ cascade: true },
 	)
 	drinks: Drink[];
 
 	@OneToMany(
 		type => TaskList,
 		taskList => taskList.wedding,
+		{ cascade: true },
 	)
 	taskLists: TaskList[];
 
 	@OneToMany(
 		type => Guest,
 		guest => guest.wedding,
+		{ cascade: true },
 	)
+	@JoinColumn()
 	guests: Guest[];
 
 	@OneToMany(
 		type => UserWedding,
 		userWedding => userWedding.wedding,
+		{ cascade: true },
 	)
+	@JoinColumn()
 	userWeddings: UserWedding[];
 }

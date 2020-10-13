@@ -59,4 +59,10 @@ export class UserService {
 			isTaken: emailAlreadyTaken,
 		} as CheckEmailAvailabilityDto;
 	}
+
+	async isAdmin(idUser: number): Promise<boolean> {
+		const user = await this.userRepository.findOne({ idUser });
+
+		return user.isAdmin;
+	}
 }

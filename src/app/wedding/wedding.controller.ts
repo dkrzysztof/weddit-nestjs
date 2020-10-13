@@ -8,7 +8,7 @@ import { GetWeddingDto } from './dto/get-wedding.dto';
 import { UpdateWeddingDto } from './dto/update-wedding.dto';
 import { WeddingService } from './wedding.service';
 
-@Controller('weddings')
+@Controller()
 export class WeddingController {
 	constructor(private readonly weddingService: WeddingService) {}
 
