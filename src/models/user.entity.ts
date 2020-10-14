@@ -49,6 +49,7 @@ export class User {
 	isAdmin: boolean;
 
 	@Exclude()
+	@Column({ nullable: true })
 	public currentHashedRefreshToken?: string;
 
 	@Column({

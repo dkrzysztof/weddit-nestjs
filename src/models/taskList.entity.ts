@@ -12,7 +12,7 @@ export class TaskList {
 	)
 	wedding: Wedding;
 
-	@Column('text')
+	@Column('text', { nullable: true })
 	description: string;
 
 	@Column('date')
@@ -21,7 +21,7 @@ export class TaskList {
 	@Column('text')
 	dutyHolderFullName: string;
 
-	@Column('bool')
+	@Column('bool', { default: false })
 	isComplete: boolean;
 
 	@Column('decimal')
@@ -29,19 +29,22 @@ export class TaskList {
 
 	@Column({
 		length: 80,
+		nullable: true,
 	})
 	contactPersonFullName: string;
 
 	@Column({
 		length: 15,
+		nullable: true,
 	})
 	contactPersonPhone: string;
 
 	@Column({
 		length: 50,
+		nullable: true,
 	})
 	contactPersonEmail: string;
 
-	@Column('text')
+	@Column('text', { nullable: true })
 	notes: string;
 }

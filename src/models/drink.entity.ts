@@ -19,24 +19,24 @@ export class Drink {
 	})
 	name: string;
 
-	@Column({ type: 'numeric', precision: 3, scale: 2 })
+	@Column({ type: 'numeric', precision: 3, scale: 2, default: 0 })
 	bottleCapacity: number;
 
-	@Column({ type: 'numeric', precision: 5, scale: 2 })
+	@Column({ type: 'numeric', precision: 5, scale: 2, default: 0 })
 	consumingFactor: number;
 
-	@Column('smallint')
+	@Column('smallint', { default: 0 })
 	consumersCount: number;
 
-	@Column('smallint')
+	@Column('smallint', { default: 0 })
 	neededAmount: number;
 
-	@Column('smallint')
+	@Column('smallint', { default: 0 })
 	boughtAmount: number;
 
-	@Column('smallint')
+	@Column('smallint', { default: 0 })
 	remainingAmount: number;
 
-	@Column('decimal')
+	@Column('decimal', { default: 0 })
 	price: number;
 }

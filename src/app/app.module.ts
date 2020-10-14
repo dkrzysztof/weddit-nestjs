@@ -11,6 +11,8 @@ import { WeddingModule } from './wedding/wedding.module';
 import { GuestModule } from './guest/guest.module';
 import { RouterModule, Routes } from 'nest-router';
 import { GuestTypesModule } from './guest/guest-types/guest-types.module';
+import { DrinksModule } from './drinks/drinks.module';
+import { TaskListsModule } from './taskLists/taskLists.module';
 
 const routes: Routes = [
 	{
@@ -21,6 +23,14 @@ const routes: Routes = [
 				path: '/:idWedding/guests',
 				module: GuestModule,
 			},
+			{
+				path: '/:idWedding/drinks',
+				module: DrinksModule,
+			},
+			{
+				path: '/:idWedding/task-lists',
+				module: TaskListsModule,
+			},
 		],
 	},
 ];
@@ -28,6 +38,8 @@ const routes: Routes = [
 @Module({
 	imports: [
 		RouterModule.forRoutes(routes),
+		TaskListsModule,
+		DrinksModule,
 		GuestModule,
 		AuthModule,
 		UsersModule,
