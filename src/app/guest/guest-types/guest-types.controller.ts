@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { request } from 'http';
 import { GuestType } from '../../../models/guestType.entity';
-import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { CreateGuestTypeDto } from './dto/create-guest-type.dto';
 import { GetGuestTypeDto } from './dto/get-guest-type.dto';
 import { UpdateGuestTypeDto } from './dto/update-guest-type.dto';

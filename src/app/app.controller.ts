@@ -1,14 +1,25 @@
-import { Controller, Get, Body, Post, Request, UseGuards, Req } from '@nestjs/common';
+import {
+	Controller,
+	Get,
+	Body,
+	Post,
+	Request,
+	UseGuards,
+	Req,
+	ClassSerializerInterceptor,
+	UseInterceptors,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthService } from './auth/auth.service';
-import { LocalAuthGuard } from './auth/local-auth.guard';
-import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { LocalAuthGuard } from './auth/guards/local-auth.guard';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { CreateUserDto } from './users/dto/create-user.dto';
 import { UserService } from './users/users.service';
-import JwtRefreshGuard from './auth/refresh-auth.guard';
+import JwtRefreshGuard from './auth/guards/refresh-auth.guard';
 import { HttpCode } from '@nestjs/common/decorators/http/http-code.decorator';
 
 @Controller()
+@UseInterceptors(ClassSerializerInterceptor)
 export class AppController {
 	constructor(
 		private readonly appService: AppService,
@@ -25,8 +36,8 @@ export class AppController {
 
 		await this.userService.setCurrentRefreshToken(refreshTokenCookie.token, user.idUser);
 
-		req.res.setHeader('Set-Cookie', [accessTokenCookie, refreshTokenCookie.cookie]);
-		return this.authService.login(req.user);
+		req.res.setHeader('Set-Cookie', [accessTokenCookie.cookie, refreshTokenCookie.cookie]);
+		return this.authService.login(accessTokenCookie.token, refreshTokenCookie.token);
 	}
 
 	@Post('auth/register')
@@ -43,10 +54,12 @@ export class AppController {
 	@UseGuards(JwtRefreshGuard)
 	@Get('refresh')
 	refresh(@Req() req) {
-		const accessTokenCookie = this.authService.getCookieWithJwtAccessToken(req.user.idUser, req.user.email);
+		const { cookie, token } = this.authService.getCookieWithJwtAccessToken(req.user.idUser, req.user.email);
 
-		req.res.setHeader('Set-Cookie', accessTokenCookie);
-		return req.user;
+		req.res.setHeader('Set-Cookie', cookie);
+		return {
+			access_token: token,
+		};
 	}
 
 	@UseGuards(JwtAuthGuard)

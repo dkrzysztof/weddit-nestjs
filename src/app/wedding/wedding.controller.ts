@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { Param } from '@nestjs/common/decorators/http/route-params.decorator';
 import { Wedding } from '../../models/wedding.entity';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { GetUserDto } from '../users/dto/get-user.dto';
 import { CreateWeddingPlanDto } from './dto/create-wedding-plan.dto';
 import { GetWeddingDto } from './dto/get-wedding.dto';

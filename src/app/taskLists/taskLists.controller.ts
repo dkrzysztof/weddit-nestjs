@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Post, Put, Param, Req, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskForGetAllTasks } from './dto/get-all-tasks.dto';
 import { GetTaskDetailsDto } from './dto/get-task.dto';

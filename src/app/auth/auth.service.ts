@@ -18,11 +18,10 @@ export class AuthService {
 		return null;
 	}
 
-	async login(user: any): Promise<any> {
-		const payload = { email: user.email, sub: user.idUser };
-
+	async login(access_token: string, refresh_token: string): Promise<any> {
 		return {
-			access_token: this.jwtService.sign(payload),
+			access_token,
+			refresh_token,
 		};
 	}
 
@@ -32,17 +31,25 @@ export class AuthService {
 			secret: process.env.JWT_SECRET,
 			expiresIn: `${process.env.JWT_EXPIRY}h`,
 		});
-		return `Access_token=${token}; HttpOnly; Path=/; Max-Age=${process.env.JWT_EXPIRY}`;
+		const cookie = `access_token=${token}; HttpOnly; Path=/; Max-Age=${process.env.JWT_EXPIRY}`;
+
+		return {
+			cookie,
+			token,
+		};
 	}
 
 	async getCookieWithJwtRefreshToken(idUser: number, email: string) {
 		const payload: JwtPayload = { idUser, email };
+		const refreshTokenExpiry = Number.parseInt(process.env.JWT_REFRESH_EXPIRY) || 1;
+
 		const token = this.jwtService.sign(payload, {
-			secret: process.env.REFRESH_SECRET,
-			expiresIn: `${process.env.REFRESH_EXPIRY}d`,
+			secret: process.env.JWT_REFRESH_SECRET,
+			expiresIn: `${refreshTokenExpiry}d`,
 		});
 
-		const cookie = `Refresh_token=${token}; HttpOnly; Secure; Path=/; Max-Age=${process.env.REFRESH_EXPIRY}`;
+		const refreshExpirationInSeconds = refreshTokenExpiry * 24 * 60 * 60;
+		const cookie = `refresh_token=${token}; HttpOnly; Path=/; Max-Age=${refreshExpirationInSeconds}`;
 
 		return {
 			cookie,

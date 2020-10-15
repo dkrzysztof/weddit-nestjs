@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { Param } from '@nestjs/common/decorators/http/route-params.decorator';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { DrinksService } from './drinks.service';
 import { AddNewDrinkDto } from './dto/add-new-drink.dto';
 import { DrinkForGetAllDrinksDto } from './dto/get-all-drinks.dto';
