@@ -52,7 +52,7 @@ export class AppController {
 	}
 
 	@UseGuards(JwtRefreshGuard)
-	@Get('refresh')
+	@Get('auth/refresh-token')
 	refresh(@Req() req) {
 		const { cookie, token } = this.authService.getCookieWithJwtAccessToken(req.user.idUser, req.user.email);
 

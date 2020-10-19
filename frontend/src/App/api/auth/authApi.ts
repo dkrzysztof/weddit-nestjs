@@ -6,10 +6,10 @@ import { LoginResponse, RegisterResponse, RefreshTokenResponse } from './respons
 const { urlToIncludeInEmail } = appConfig;
 
 export const AuthApi = {
-	login: (body: LoginRequest): Promise<LoginResponse> => requests.post(`/auth/login`, body),
+	login: (body: LoginRequest): Promise<LoginResponse> => requests.post(`auth/login`, body),
 
 	register: (body: RegisterRequest): Promise<RegisterResponse> =>
-		requests.post(`/auth/register`, { ...body, urlToIncludeInEmail }),
+		requests.post(`auth/register`, { ...body, urlToIncludeInEmail }),
 
-	refreshToken: (): Promise<RefreshTokenResponse> => requests.fetch('/auth/refresh-token', null, {})
+	refreshToken: (): Promise<RefreshTokenResponse> => requests.fetch('auth/refresh-token', null, {})
 };

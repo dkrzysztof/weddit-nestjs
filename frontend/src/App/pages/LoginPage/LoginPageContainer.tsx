@@ -24,15 +24,14 @@ const LoginPageContainer: React.FC<LoginPageContainerProps> = ({ history }: Logi
 	const [loginError, setLoginError] = useState<string[] | boolean>(false);
 	const status = useSelector((state: RootState) => state.session.status.authentication);
 
-
 	const formInitialValues = {
-		email: 'admin@test.com',
-		password: 'Admin123!'
+		email: 'admin@admin.com',
+		password: 'password'
 	};
 
 	const signInHandler: FinishFormType = (values: LoginRequest) => {
 		let handleSuccess: () => void = () => {
-			history.push('/auth');
+			history.push('/user');
 		};
 
 		let handleError: (errorMessages: string[]) => void = (errors: string[]) => {
@@ -54,11 +53,10 @@ const LoginPageContainer: React.FC<LoginPageContainerProps> = ({ history }: Logi
 	};
 
 	return (
-
 		<div className='login--container'>
-			{status === StatusType.LOADING ?
+			{status === StatusType.LOADING ? (
 				<LoadingScreen container='screen' />
-				:
+			) : (
 				<Row align='middle' justify='center'>
 					<Col xs={22} md={14} xl={10} xxl={8}>
 						<br />
@@ -83,7 +81,7 @@ const LoginPageContainer: React.FC<LoginPageContainerProps> = ({ history }: Logi
 						/>
 					</Col>
 				</Row>
-			}
+			)}
 		</div>
 	);
 };

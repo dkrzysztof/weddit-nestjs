@@ -6,7 +6,7 @@ import { LogsApi } from './logs/logsApi';
 import { notification } from 'antd';
 import { AuthApi } from './auth/authApi';
 
-const baseURL = `https://localhost:44303/api/`;
+const baseURL = `http://localhost:5000/`;
 
 axios.defaults.baseURL = baseURL;
 
@@ -134,7 +134,15 @@ const responseBodyAxios = (response: AxiosResponse) => {
 
 	return response.data;
 };
-const responseBodyFetch = (response: Response) => response.json();
+const responseBodyFetch = async (response: Response) => {
+	const responseJsonObject = await response.json();
+	if (response.ok) {
+		return responseJsonObject;
+	} else
+		throw new Error(
+			responseJsonObject.errors.detailedErrors + '\n' + responseJsonObject.errors.commonErrors.join('\n')
+		);
+};
 
 export const requests = {
 	get: (url: string, params?: {}) =>

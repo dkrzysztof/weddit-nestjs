@@ -13,6 +13,7 @@ import { RouterModule, Routes } from 'nest-router';
 import { GuestTypesModule } from './guest/guest-types/guest-types.module';
 import { DrinksModule } from './drinks/drinks.module';
 import { TaskListsModule } from './taskLists/taskLists.module';
+import { AccountModule } from './account/account.module';
 
 const routes: Routes = [
 	{
@@ -44,6 +45,7 @@ const routes: Routes = [
 		AuthModule,
 		UsersModule,
 		WeddingModule,
+		AccountModule,
 		DatabaseModule,
 		GuestTypesModule,
 		ConfigModule.forRoot({

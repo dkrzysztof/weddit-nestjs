@@ -36,6 +36,7 @@ export class User {
 	email: string;
 
 	@IsNotEmpty()
+	@Exclude()
 	@MinLength(6)
 	@Column({
 		length: 60,

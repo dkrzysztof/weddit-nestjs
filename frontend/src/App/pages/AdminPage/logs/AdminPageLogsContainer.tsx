@@ -9,7 +9,7 @@ import Role from 'App/types/role';
 const AdminPageLogsContainer: React.FC<{}> = () => {
 	return (
 		<Switch>
-			<ProtectedRoute acceptedRoles={[Role.ADMIN]} exact path='/admin/logs' component={GetLogsContainer} />
+			<ProtectedRoute adminRestriced exact path='/admin/logs' component={GetLogsContainer} />
 		</Switch>
 	);
 };

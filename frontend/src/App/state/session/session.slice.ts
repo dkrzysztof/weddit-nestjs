@@ -4,6 +4,7 @@ import { sessionInitialState, SessionState } from './session.state';
 import { GetAccountDetailsResponse } from 'App/api/account/responses/getAccountDetailsResponse';
 import { LoginResponse } from 'App/api/auth/responses';
 import { StatusType } from 'App/types/requestStatus';
+import { notification } from 'antd';
 
 const { FAILED, SUCCESS, LOADING } = StatusType;
 
@@ -24,6 +25,7 @@ const sessionSlice = createSlice({
 			localStorage.setItem('token', action.payload.token);
 		},
 		authenticationFailure: (state: SessionState, action: PayloadAction<string[]>) => {
+			notification.error({ message: action.payload && action.payload.length > 0 && action.payload[0] });
 			state.status.authentication = FAILED;
 		},
 

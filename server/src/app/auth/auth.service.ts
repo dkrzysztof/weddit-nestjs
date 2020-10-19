@@ -20,8 +20,8 @@ export class AuthService {
 
 	async login(access_token: string, refresh_token: string): Promise<any> {
 		return {
-			access_token,
-			refresh_token,
+			token: access_token,
+			refreshToken: refresh_token,
 		};
 	}
 

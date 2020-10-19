@@ -1,13 +1,8 @@
 export interface GetAccountDetailsResponse {
-	id: string;
-	phoneNumber: string;
-	phoneNumberConfirmed: string;
-	email: string;
-	emailConfirmed: string;
+	idUser: number;
 	firstName: string;
 	lastName: string;
-	lockoutEnabled: string;
-	lockoutEndDateUtc: null | string;
-	birthDate: null;
-	roles: Role[];
+	email: string;
+	isAdmin: boolean;
+	createdAt: string;
 }

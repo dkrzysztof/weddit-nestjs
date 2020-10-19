@@ -15,7 +15,7 @@ import { HttpStatusCodeResponse } from 'App/types/httpResponse.d';
 const { urlToIncludeInEmail } = appConfig;
 
 export const AccountApi = {
-	getAccountDetails: (): Promise<GetAccountDetailsResponse> => requests.get(`/account/details`),
+	getAccountDetails: (): Promise<GetAccountDetailsResponse> => requests.get(`account/details`),
 
 	updateProfile: (body: UpdateProfileRequest): Promise<UpdateAccountDetailsResponse> =>
 		requests.put(`/account/details`, body),

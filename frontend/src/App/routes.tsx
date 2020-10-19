@@ -20,16 +20,15 @@ const Routes: React.FC = () => {
 				path='/auth'
 				exact
 				component={AuthPage}
-				acceptedRoles={[Role.ADMIN]}
+				adminRestriced
 				others={{ text: 'This is visible only for admins' }}
 			/>
 			<ProtectedRoute
 				path='/user'
 				component={AuthPage}
-				acceptedRoles={[Role.ADMIN, Role.USER]}
 				others={{ text: 'This is visible for all logged in users' }}
 			/>
-			<ProtectedRoute acceptedRoles={[Role.ADMIN]} path='/admin' component={AdminPage} />
+			<ProtectedRoute adminRestriced path='/admin' component={AdminPage} />
 			<Route path='/404' component={NotFoundPage} />
 			<Redirect to='/404' />
 		</Switch>

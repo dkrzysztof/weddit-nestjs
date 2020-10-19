@@ -35,7 +35,7 @@ export const authenticateUser = (
 					dispatch(getUserDetailsFailure());
 				});
 		})
-		.catch(() => {
+		.catch((e) => {
 			const err = ['Provided credentials are incorrect'];
 			onError(err);
 			dispatch(authenticationFailure(err));
