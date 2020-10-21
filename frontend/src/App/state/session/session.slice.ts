@@ -16,8 +16,6 @@ const sessionSlice = createSlice({
 			state.status.authentication = LOADING;
 		},
 		authenticationSuccess: (state: SessionState, action: PayloadAction<LoginResponse>) => {
-			// TODO: implementacja refresh tokena na HttpOnly
-			// setCookie(REFRESH_TOKEN_COOKIE_NAME, action.payload.refresh_token, 40);
 			state.status.authentication = SUCCESS;
 			state.info = action.payload;
 
@@ -34,7 +32,11 @@ const sessionSlice = createSlice({
 		},
 		getUserDetailsSuccess: (state: SessionState, action: PayloadAction<GetAccountDetailsResponse>) => {
 			state.status.getUserDetails = SUCCESS;
-			state.user = action.payload;
+
+			let { createdAt, ...detailsData } = action.payload;
+			let createdAtDate = new Date(createdAt);
+
+			state.user = { ...detailsData, createdAt: createdAtDate };
 			state.error = null;
 		},
 		getUserDetailsFailure: (state: SessionState, action: PayloadAction<string[]>) => {

@@ -69,7 +69,7 @@ class ProtectedRoute extends React.Component<ProtectedRouteProps, ProtectedRoute
 						return (
 							<Redirect
 								to={{
-									pathname: '/signin',
+									pathname: '/403',
 									state: props.location
 								}}
 							/>

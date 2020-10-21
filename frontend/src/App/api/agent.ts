@@ -5,6 +5,7 @@ import { AdminApi } from './admin/adminApi';
 import { LogsApi } from './logs/logsApi';
 import { notification } from 'antd';
 import { AuthApi } from './auth/authApi';
+import store from 'App/state/store';
 
 const baseURL = `http://localhost:5000/`;
 
@@ -12,9 +13,11 @@ axios.defaults.baseURL = baseURL;
 
 axios.interceptors.request.use(
 	(config) => {
-		// token interceptor goes here
-		const token = localStorage.getItem('token');
-		if (token) config.headers.Authorization = `Bearer ${token}`;
+		const state = store.getState();
+		if (state.session.info && state.session.info.token) {
+			config.headers.Authorization = `Bearer ${state.session.info.token}`;
+		}
+
 		return config;
 	},
 	(error) => {

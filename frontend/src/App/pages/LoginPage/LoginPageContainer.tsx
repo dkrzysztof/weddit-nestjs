@@ -12,6 +12,7 @@ import { authenticateUser } from 'App/state/session/session.thunk';
 import { RootState } from 'App/state/root.reducer';
 import LoadingScreen from 'App/common/components/LoadingScreen';
 import StatusType from 'App/types/requestStatus';
+import Center from 'App/common/components/Center';
 
 interface LoginPageContainerProps extends RouteChildrenProps {
 	name?: string;
@@ -57,8 +58,7 @@ const LoginPageContainer: React.FC<LoginPageContainerProps> = ({ history }: Logi
 			{status === StatusType.LOADING ? (
 				<LoadingScreen container='screen' />
 			) : (
-				<Row align='middle' justify='center'>
-					<Col xs={22} md={14} xl={10} xxl={8}>
+				<Center>
 						<br />
 						{loginError && (
 							<Alert
@@ -79,8 +79,7 @@ const LoginPageContainer: React.FC<LoginPageContainerProps> = ({ history }: Logi
 							initialValues={formInitialValues}
 							autoComplete='off'
 						/>
-					</Col>
-				</Row>
+					</Center>
 			)}
 		</div>
 	);

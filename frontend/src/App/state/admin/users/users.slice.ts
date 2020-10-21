@@ -80,7 +80,6 @@ export const adminUsersSlice = createSlice({
 			state.status.updateUser = FAILED;
 			state.error = action.payload;
 		},
-
 		cleanUpUserStatusStart: (state: AdminUsersState) => {
 			state.status = adminUsersInitialState.status;
 			state.error = adminUsersInitialState.error;

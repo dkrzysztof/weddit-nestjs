@@ -15,4 +15,4 @@ async function bootstrap() {
 	await app.listen(process.env.PORT);
 	console.info(`\x1b[33m[SERVER]:\x1b[32m`, `Server is running on port`, `${process.env.PORT}`);
 }
-bootstrap();
+bootstrap(); 

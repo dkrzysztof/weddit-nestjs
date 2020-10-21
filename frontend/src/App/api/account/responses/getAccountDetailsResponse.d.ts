@@ -4,5 +4,5 @@ export interface GetAccountDetailsResponse {
 	lastName: string;
 	email: string;
 	isAdmin: boolean;
-	createdAt: string;
+	createdAt: string | Date;
 }

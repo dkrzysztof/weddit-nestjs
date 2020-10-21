@@ -8,13 +8,15 @@ import { default as LoginPage } from './pages/LoginPage/LoginPageContainer';
 import { default as AuthPage } from './pages/AuthPage/AuthPageContainer';
 import { default as AdminPage } from './pages/AdminPage/AdminPageContainer';
 import { default as ResetPasswordPage } from './pages/ResetPasswordPage/ResetPasswordPageContainer';
-import Role from './types/role';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
+import ForbiddenPage from './pages/ForbiddenPage/ForbiddenPage';
 
 const Routes: React.FC = () => {
 	return (
 		<Switch>
 			<Route exact path='/' component={HomePage} />
 			<Route exact path='/signin' component={LoginPage} />
+			<Route exact path='/register' component={RegisterPage} />
 			<Route exact path='/reset-password' component={ResetPasswordPage} />
 			<ProtectedRoute
 				path='/auth'
@@ -30,6 +32,7 @@ const Routes: React.FC = () => {
 			/>
 			<ProtectedRoute adminRestriced path='/admin' component={AdminPage} />
 			<Route path='/404' component={NotFoundPage} />
+			<Route path='/403' component={ForbiddenPage} />
 			<Redirect to='/404' />
 		</Switch>
 	);
