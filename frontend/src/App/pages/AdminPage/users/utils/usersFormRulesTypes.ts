@@ -3,7 +3,7 @@ import { Rule } from 'antd/lib/form';
 export interface UpdateUserFormRules {
 	firstName: Rule[];
 	lastName: Rule[];
-	roles: Rule[];
+	isAdmin: Rule[];
 }
 
 export interface CreateUserFormRules {
@@ -11,7 +11,6 @@ export interface CreateUserFormRules {
 	confirmPassword: Rule[];
 	firstName: Rule[];
 	lastName: Rule[];
-	birthDate: Rule[];
-	roleName: Rule[];
+	isAdmin: Rule[];
 	password: Rule[];
 }

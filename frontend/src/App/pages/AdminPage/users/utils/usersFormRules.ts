@@ -3,11 +3,10 @@ import { UpdateUserFormRules, CreateUserFormRules } from './usersFormRulesTypes'
 export const updateUserFormRules: UpdateUserFormRules = {
 	firstName: [{ required: true, max: 255 }],
 	lastName: [{ required: true, max: 255 }],
-	roles: [{ required: true, type: 'array' }]
+	isAdmin: [{ type: 'boolean' }]
 };
 
 export const createUserFormRules: CreateUserFormRules = {
-	birthDate: [{ required: true }],
 	confirmPassword: [
 		{
 			required: true
@@ -31,5 +30,5 @@ export const createUserFormRules: CreateUserFormRules = {
 	],
 	firstName: [{ required: true, max: 255 }],
 	lastName: [{ required: true, max: 255 }],
-	roleName: [{ required: true }]
+	isAdmin: [{ type: 'boolean' }]
 };

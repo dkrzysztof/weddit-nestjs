@@ -10,13 +10,13 @@ const { urlToIncludeInEmail } = appConfig;
 export const AdminApi = {
 	getUsers: (params: GetUsersRequest): Promise<GetUsersResponse> => requests.get(`/admin/users`, params),
 
-	getUser: (userId: string): Promise<GetUserResponse> => requests.get(`/admin/users/${userId}`),
+	getUser: (userId: number): Promise<GetUserResponse> => requests.get(`/admin/users/${userId}`),
 
 	createUser: (body: CreateUserRequest): Promise<CreateUserResponse> =>
 		requests.post(`/admin/users`, { ...body, urlToIncludeInEmail }),
 
-	updateUser: (userId: string, body: UpdateUserRequest): Promise<UpdateUserResponse> =>
+	updateUser: (userId: number, body: UpdateUserRequest): Promise<UpdateUserResponse> =>
 		requests.put(`/admin/users/${userId}`, body),
 
-	deleteUser: (userId: string): Promise<HttpStatusCodeResponse> => requests.delete(`/admin/users/${userId}`)
+	deleteUser: (userId: number): Promise<HttpStatusCodeResponse> => requests.delete(`/admin/users/${userId}`)
 };

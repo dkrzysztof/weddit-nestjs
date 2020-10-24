@@ -1,11 +1,6 @@
 export interface UpdateUserRequest {
-	userId: string;
 	firstName: string;
 	lastName: string;
-	emailConfirmed: boolean;
-	phoneConfirmed?: boolean;
-	isDeleted?: boolean;
-	lockoutEnabled?: boolean;
-	lockoutEnd?: string | null;
-	roles: Role[];
+	email: string;
+	isAdmin: boolean;
 }

@@ -27,14 +27,14 @@ export const getUsers = (params: GetUsersRequest): AppThunk => async (dispatch) 
 		.catch((error) => dispatch(getUsersFailure(error)));
 };
 
-export const getUser = (userId: string): AppThunk => async (dispatch) => {
+export const getUser = (userId: number): AppThunk => async (dispatch) => {
 	dispatch(getUserStart());
 	agent.Admin.getUser(userId)
 		.then((response) => dispatch(getUserSuccess(response)))
 		.catch((error) => dispatch(getUserFailure(error)));
 };
 
-export const deleteUser = (userId: string): AppThunk => async (dispatch) => {
+export const deleteUser = (userId: number): AppThunk => async (dispatch) => {
 	dispatch(deleteUserStart());
 	agent.Admin.deleteUser(userId)
 		.then(() => dispatch(deleteUserSuccess(userId)))
@@ -48,7 +48,7 @@ export const createUser = (userToCreate: CreateUserRequest): AppThunk => async (
 		.catch((error) => dispatch(createUserFailure(error)));
 };
 
-export const updateUser = (userId: string, userToUpdate: UpdateUserRequest): AppThunk => async (dispatch) => {
+export const updateUser = (userId: number, userToUpdate: UpdateUserRequest): AppThunk => async (dispatch) => {
 	dispatch(updateUserStart());
 	agent.Admin.updateUser(userId, userToUpdate)
 		.then((res) => dispatch(updateUserSuccess(res)))

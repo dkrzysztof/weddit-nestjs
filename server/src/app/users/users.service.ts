@@ -19,7 +19,7 @@ export class UserService {
 
 	async getUserDetails(id: number): Promise<GetUserDto> {
 		return this.userRepository.findOne(id);
-	}
+	}  
 
 	async createUser(user: CreateUserDto): Promise<GetUserDto> {
 		const { password, ...userData } = user;

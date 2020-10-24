@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Input, Select, Button, Form } from 'antd';
+import { Input, Select, Button, Form, Checkbox } from 'antd';
 import FormItem from 'antd/lib/form/FormItem';
 
 import { updateUserFormRules } from '../utils/usersFormRules';
@@ -12,7 +12,7 @@ interface UpdateUserFormProps {
 		email: string;
 		firstName: string;
 		lastName: string;
-		roles: Role[];
+		isAdmin: boolean;
 	};
 	onFinish: (values: UpdateUserRequest) => void;
 	loading: boolean;
@@ -28,11 +28,8 @@ const UpdateUserForm: React.FC<UpdateUserFormProps> = ({ initialValues, loading,
 				<Input />
 			</FormItem>
 
-			<FormItem name='roles' label='Role' rules={updateUserFormRules.roles}>
-				<Select mode='multiple' placeholder='Wybierz rolę użytkownika'>
-					<Select.Option value='User'>Użytkownik</Select.Option>
-					<Select.Option value='Administrator'>Administrator</Select.Option>
-				</Select>
+			<FormItem label='Uprawnienia administratora' name='isAdmin' rules={updateUserFormRules.isAdmin}>
+				<Checkbox />
 			</FormItem>
 			<FormItem>
 				<Button block loading={loading} type='primary' htmlType='submit'>

@@ -10,6 +10,7 @@ import defaultPageQueryParams from 'App/common/utils/defaultPageQueryParams';
 import { getUsers } from 'App/state/admin/users/users.thunk';
 import { RootState } from 'App/state/root.reducer';
 import { StatusType } from 'App/types/requestStatus';
+import PageTitle from 'App/common/components/PageTitle';
 
 const { LOADING } = StatusType;
 
@@ -19,9 +20,9 @@ const GetUsersContainer = () => {
 	const users = useSelector((state: RootState) => state.admin.users.users);
 	const usersStatus = useSelector((state: RootState) => state.admin.users.status);
 
-	const { pageNumber, pageSize, totalNumberOfItems } = useSelector(
-		(state: RootState) => state.admin.users.getUsersParams
-	);
+	// const { pageNumber, pageSize, totalNumberOfItems } = useSelector(
+	// 	(state: RootState) => state.admin.users.getUsersParams
+	// );
 
 	useEffect(() => {
 		dispatch(getUsers(defaultPageQueryParams));
@@ -38,21 +39,25 @@ const GetUsersContainer = () => {
 		);
 	};
 
-	const paginationConfig = {
-		pageSize,
-		current: pageNumber,
-		total: totalNumberOfItems,
-		showSizeChanger: true
-	};
+	// const paginationConfig = {
+	// 	pageSize,
+	// 	current: pageNumber,
+	// 	total: totalNumberOfItems,
+	// 	showSizeChanger: true
+	// };
 
 	return (
 		<>
-			<Row>
-				<Col span={24}>
+			<PageTitle title='Lista użytkowników' />
+			<Row justify='end' style={{ marginBottom: '1em' }}>
+				<Col span={6}>
 					<Link to='/admin/users/create'>
-						<Button icon={<PlusOutlined />}>Nowy użytkownik</Button>
+						<Button style={{ width: '100%' }} icon={<PlusOutlined />}>
+							Nowy użytkownik
+						</Button>
 					</Link>
 				</Col>
+				<Col span={1}></Col>
 			</Row>
 			<Row className='overflow-hidden'>
 				<Col span={24}>
@@ -68,7 +73,7 @@ const GetUsersContainer = () => {
 						}
 					/>
 					<Table
-						pagination={paginationConfig}
+						// pagination={paginationConfig}
 						onChange={handleTableChange}
 						loading={usersStatus.getUsers === LOADING}
 						columns={renderTableColumns(users, dispatch)}

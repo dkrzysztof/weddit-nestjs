@@ -17,13 +17,16 @@ export const adminUsersSlice = createSlice({
 		},
 		getUsersSuccess(state: AdminUsersState, action: PayloadAction<GetUsersResponse>) {
 			state.status.getUsers = SUCCESS;
-			state.users = action.payload.data;
+			state.users = action.payload;
 			state.getUsersParams = action.payload;
 		},
 		getUsersFailure(state: AdminUsersState, action: PayloadAction<string[]>) {
 			state.status.getUsers = FAILED;
 			state.error = action.payload;
 		},
+
+		// ---
+
 		getUserStart: (state: AdminUsersState) => {
 			state.status.getUser = LOADING;
 			state.error = null;
@@ -36,18 +39,24 @@ export const adminUsersSlice = createSlice({
 			state.status.getUser = FAILED;
 			state.error = action.payload;
 		},
+
+		// ---
+
 		deleteUserStart: (state: AdminUsersState) => {
 			state.status.deleteUser = LOADING;
 			state.error = null;
 		},
-		deleteUserSuccess: (state: AdminUsersState, action: PayloadAction<string>) => {
+		deleteUserSuccess: (state: AdminUsersState, action: PayloadAction<number>) => {
 			state.status.deleteUser = SUCCESS;
-			state.users = state.users.filter((u) => u.id !== action.payload);
+			state.users = state.users.filter((u) => u.idUser !== action.payload);
 		},
 		deleteUserFailure: (state: AdminUsersState, action: PayloadAction<string[]>) => {
 			state.status.deleteUser = FAILED;
 			state.error = action.payload;
 		},
+
+		// ---
+
 		createUserStart: (state: AdminUsersState) => {
 			state.error = null;
 			state.status.createUser = LOADING;
@@ -59,27 +68,33 @@ export const adminUsersSlice = createSlice({
 			state.status.createUser = FAILED;
 			state.error = action.payload;
 		},
+
+		// ---
+
 		updateUserStart: (state: AdminUsersState) => {
 			state.status.updateUser = LOADING;
 			state.error = null;
 		},
 		updateUserSuccess: (state: AdminUsersState, action: PayloadAction<UpdateUserResponse>) => {
 			state.status.updateUser = SUCCESS;
-			const user = state.users.find((u) => u.id === action.payload.id);
+			const user = state.users.find((u) => u.idUser === action.payload.idUser);
 
 			if (user) {
-				const { firstName, lastName, roles } = action.payload;
+				const { firstName, lastName, isAdmin } = action.payload;
 
 				user.firstName = firstName;
 				user.lastName = lastName;
 
-				user.roles = roles;
+				user.isAdmin = isAdmin;
 			}
 		},
 		updateUserFailure: (state: AdminUsersState, action: PayloadAction<string[]>) => {
 			state.status.updateUser = FAILED;
 			state.error = action.payload;
 		},
+
+		// ---
+
 		cleanUpUserStatusStart: (state: AdminUsersState) => {
 			state.status = adminUsersInitialState.status;
 			state.error = adminUsersInitialState.error;

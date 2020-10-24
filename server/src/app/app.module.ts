@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -14,6 +14,8 @@ import { GuestTypesModule } from './guest/guest-types/guest-types.module';
 import { DrinksModule } from './drinks/drinks.module';
 import { TaskListsModule } from './taskLists/taskLists.module';
 import { AccountModule } from './account/account.module';
+import { UserService } from './users/users.service';
+import { User } from 'src/models/user.entity';
 
 const routes: Routes = [
 	{
@@ -36,6 +38,7 @@ const routes: Routes = [
 	},
 ];
 
+@Global()
 @Module({
 	imports: [
 		RouterModule.forRoutes(routes),
@@ -55,5 +58,6 @@ const routes: Routes = [
 	],
 	controllers: [AppController],
 	providers: [AppService],
+	exports: [AppService],
 })
 export class AppModule {}

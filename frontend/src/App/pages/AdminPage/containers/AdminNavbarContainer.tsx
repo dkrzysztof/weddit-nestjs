@@ -25,18 +25,9 @@ const AdminNavbarContainer: React.FC<{}> = () => {
 		</SubMenu>
 	);
 
-	const logsSubMenu = (
-		<SubMenu key='sub2' icon={<FileTextOutlined />} title='Logi'>
-			<Menu.Item key='3'>
-				<Link to='/admin/logs'>Lista logów</Link>
-			</Menu.Item>
-		</SubMenu>
-	);
-
 	return (
 		<Menu className='sidebar' defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} mode='inline'>
 			{usersSubMenu}
-			{logsSubMenu}
 		</Menu>
 	);
 };

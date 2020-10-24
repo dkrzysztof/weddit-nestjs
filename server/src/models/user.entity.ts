@@ -36,7 +36,7 @@ export class User {
 	email: string;
 
 	@IsNotEmpty()
-	@Exclude()
+	@Exclude({ toPlainOnly: true })
 	@MinLength(6)
 	@Column({
 		length: 60,
@@ -49,9 +49,9 @@ export class User {
 	})
 	isAdmin: boolean;
 
-	@Exclude()
 	@Column({ nullable: true })
-	public currentHashedRefreshToken?: string;
+	@Exclude({ toPlainOnly: true })
+	currentHashedRefreshToken?: string;
 
 	@Column({
 		type: 'timestamp',

@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { UsersModule } from '../users/users.module';
 import { JwtRefreshStrategy } from './strategies/refresh.strategy';
+import { AdminGuard } from './guards/admin.guard';
 require('dotenv').config();
 
 @Module({

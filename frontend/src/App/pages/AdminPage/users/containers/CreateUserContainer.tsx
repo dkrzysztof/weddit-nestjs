@@ -50,8 +50,7 @@ export const CreateUserContainer = () => {
 							password: 'Password123!',
 							firstName: 'Szymon',
 							lastName: 'Pituła',
-							roles: [Role.USER],
-							language: i18next.language
+							isAdmin: false
 						}}
 						loading={usersStatus.createUser === LOADING}
 						onFinish={handleFormSubmit}

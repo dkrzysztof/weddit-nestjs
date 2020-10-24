@@ -22,7 +22,7 @@ interface UpdateUserContainerProps extends RouteComponentProps<RouteParams> {}
 const { LOADING, SUCCESS } = StatusType;
 
 const UpdateUserContainer: React.FC<UpdateUserContainerProps> = ({ match }) => {
-	const userId = match.params.userId;
+	const userId = Number.parseInt(match.params.userId);
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const user = useSelector((state: RootState) => state.admin.users.selectedUser);
@@ -42,7 +42,7 @@ const UpdateUserContainer: React.FC<UpdateUserContainerProps> = ({ match }) => {
 
 	const handleFormSubmit = (values: UpdateUserRequest) => {
 		if (user) {
-			dispatch(updateUser(user.id, values));
+			dispatch(updateUser(user.idUser, values));
 		}
 	};
 
@@ -68,7 +68,7 @@ const UpdateUserContainer: React.FC<UpdateUserContainerProps> = ({ match }) => {
 							email: user.email,
 							firstName: user.firstName,
 							lastName: user.lastName,
-							roles: user.roles
+							isAdmin: user.isAdmin
 						}}
 						onFinish={handleFormSubmit}
 						loading={usersStatus.updateUser === LOADING}

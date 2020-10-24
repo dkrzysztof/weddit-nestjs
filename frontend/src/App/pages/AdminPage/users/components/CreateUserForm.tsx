@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Select, Button } from 'antd';
+import { Form, Input, Select, Button, Checkbox } from 'antd';
 import FormItem from 'antd/lib/form/FormItem';
 import { createUserFormRules } from '../utils/usersFormRules';
 import { CreateUserRequest } from 'App/api/admin/requests';
@@ -21,6 +21,10 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({ initialValues, loading,
 				<Input type='password' />
 			</FormItem>
 
+			<FormItem label='Powtórz hasło' name='confirmPassword' rules={createUserFormRules.confirmPassword}>
+				<Input type='password' />
+			</FormItem>
+
 			<FormItem label='Imię' name='firstName' rules={createUserFormRules.firstName}>
 				<Input />
 			</FormItem>
@@ -29,16 +33,9 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({ initialValues, loading,
 				<Input />
 			</FormItem>
 
-			<FormItem name='roles' label='Rola' rules={createUserFormRules.roleName}>
-				<Select mode='multiple' placeholder='Wybierz rolę użytkownika'>
-					<Select.Option value='Student'>Student</Select.Option>
-					<Select.Option value='Administrator'>Administrator</Select.Option>
-				</Select>
+			<FormItem label='Uprawnienia administratora' name='isAdmin' rules={createUserFormRules.isAdmin}>
+				<Checkbox />
 			</FormItem>
-
-			<Form.Item name="language" noStyle>
-				<Input type="hidden" />
-			</Form.Item>
 
 			<FormItem>
 				<Button block loading={loading} type='primary' htmlType='submit'>

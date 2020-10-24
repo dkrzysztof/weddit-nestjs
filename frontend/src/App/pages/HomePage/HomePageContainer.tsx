@@ -1,8 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Button } from 'antd';
+import { Button, Col, Row } from 'antd';
 import { RootState } from 'App/state/root.reducer';
+
+import home_screen_wedding from './utils/home_screen_wedding.svg';
 
 const HomePageContainer: React.FC<{}> = () => {
 	type MouseClickEvent = (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
@@ -19,9 +21,19 @@ const HomePageContainer: React.FC<{}> = () => {
 
 	return (
 		<div>
-			<h1>Strona główna</h1>
-			<Button onClick={logState}>Log Redux State</Button>
-			<Button onClick={getAllCokies}>Log Document Cookies</Button>
+			<Row justify='center' align='middle'>
+				<Col span={10}>
+					<img style={{ width: '100%' }} src={home_screen_wedding} />
+				</Col>
+				<Col
+					span={24}
+					style={{
+						textAlign: 'center'
+					}}
+				>
+					<h1 style={{ fontSize: '3rem' }}>Witaj na weddit!</h1>
+				</Col>
+			</Row>
 		</div>
 	);
 };
