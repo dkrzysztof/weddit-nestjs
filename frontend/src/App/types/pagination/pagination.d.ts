@@ -1,8 +1,8 @@
 export interface IPageQueryParams {
 	pageNumber: number;
 	pageSize: number;
-	query: string | null;
-	orderBy: string | null;
+	// query: string | null;
+	// orderBy: string | null;
 	totalNumberOfItems?: number;
 }
 

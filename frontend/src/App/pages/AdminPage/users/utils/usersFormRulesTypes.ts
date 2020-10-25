@@ -4,6 +4,7 @@ export interface UpdateUserFormRules {
 	firstName: Rule[];
 	lastName: Rule[];
 	isAdmin: Rule[];
+	email: Rule[];
 }
 
 export interface CreateUserFormRules {

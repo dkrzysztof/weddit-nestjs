@@ -23,13 +23,14 @@ const { LOADING, SUCCESS } = StatusType;
 
 const UpdateUserContainer: React.FC<UpdateUserContainerProps> = ({ match }) => {
 	const userId = Number.parseInt(match.params.userId);
+
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const user = useSelector((state: RootState) => state.admin.users.selectedUser);
-
 	const usersStatus = useSelector((state: RootState) => state.admin.users.status);
+
 	useEffect(() => {
-		if (!user) {
+		if (!user || (user && user.idUser !== userId)) {
 			dispatch(getUser(userId));
 		}
 	}, [dispatch, user, userId]);

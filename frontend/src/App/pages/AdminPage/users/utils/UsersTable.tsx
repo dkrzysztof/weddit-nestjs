@@ -17,14 +17,14 @@ export const renderTableColumns = (users: UserForGetUsersResponse[], dispatch: D
 	{
 		title: 'Imię',
 		dataIndex: 'firstName',
-		render: (firstName, record) => <Link to={`/admin/users/${record.id}`}>{firstName}</Link>
+		render: (firstName, record) => <Link to={`/admin/users/${record.idUser}`}>{firstName}</Link>
 	},
 	{ title: 'Nazwisko', dataIndex: 'lastName' },
 	{ title: 'Email', dataIndex: 'email' },
 	{
 		title: 'Administrator',
 		dataIndex: 'isAdmin',
-		render: (isAdmin: string[]) => (
+		render: (isAdmin: boolean) => (
 			<>
 				{isAdmin ? (
 					<CheckSquareOutlined style={{ color: '#52c41a', ...squareOutlineStyle }} />

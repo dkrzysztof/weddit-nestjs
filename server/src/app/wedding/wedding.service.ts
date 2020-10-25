@@ -75,7 +75,6 @@ export class WeddingService {
 		});
 
 		const user = await weddingPermissions.find((value, index) => {
-			// console.log(index, value);
 			return value.users.idUser === userPayload.idUser;
 		});
 

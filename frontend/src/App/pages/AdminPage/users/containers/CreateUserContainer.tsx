@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, Row, Col, notification } from 'antd';
-import { ArrowLeftOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, UserAddOutlined } from '@ant-design/icons';
 
 import CreateUserForm from '../components/CreateUserForm';
 import { CreateUserRequest } from 'App/api/admin/requests';
@@ -12,6 +12,8 @@ import { RootState } from 'App/state/root.reducer';
 import { StatusType } from 'App/types/requestStatus';
 import Role from 'App/types/role';
 import i18next from 'i18next';
+import PageTitle from 'App/common/components/PageTitle';
+import GoToPreviousPageButton from 'App/common/components/handleGoBack';
 
 const { LOADING } = StatusType;
 
@@ -34,10 +36,11 @@ export const CreateUserContainer = () => {
 	return (
 		<React.Fragment>
 			<Row className='mb-5'>
-				<Col>
-					<Button block onClick={() => history.push('/admin/users')} icon={<ArrowLeftOutlined />}>
-						Powrót
-					</Button>
+				<Col span={24} style={{ marginLeft: '2em' }}>
+					<GoToPreviousPageButton history={history} />
+				</Col>
+				<Col span={22}>
+					<PageTitle title='Stwórz nowego użytkownika' icon={<UserAddOutlined />} />
 				</Col>
 			</Row>
 			<Row justify='center'>

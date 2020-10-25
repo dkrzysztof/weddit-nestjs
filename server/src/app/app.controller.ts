@@ -19,13 +19,8 @@ import JwtRefreshGuard from './auth/guards/refresh-auth.guard';
 import { HttpCode } from '@nestjs/common/decorators/http/http-code.decorator';
 
 @Controller()
-@UseInterceptors(ClassSerializerInterceptor)
 export class AppController {
-	constructor(
-		private readonly appService: AppService,
-		private readonly authService: AuthService,
-		private userService: UserService,
-	) {}
+	constructor(private readonly authService: AuthService, private userService: UserService) {}
 
 	@UseGuards(LocalAuthGuard)
 	@Post('/auth/login')

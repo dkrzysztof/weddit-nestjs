@@ -8,7 +8,6 @@ export class AdminGuard implements CanActivate {
 	constructor(@Inject('AppService') private readonly appService: AppService) {}
 	canActivate(context: ExecutionContext): boolean | Promise<boolean> {
 		const request = context.switchToHttp().getRequest();
-		console.log(request.user);
 		return this.appService.isUserAdmin(Number.parseInt(request.user.idUser));
 	}
 }

@@ -3,6 +3,7 @@ import { UserForGetUsersResponse } from 'App/api/admin/responses/getUsersRespons
 import defaultPageQueryParams from 'App/common/utils/defaultPageQueryParams';
 import { GetUsersRequest } from 'App/api/admin/requests';
 import { StatusType } from 'App/types/requestStatus';
+import { IPageQueryParams } from 'App/types/pagination/pagination';
 
 const { INITIAL } = StatusType;
 
@@ -16,7 +17,7 @@ export interface AdminUsersState {
 	};
 	error: string[];
 	users: UserForGetUsersResponse[];
-	getUsersParams: GetUsersRequest;
+	getUsersParams: IPageQueryParams;
 	getUsersTotalPages: number;
 	selectedUser: GetUserResponse | null;
 }

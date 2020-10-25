@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, UseGuards, Query } from '@nestjs/common';
 import { GetUserDto } from 'src/app/users/dto/get-user.dto';
 import { UserService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -7,6 +7,8 @@ import { DeleteResult } from 'typeorm';
 import { GetUsersDto } from './dto/get-users.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { AdminGuard } from '../auth/guards/admin.guard';
+import { IPageQueryParams } from 'src/types/PageQueryParams';
+import { ICollectionResponse } from 'src/types/CollectionResponse';
 
 @Controller('admin/users')
 export class UsersController {
@@ -14,8 +16,8 @@ export class UsersController {
 
 	@UseGuards(JwtAuthGuard, AdminGuard)
 	@Get()
-	async getAllUsers(): Promise<GetUsersDto[]> {
-		return await this.userService.getAllUsers();
+	async getAllUsers(@Query() query: IPageQueryParams): Promise<ICollectionResponse<GetUsersDto>> {
+		return await this.userService.getAllUsers(query);
 	}
 
 	@UseGuards(JwtAuthGuard, AdminGuard)

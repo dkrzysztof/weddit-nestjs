@@ -3,6 +3,7 @@ import { UpdateUserFormRules, CreateUserFormRules } from './usersFormRulesTypes'
 export const updateUserFormRules: UpdateUserFormRules = {
 	firstName: [{ required: true, max: 255 }],
 	lastName: [{ required: true, max: 255 }],
+	email: [{ required: true, type: 'email' }],
 	isAdmin: [{ type: 'boolean' }]
 };
 
@@ -24,7 +25,7 @@ export const createUserFormRules: CreateUserFormRules = {
 	password: [
 		{
 			required: true,
-			pattern: RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\W]).{6,}$'),
+			min: 6,
 			max: 100
 		}
 	],

@@ -11,6 +11,8 @@ import { getUsers } from 'App/state/admin/users/users.thunk';
 import { RootState } from 'App/state/root.reducer';
 import { StatusType } from 'App/types/requestStatus';
 import PageTitle from 'App/common/components/PageTitle';
+import { IPageQueryParams } from 'App/types/pagination/pagination';
+import { PaginationConfig } from 'antd/lib/pagination/Pagination';
 
 const { LOADING } = StatusType;
 
@@ -20,36 +22,43 @@ const GetUsersContainer = () => {
 	const users = useSelector((state: RootState) => state.admin.users.users);
 	const usersStatus = useSelector((state: RootState) => state.admin.users.status);
 
-	// const { pageNumber, pageSize, totalNumberOfItems } = useSelector(
-	// 	(state: RootState) => state.admin.users.getUsersParams
-	// );
+	const { pageNumber, pageSize, totalNumberOfItems } = useSelector(
+		(state: RootState) => state.admin.users.getUsersParams
+	);
+
+	const paginationConfig = {
+		pageSize,
+		current: pageNumber,
+		total: totalNumberOfItems,
+		showSizeChanger: true
+	};
 
 	useEffect(() => {
-		dispatch(getUsers(defaultPageQueryParams));
-	}, [dispatch]);
-
-	const handleTableChange = (pagination: any): any => {
 		dispatch(
 			getUsers({
-				pageNumber: pagination.current || 1,
-				pageSize: pagination.pageSize || 10,
-				query: '',
-				...defaultPageQueryParams
+				pageNumber: pageNumber || defaultPageQueryParams.pageNumber,
+				pageSize: pageSize || defaultPageQueryParams.pageSize
+			})
+		);
+	}, [dispatch]);
+
+	const handleTableChange = (pagination: PaginationConfig): any => {
+		const { pageNumber: defaultPageNumber, pageSize: defaultPageSize, ...others } = defaultPageQueryParams;
+		const pageNumber = pagination.current || defaultPageNumber;
+		const pageSize = pagination.pageSize || defaultPageSize;
+		dispatch(
+			getUsers({
+				pageNumber,
+				pageSize,
+				...others
 			})
 		);
 	};
 
-	// const paginationConfig = {
-	// 	pageSize,
-	// 	current: pageNumber,
-	// 	total: totalNumberOfItems,
-	// 	showSizeChanger: true
-	// };
-
 	return (
 		<>
 			<PageTitle title='Lista użytkowników' />
-			<Row justify='end' style={{ marginBottom: '1em' }}>
+			<Row justify='space-around' style={{ marginBottom: '1em' }}>
 				<Col span={6}>
 					<Link to='/admin/users/create'>
 						<Button style={{ width: '100%' }} icon={<PlusOutlined />}>
@@ -61,24 +70,13 @@ const GetUsersContainer = () => {
 			</Row>
 			<Row className='overflow-hidden'>
 				<Col span={24}>
-					<Input
-						allowClear
-						onChange={(val) =>
-							dispatch(
-								getUsers({
-									...defaultPageQueryParams,
-									query: val.currentTarget.value
-								})
-							)
-						}
-					/>
 					<Table
-						// pagination={paginationConfig}
+						pagination={paginationConfig}
 						onChange={handleTableChange}
 						loading={usersStatus.getUsers === LOADING}
 						columns={renderTableColumns(users, dispatch)}
 						dataSource={users}
-						rowKey='id'
+						rowKey='idUser'
 					/>
 				</Col>
 			</Row>

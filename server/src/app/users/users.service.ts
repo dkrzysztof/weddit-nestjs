@@ -8,18 +8,25 @@ import { EditUserDto } from './dto/edit-user.dto';
 import { GetUsersDto } from './dto/get-users.dto';
 import * as bcrypt from 'bcrypt';
 import { CheckEmailAvailabilityDto } from './dto/check-email-availability.dto';
+import { IPageQueryParams } from 'src/types/PageQueryParams';
+import { ICollectionResponse } from 'src/types/CollectionResponse';
+import { getCollection } from 'src/utilities/get-collection.utility';
 
 @Injectable()
 export class UserService {
 	constructor(@InjectRepository(User) private userRepository: Repository<User>) {}
 
-	async getAllUsers(): Promise<GetUsersDto[]> {
-		return this.userRepository.find();
+	async getAllUsers(query: IPageQueryParams): Promise<ICollectionResponse<GetUsersDto>> {
+		return await getCollection(
+			query,
+			async (skip, take) => await this.userRepository.find({ skip, take }),
+			async () => await this.userRepository.count(),
+		);
 	}
 
 	async getUserDetails(id: number): Promise<GetUserDto> {
 		return this.userRepository.findOne(id);
-	}  
+	}
 
 	async createUser(user: CreateUserDto): Promise<GetUserDto> {
 		const { password, ...userData } = user;

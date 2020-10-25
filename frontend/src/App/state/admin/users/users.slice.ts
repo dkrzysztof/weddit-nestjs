@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { adminUsersInitialState, AdminUsersState } from './users.state';
 import { GetUsersResponse, GetUserResponse, UpdateUserResponse } from 'App/api/admin/responses';
 import { StatusType } from 'App/types/requestStatus';
+import { ICollectionResponse } from 'App/types/pagination/pagination';
 
 const { FAILED, LOADING, SUCCESS } = StatusType;
 
@@ -17,8 +18,10 @@ export const adminUsersSlice = createSlice({
 		},
 		getUsersSuccess(state: AdminUsersState, action: PayloadAction<GetUsersResponse>) {
 			state.status.getUsers = SUCCESS;
-			state.users = action.payload;
-			state.getUsersParams = action.payload;
+			const { data, ...params } = action.payload;
+			state.users = data;
+			state.getUsersParams = params;
+			state.getUsersTotalPages = params.totalNumberOfItems;
 		},
 		getUsersFailure(state: AdminUsersState, action: PayloadAction<string[]>) {
 			state.status.getUsers = FAILED;

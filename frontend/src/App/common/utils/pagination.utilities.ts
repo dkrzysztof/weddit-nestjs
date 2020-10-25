@@ -1,10 +1,10 @@
 import { IPageQueryParams } from 'App/types/pagination/pagination';
 
 export const defaultPageQueryParams: IPageQueryParams = {
-	orderBy: null,
+	// orderBy: null,
 	pageNumber: 1,
-	pageSize: 10,
-	query: ''
+	pageSize: 10
+	// query: ''
 };
 
 /**
