@@ -34,10 +34,13 @@ export const getUser = (userId: number): AppThunk => async (dispatch) => {
 		.catch((error) => dispatch(getUserFailure(error)));
 };
 
-export const deleteUser = (userId: number): AppThunk => async (dispatch) => {
+export const deleteUser = (userId: number, params: GetUsersRequest): AppThunk => async (dispatch) => {
 	dispatch(deleteUserStart());
 	agent.Admin.deleteUser(userId)
-		.then(() => dispatch(deleteUserSuccess(userId)))
+		.then(() => {
+			dispatch(deleteUserSuccess(userId));
+			dispatch(getUsers(params));
+		})
 		.catch((error) => dispatch(deleteUserFailure(error)));
 };
 

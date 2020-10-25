@@ -6,6 +6,9 @@ import { CheckSquareOutlined, CloseSquareOutlined, ExclamationCircleOutlined, Se
 
 import { UserForGetUsersResponse } from 'App/api/admin/responses/getUsersResponse';
 import { deleteUser } from 'App/state/admin/users/users.thunk';
+import { RootState } from 'App/state/root.reducer';
+import { useSelector } from 'react-redux';
+import store from 'App/state/store';
 
 const squareOutlineStyle = {
 	fontSize: '1.3em',
@@ -74,6 +77,8 @@ const menuForActionDropdown = (
 export function confirmUserDelete(userId: number, users: UserForGetUsersResponse[], dispatch: Dispatch<any>) {
 	const { confirm } = Modal;
 
+	const params = store.getState().admin.users.getUsersParams;
+
 	return () => {
 		const userToDelete = users.find((u) => u.idUser === userId);
 		confirm({
@@ -84,7 +89,7 @@ export function confirmUserDelete(userId: number, users: UserForGetUsersResponse
 			okType: 'primary',
 			cancelText: 'Nie',
 			onOk() {
-				dispatch(deleteUser(userId));
+				dispatch(deleteUser(userId, params));
 			}
 		});
 	};

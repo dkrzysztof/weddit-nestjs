@@ -52,6 +52,7 @@ export const adminUsersSlice = createSlice({
 		deleteUserSuccess: (state: AdminUsersState, action: PayloadAction<number>) => {
 			state.status.deleteUser = SUCCESS;
 			state.users = state.users.filter((u) => u.idUser !== action.payload);
+			state.status.getUsers = null;
 		},
 		deleteUserFailure: (state: AdminUsersState, action: PayloadAction<string[]>) => {
 			state.status.deleteUser = FAILED;
