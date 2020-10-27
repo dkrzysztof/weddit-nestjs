@@ -4,15 +4,16 @@ import { Layout } from 'antd';
 
 import { default as AdminNavbar } from './containers/AdminNavbarContainer';
 import { default as AdminPageUsers } from './users/AdminPageUsersContainer';
+import { RouteComponentProps } from 'react-router';
 
-const AdminPageContainer: React.FC<{}> = () => {
+const AdminPageContainer: React.FC<RouteComponentProps> = (props) => {
 	const [collapsed, setCollapsed] = useState<boolean>(false);
 
 	const handleCollapse = () => setCollapsed(!collapsed);
 
 	const Content = (
 		<>
-			<AdminPageUsers />
+			<AdminPageUsers {...props} />
 		</>
 	);
 	return (

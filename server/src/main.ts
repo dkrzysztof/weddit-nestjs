@@ -7,8 +7,8 @@ async function bootstrap() {
 	const app = await NestFactory.create(AppModule, { logger: console });
 	app.use(cookieParser());
 	app.enableCors({
-		origin: '*',
-		methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+		origin: 'http://localhost:3000',
+		methods: '*',
 	});
 	app.useGlobalPipes(new ValidationPipe());
 	app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));

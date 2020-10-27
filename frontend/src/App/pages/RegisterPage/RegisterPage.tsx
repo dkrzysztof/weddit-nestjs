@@ -23,7 +23,7 @@ const RegisterPage: React.FC<RegisterPageProps> = () => {
 	};
 
 	return (
-		<Center>
+		<Center size='small'>
 			<PageHeader title={'Zarejestruj się!'} />
 			{register.status.registerUser === StatusType.LOADING && <LoadingScreen container='screen' />}
 			<RegisterForm onFinish={handleRegisterFormSubmit} />

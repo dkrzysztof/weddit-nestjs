@@ -8,7 +8,7 @@ import { Layout } from 'antd';
 // local direct
 import Routes from './routes';
 import './common/styles/bootstrap-utilities.less';
-import NavbarContainer from './common/containers/NavbarContainer';
+import NavbarContainer from './common/containers/Navbar/NavbarContainer';
 
 // styles
 import './App.less';

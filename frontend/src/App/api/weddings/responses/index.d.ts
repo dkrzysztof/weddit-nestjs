@@ -1,0 +1,1 @@
+export { GetWeddingDetailsResponse } from './getWeddingDetailsResponse';

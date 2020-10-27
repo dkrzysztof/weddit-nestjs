@@ -54,7 +54,7 @@ const UpdateUserForm: React.FC<UpdateUserFormProps> = ({ initialValues, loading,
 				valuePropName='isAdmin'
 				rules={updateUserFormRules.isAdmin}
 			>
-				<Checkbox value={isAdmin} onChange={handleCheckboxChange} />
+				<Checkbox checked={isAdmin} onChange={handleCheckboxChange} />
 			</Form.Item>
 			<FormItem>
 				<Button block loading={loading} type='primary' htmlType='submit'>

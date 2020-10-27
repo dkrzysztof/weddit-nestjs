@@ -1,5 +1,8 @@
 import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ICollectionResponse } from 'src/types/CollectionResponse';
+import { IPageQueryParams } from 'src/types/PageQueryParams';
+import { getCollection } from 'src/utilities/get-collection.utility';
 import { getConnection, Repository } from 'typeorm';
 import { User } from '../../models/user.entity';
 import { UserWedding } from '../../models/userWedding.entity';
@@ -9,6 +12,7 @@ import { transactionWrapper } from '../../utilities/transaction-wrapper.utility'
 import { updateAllObjectKeyValues } from '../../utilities/update-all-keys.utilities';
 import { JwtPayload } from '../interfaces/jwt-payload.interface';
 import { CreateWeddingPlanDto } from './dto/create-wedding-plan.dto';
+import { GetUserWeddingsDto } from './dto/get-user-weddings.dto';
 import { GetWeddingDto } from './dto/get-wedding.dto';
 import { UpdateWeddingDto } from './dto/update-wedding.dto';
 
@@ -106,4 +110,40 @@ export class WeddingService {
 	}
 
 	async updateUserPermission(userPayload: JwtPayload, idWedding: number): Promise<any> {}
+
+	async getUserWeddings(query: IPageQueryParams, user: JwtPayload): Promise<ICollectionResponse<GetUserWeddingsDto>> {
+		return await getCollection(
+			query,
+			(skip, take) => {
+				return this.userWeddingRepository
+					.createQueryBuilder('T')
+					.leftJoinAndSelect('T.wedding', 'W')
+					.leftJoinAndSelect('T.users', 'U')
+					.select([
+						'W.idWedding as "idWedding"',
+						'W.name AS "name"',
+						'W.dateOfWedding as "dateOfWedding"',
+						'W.address AS "address"',
+					])
+					.where('U.idUser = :idUser', { idUser: user.idUser })
+					.skip(skip)
+					.take(take)
+					.getRawMany() as Promise<GetUserWeddingsDto[]>;
+			},
+			() => {
+				return this.userWeddingRepository
+					.createQueryBuilder('T')
+					.leftJoinAndSelect('T.wedding', 'W')
+					.leftJoinAndSelect('T.users', 'U')
+					.select([
+						'W.idWedding AS "idWedding',
+						'W.name AS "name"',
+						'W.dateOfWedding AS "dateOfWedding"',
+						'W.address AS "address"',
+					])
+					.where('U.idUser = :idUser', { idUser: user.idUser })
+					.getCount();
+			},
+		);
+	}
 }

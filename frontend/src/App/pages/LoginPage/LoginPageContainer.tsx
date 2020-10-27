@@ -26,8 +26,8 @@ const LoginPageContainer: React.FC<LoginPageContainerProps> = ({ history }: Logi
 	const status = useSelector((state: RootState) => state.session.status.authentication);
 
 	const formInitialValues = {
-		email: 'admin@admin.com',
-		password: 'password'
+		email: 'user@user.com',
+		password: 'Admin123!'
 	};
 
 	const signInHandler: FinishFormType = (values: LoginRequest) => {
@@ -58,28 +58,28 @@ const LoginPageContainer: React.FC<LoginPageContainerProps> = ({ history }: Logi
 			{status === StatusType.LOADING ? (
 				<LoadingScreen container='screen' />
 			) : (
-				<Center>
-						<br />
-						{loginError && (
-							<Alert
-								message='Error'
-								type='error'
-								showIcon
-								closable
-								description={loginError}
-								className='w-100'
-							/>
-						)}
-						<PageHeader title={'Zaloguj się'} />
-						<LoginForm
-							className='login-form'
-							name='loginForm'
-							size='large'
-							onFinish={signInHandler}
-							initialValues={formInitialValues}
-							autoComplete='off'
+				<Center size='small'>
+					<br />
+					{loginError && (
+						<Alert
+							message='Error'
+							type='error'
+							showIcon
+							closable
+							description={loginError}
+							className='w-100'
 						/>
-					</Center>
+					)}
+					<PageHeader title={'Zaloguj się'} />
+					<LoginForm
+						className='login-form'
+						name='loginForm'
+						size='large'
+						onFinish={signInHandler}
+						initialValues={formInitialValues}
+						autoComplete='off'
+					/>
+				</Center>
 			)}
 		</div>
 	);

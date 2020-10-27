@@ -6,6 +6,7 @@ import { LogsApi } from './logs/logsApi';
 import { notification } from 'antd';
 import { AuthApi } from './auth/authApi';
 import store from 'App/state/store';
+import { WeddingsApi } from './weddings/weddingsApi';
 
 const baseURL = `http://localhost:5000/`;
 
@@ -147,6 +148,10 @@ const responseBodyFetch = async (response: Response) => {
 		);
 };
 
+const catchFetchError = async (eee) => {
+	console.log(eee);
+};
+
 export const requests = {
 	get: (url: string, params?: {}) =>
 		axios
@@ -160,7 +165,9 @@ export const requests = {
 		axios.put(url, body, config).then(responseBodyAxios),
 	delete: (url: string) => axios.delete(url).then(responseBodyAxios),
 	fetch: (url: string, body: BodyInit | null, config?: RequestInit | undefined) =>
-		fetch(`${baseURL}${url}`, { ...config, body, method: 'post' }).then(responseBodyFetch),
+		fetch(`${baseURL}${url}`, { ...config, body, method: config.method })
+			.then(responseBodyFetch)
+			.catch(catchFetchError),
 	download: (url: string, fileName: string) =>
 		axios({
 			url: url,
@@ -181,5 +188,6 @@ export default {
 	Account: AccountApi,
 	Auth: AuthApi,
 	Logs: LogsApi,
-	Admin: AdminApi
+	Admin: AdminApi,
+	Weddings: WeddingsApi
 };

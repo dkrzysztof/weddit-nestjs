@@ -47,7 +47,7 @@ const GetUserContainer: React.FC<GetUserContainerProps> = ({ match, history }: G
 		<>
 			<Row justify='center'>
 				<Col span={24} style={{ marginLeft: '2em' }}>
-					<GoToPreviousPageButton history={history} />
+					<GoToPreviousPageButton />
 				</Col>
 				<Col span={22}>
 					<Divider dashed>

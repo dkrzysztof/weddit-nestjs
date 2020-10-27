@@ -2,12 +2,11 @@ import { Button } from 'antd';
 import React from 'react';
 import { History } from 'history';
 import { ArrowLeftOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router';
 
-interface GoToPreviousPageButtonProps {
-	history: History;
-}
+const GoToPreviousPageButton: React.FC<{}> = () => {
+	const history = useHistory();
 
-const GoToPreviousPageButton: React.FC<GoToPreviousPageButtonProps> = ({ history }) => {
 	return (
 		<Button onClick={() => history.goBack()} icon={<ArrowLeftOutlined />}>
 			Powrót

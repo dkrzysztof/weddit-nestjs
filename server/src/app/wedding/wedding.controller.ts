@@ -1,9 +1,12 @@
 import { Body, Controller, Get, Post, Put, Req, UseGuards } from '@nestjs/common';
-import { Param } from '@nestjs/common/decorators/http/route-params.decorator';
+import { Param, Query } from '@nestjs/common/decorators/http/route-params.decorator';
+import { ICollectionResponse } from 'src/types/CollectionResponse';
+import { IPageQueryParams } from 'src/types/PageQueryParams';
 import { Wedding } from '../../models/wedding.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { GetUserDto } from '../users/dto/get-user.dto';
 import { CreateWeddingPlanDto } from './dto/create-wedding-plan.dto';
+import { GetUserWeddingsDto } from './dto/get-user-weddings.dto';
 import { GetWeddingDto } from './dto/get-wedding.dto';
 import { UpdateWeddingDto } from './dto/update-wedding.dto';
 import { WeddingService } from './wedding.service';
@@ -32,5 +35,14 @@ export class WeddingController {
 	@Get(':id')
 	async getWedding(@Req() request, @Param('id') idWedding): Promise<GetWeddingDto> {
 		return await this.weddingService.getWeddingDetails(request.user, idWedding);
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Get('/')
+	async getUserWeddings(
+		@Query() query: IPageQueryParams,
+		@Req() { user },
+	): Promise<ICollectionResponse<GetUserWeddingsDto>> {
+		return await this.weddingService.getUserWeddings(query, user);
 	}
 }

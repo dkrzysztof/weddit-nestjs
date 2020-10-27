@@ -10,6 +10,8 @@ import { default as AdminPage } from './pages/AdminPage/AdminPageContainer';
 import { default as ResetPasswordPage } from './pages/ResetPasswordPage/ResetPasswordPageContainer';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import ForbiddenPage from './pages/ForbiddenPage/ForbiddenPage';
+import WeddingPageContainer from './pages/WeddingPage/WeddingPageContainer';
+import CreateWeddingContainer from './pages/WeddingPage/containers/CreateWeddingContainer';
 
 const Routes: React.FC = () => {
 	return (
@@ -18,18 +20,10 @@ const Routes: React.FC = () => {
 			<Route exact path='/signin' component={LoginPage} />
 			<Route exact path='/register' component={RegisterPage} />
 			<Route exact path='/reset-password' component={ResetPasswordPage} />
-			<ProtectedRoute
-				path='/auth'
-				exact
-				component={AuthPage}
-				adminRestriced
-				others={{ text: 'This is visible only for admins' }}
-			/>
-			<ProtectedRoute
-				path='/user'
-				component={AuthPage}
-				others={{ text: 'This is visible for all logged in users' }}
-			/>
+			<ProtectedRoute path='/auth' exact component={AuthPage} adminRestriced />
+			<ProtectedRoute exact path='/user' component={AuthPage} />
+			<ProtectedRoute path='/user/weddings' component={WeddingPageContainer} />
+			<ProtectedRoute path='/user/weddings/create' component={CreateWeddingContainer} />
 			<ProtectedRoute adminRestriced path='/admin' component={AdminPage} />
 			<Route path='/404' component={NotFoundPage} />
 			<Route path='/403' component={ForbiddenPage} />

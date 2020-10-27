@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { Row, Col, Button, Table, Input } from 'antd';
+import { Row, Col, Button, Table } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { renderTableColumns } from '../utils/UsersTable';
@@ -11,8 +11,7 @@ import { getUsers } from 'App/state/admin/users/users.thunk';
 import { RootState } from 'App/state/root.reducer';
 import { StatusType } from 'App/types/requestStatus';
 import PageTitle from 'App/common/components/PageTitle';
-import { IPageQueryParams } from 'App/types/pagination/pagination';
-import { PaginationConfig } from 'antd/lib/pagination/Pagination';
+import { PaginationConfig } from 'antd/lib/pagination';
 
 const { LOADING } = StatusType;
 

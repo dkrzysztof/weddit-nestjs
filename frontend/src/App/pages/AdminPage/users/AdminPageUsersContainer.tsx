@@ -6,7 +6,7 @@ import GetUsersContainer from './containers/GetUsersContainer';
 import UpdateUserContainer from './containers/UpdateUserContainer';
 import CreateUserContainer from './containers/CreateUserContainer';
 import GetUserContainer from './containers/GetUserContainer';
-import { Switch } from 'react-router';
+import { RouteComponentProps, Switch } from 'react-router';
 import Role from 'App/types/role';
 
 const AdminPageUsersContainer: React.FC<{}> = () => {

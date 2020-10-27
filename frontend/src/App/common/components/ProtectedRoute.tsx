@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import { Route, Redirect, RouteChildrenProps } from 'react-router-dom';
+import { Route, Redirect, RouteChildrenProps, RouteComponentProps } from 'react-router-dom';
 
 import LoadingScreen from './LoadingScreen';
 import agent from 'App/api/agent';
@@ -9,6 +9,7 @@ import { mapStateToProps } from 'App/state/utils/connect';
 
 interface ProtectedRouteState {
 	isLoading: boolean;
+	redirectToSignInPage: boolean;
 }
 
 interface OwnProps {
@@ -28,19 +29,21 @@ class ProtectedRoute extends React.Component<ProtectedRouteProps, ProtectedRoute
 		let isUserAuthenticated = this.checkIfUserIsAuthenticated();
 
 		this.state = {
-			isLoading: !isUserAuthenticated
+			isLoading: !isUserAuthenticated,
+			redirectToSignInPage: false
 		};
 	}
 
 	componentDidMount() {
 		if (!this.checkIfUserIsAuthenticated()) {
-			agent.Auth.refreshToken()
-				.then((result) => {
-					console.log(result);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+			this.setState({ redirectToSignInPage: true });
+			// agent.Auth.refreshToken()
+			// 	.then((result) => {
+			// 		console.log(result);
+			// 	})
+			// 	.catch((err) => {
+			// 		console.log(err);
+			// 	});
 		}
 	}
 
@@ -61,6 +64,16 @@ class ProtectedRoute extends React.Component<ProtectedRouteProps, ProtectedRoute
 			<Route
 				{...rest}
 				render={(props: RouteChildrenProps) => {
+					if (this.state.redirectToSignInPage) {
+						return (
+							<Redirect
+								to={{
+									pathname: '/signIn',
+									state: props.location
+								}}
+							/>
+						);
+					}
 					if (this.state.isLoading) {
 						return <LoadingScreen container='screen' />;
 					} else if (this.checkIfUserIsAuthorized() && this.checkIfUserIsAuthenticated()) {

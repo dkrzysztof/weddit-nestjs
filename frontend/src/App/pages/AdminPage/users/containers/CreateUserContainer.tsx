@@ -37,7 +37,7 @@ export const CreateUserContainer = () => {
 		<React.Fragment>
 			<Row className='mb-5'>
 				<Col span={24} style={{ marginLeft: '2em' }}>
-					<GoToPreviousPageButton history={history} />
+					<GoToPreviousPageButton />
 				</Col>
 				<Col span={22}>
 					<PageTitle title='Stwórz nowego użytkownika' icon={<UserAddOutlined />} />
