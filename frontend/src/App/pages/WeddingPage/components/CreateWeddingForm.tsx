@@ -13,10 +13,10 @@ interface CreateWeddingFormProps {
 const CreateWeddingForm: React.FC<CreateWeddingFormProps> = ({ onFinish, loading }) => {
 	return (
 		<Form labelCol={{ span: 7 }} wrapperCol={{ span: 14 }} onFinish={onFinish}>
-			<Form.Item label='Nazwa własna' name='name'>
-				<Input></Input>
+			<Form.Item label='Nazwa własna' rules={[{ required: true, type: 'string' }]} name='name'>
+				<Input />
 			</Form.Item>
-			<Form.Item label='Data wesela' name='dateOfWedding'>
+			<Form.Item label='Data wesela' rules={[{ required: true }]} name='dateOfWedding'>
 				<DatePicker />
 			</Form.Item>
 			<Form.Item label='Godzina wesela' name='hourOfWedding'>

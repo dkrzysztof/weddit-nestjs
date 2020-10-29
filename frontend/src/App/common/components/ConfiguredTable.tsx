@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { CSSProperties, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Table } from 'antd';
@@ -20,6 +20,7 @@ interface ConfiguredTableProps {
 	selectCollectionGetQueryParams: (state: RootState) => IPageQueryParams;
 	rowKey: string;
 	columnsRenderMethod: (collection: any[], dispatch: Dispatch) => ColumnsType;
+	style?: CSSProperties;
 }
 
 const ConfiguredTable: React.FC<ConfiguredTableProps> = ({
@@ -29,7 +30,7 @@ const ConfiguredTable: React.FC<ConfiguredTableProps> = ({
 	selectCollectionGetStatus,
 	rowKey,
 	columnsRenderMethod,
-
+	style,
 	...props
 }) => {
 	const dispatch = useDispatch();
@@ -75,6 +76,7 @@ const ConfiguredTable: React.FC<ConfiguredTableProps> = ({
 			columns={columnsRenderMethod(collection, dispatch)}
 			dataSource={collection}
 			rowKey={rowKey}
+			style={style}
 			{...props}
 		/>
 	);

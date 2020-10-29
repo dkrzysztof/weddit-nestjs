@@ -1,18 +1,26 @@
-import { Descriptions, Result } from 'antd';
+import { Card, Col, Descriptions, Divider, Result, Row } from 'antd';
 import Center from 'App/common/components/Center';
+import ConfiguredCard from 'App/common/components/ConfiguredCard';
 import GoToPreviousPageButton from 'App/common/components/handleGoBack';
 import LoadingScreen from 'App/common/components/LoadingScreen';
 import PageTitle from 'App/common/components/PageTitle';
 import { RootState } from 'App/state/root.reducer';
 import { getWeddingDetails } from 'App/state/weddings/weddings.thunk';
+import { ObjectOfStyles } from 'App/types/ObjectOfStyles.type';
 import StatusType from 'App/types/requestStatus';
-import React, { useEffect } from 'react';
+import React, { CSSProperties, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 
 interface ViewWeddingRouteParams {
 	idWedding: string;
 }
+
+const styles: ObjectOfStyles = {
+	description: {
+		marginBottom: '1em'
+	}
+};
 
 const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>> = ({ match }) => {
 	const idWedding = Number.parseInt(match.params.idWedding);
@@ -33,35 +41,70 @@ const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>
 
 	if (getWeddingDetailsStatus === StatusType.SUCCESS) {
 		return (
-			<Center size='medium'>
+			<>
 				<GoToPreviousPageButton />
 				<PageTitle title={`Dane szczegółowe wesela ${wedding.name}`} />
-				<Descriptions bordered>
-					<Descriptions.Item label='name'>{wedding.name || <em>brak</em>}</Descriptions.Item>
-					<Descriptions.Item label='dateOfWedding'>
-						{wedding.dateOfWedding || <em>brak</em>}
-					</Descriptions.Item>
-					<Descriptions.Item label='hourOfWedding'>
-						{wedding.hourOfWedding || <em>brak</em>}
-					</Descriptions.Item>
-					<Descriptions.Item label='hourOfChurchService'>
-						{wedding.hourOfChurchService || <em>brak</em>}
-					</Descriptions.Item>
-					<Descriptions.Item label='hasAfters'>{wedding.hasAfters || <em>brak</em>}</Descriptions.Item>
-					<Descriptions.Item label='address'>{wedding.address || <em>brak</em>}</Descriptions.Item>
-					<Descriptions.Item label='tablesTotalCount'>
-						{wedding.tablesTotalCount || <em>brak</em>}
-					</Descriptions.Item>
-					<Descriptions.Item label='tableNumberOfMarried'>
-						{wedding.tableNumberOfMarried || <em>brak</em>}
-					</Descriptions.Item>
-					<Descriptions.Item label='sumCostTask'>{wedding.sumCostTask || <em>brak</em>}</Descriptions.Item>
-					<Descriptions.Item label='sumCostDrink'>{wedding.sumCostDrink || <em>brak</em>}</Descriptions.Item>
-					<Descriptions.Item label='sumCost'>{wedding.sumCost || <em>brak</em>}</Descriptions.Item>
-					<Descriptions.Item label='budget'>{wedding.budget || <em>brak</em>}</Descriptions.Item>
-					<Descriptions.Item label='exceedBudget'>{wedding.exceedBudget || <em>brak</em>}</Descriptions.Item>
-				</Descriptions>
-			</Center>
+				<Row justify='center'>
+					<Col xs={22} sm={22} md={20} lg={16}>
+						<Descriptions
+							bordered
+							column={{ xxl: 4, xl: 3, lg: 2, md: 2, sm: 2, xs: 1 }}
+							style={styles.description}
+						>
+							<Descriptions.Item label='Nazwa wesela'>{wedding.name || <em>brak</em>}</Descriptions.Item>
+							<Descriptions.Item label='Data ślubu'>
+								{wedding.dateOfWedding || <em>brak</em>}
+							</Descriptions.Item>
+							<Descriptions.Item label='Godzina rozpoczęcia'>
+								{wedding.hourOfWedding || <em>brak</em>}
+							</Descriptions.Item>
+							<Descriptions.Item label='Godzina mszy świętej'>
+								{wedding.hourOfChurchService || <em>brak</em>}
+							</Descriptions.Item>
+							<Descriptions.Item label='Czy będą poprawiny?'>
+								{wedding.hasAfters || <em>brak</em>}
+							</Descriptions.Item>
+							<Descriptions.Item label='Adres sali weselnej'>
+								{wedding.address || <em>brak</em>}
+							</Descriptions.Item>
+							<Descriptions.Item label='Liczba stolików na sali'>
+								{wedding.tablesTotalCount || <em>brak</em>}
+							</Descriptions.Item>
+							<Descriptions.Item label='Numer Stolika Pary młodej'>
+								{wedding.tableNumberOfMarried || <em>brak</em>}
+							</Descriptions.Item>
+							<Descriptions.Item label='Koszt usług'>
+								{wedding.sumCostTask || <em>brak</em>}
+							</Descriptions.Item>
+							<Descriptions.Item label='Koszt napojów'>
+								{wedding.sumCostDrink || <em>brak</em>}
+							</Descriptions.Item>
+							<Descriptions.Item label='Suma Kosztów'>
+								{wedding.sumCost || <em>brak</em>}
+							</Descriptions.Item>
+							<Descriptions.Item label='Budżet'>{wedding.budget || <em>brak</em>}</Descriptions.Item>
+							<Descriptions.Item label='Przkroczony budżet'>
+								{wedding.exceedBudget || <em>brak</em>}
+							</Descriptions.Item>
+						</Descriptions>
+						<Divider>Akcje</Divider>
+						<Row justify='space-between'>
+							<Col xs={24} sm={24} md={11} lg={5}>
+								<ConfiguredCard>Lista Gości</ConfiguredCard>
+							</Col>
+							<Col xs={24} sm={24} md={11} lg={5}>
+								<ConfiguredCard>Napoje na weselu</ConfiguredCard>
+							</Col>
+							<Col xs={24} sm={24} md={11} lg={5}>
+								<ConfiguredCard>Lista zadań</ConfiguredCard>
+							</Col>
+							<Col xs={24} sm={24} md={11} lg={5}>
+								<ConfiguredCard>Rozstawienie gości</ConfiguredCard>
+							</Col>
+						</Row>
+					</Col>
+				</Row>
+			</>
 		);
 	} else return <Result status='500' title='500' subTitle='Przykro nam, ale serwer napotkał bład...' />;
 };

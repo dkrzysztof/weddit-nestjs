@@ -10,11 +10,12 @@ import { Wedding } from '../../models/wedding.entity';
 import { usersProvider } from '../users/users.providers';
 import { userWeddingProvider } from '../user-wedding/userWedding.provider';
 import { UserWedding } from '../../models/userWedding.entity';
+import { UsersModule } from '../users/users.module';
 
 @Module({
 	providers: [...weddingProvider, ...usersProvider, ...userWeddingProvider, WeddingService],
 	controllers: [WeddingController],
-	imports: [DatabaseModule, ConfigModule, TypeOrmModule.forFeature([Wedding, User, UserWedding])],
+	imports: [DatabaseModule, ConfigModule, TypeOrmModule.forFeature([Wedding, User, UserWedding]), UsersModule],
 	exports: [WeddingService],
 })
 export class WeddingModule {}

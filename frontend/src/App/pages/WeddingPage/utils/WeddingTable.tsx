@@ -1,15 +1,12 @@
 import React, { Dispatch } from 'react';
 
 import { Link } from 'react-router-dom';
-import { Tag, Button, Modal, Dropdown, Menu, Checkbox } from 'antd';
-import { CheckSquareOutlined, CloseSquareOutlined, ExclamationCircleOutlined, SettingFilled } from '@ant-design/icons';
+import { Button, Modal, Dropdown, Menu } from 'antd';
+import { ExclamationCircleOutlined, SettingFilled } from '@ant-design/icons';
 
-import { UserForGetUsersResponse } from 'App/api/admin/responses/getUsersResponse';
-import { deleteUser } from 'App/state/admin/users/users.thunk';
-import { RootState } from 'App/state/root.reducer';
-import { useSelector } from 'react-redux';
 import store from 'App/state/store';
-import { WeddingForGetUserWeddings } from 'App/api/weddings/requests/getUserWeddingsResponse';
+import { WeddingForGetUserWeddings } from 'App/api/weddings/requests/getUserWeddingsRequest';
+import { deleteWedding } from 'App/state/weddings/weddings.thunk';
 
 const squareOutlineStyle = {
 	fontSize: '1.3em',
@@ -52,7 +49,7 @@ const menuForActionDropdown = (
 	<Menu>
 		<Menu.Item>
 			<Button type='link'>
-				<Link to={`/weddings/${record.idWedding}/update`}>Edycja</Link>
+				<Link to={`weddings/${record.idWedding}/update`}>Edycja</Link>
 			</Button>
 		</Menu.Item>
 		<Menu.Item>
@@ -70,7 +67,7 @@ export function confirmWeddingDelete(
 ) {
 	const { confirm } = Modal;
 
-	const params = store.getState().admin.users.getUsersParams;
+	const params = store.getState().weddings.getUserWeddingsQueryParams;
 
 	return () => {
 		const weddingToDelete = weddings.find((u) => u.idWedding === idWedding);
@@ -82,7 +79,7 @@ export function confirmWeddingDelete(
 			okType: 'primary',
 			cancelText: 'Nie',
 			onOk() {
-				// dispatch(deleteUser(userId, params));
+				dispatch(deleteWedding(idWedding, params));
 			}
 		});
 	};

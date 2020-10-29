@@ -37,7 +37,6 @@ interface DetailedError {
 
 axios.interceptors.response.use(undefined, (error: AxiosError) => {
 	const { status, data } = error.response || {};
-	console.log(data);
 
 	if (status === 404) {
 		notification['error']({
@@ -82,50 +81,11 @@ axios.interceptors.response.use(undefined, (error: AxiosError) => {
 	}
 
 	if (status === 400) {
-		// mamy 2 typy 400-tek (teoretycznie)
-
-		// zwykła 400 - zawiera obiekt errors, który zawiera obiekty detailedErrors oraz commonErrors
-
-		// foramularzowa - nie zawiera obiektu errors ani detailedErrors ani commonErrors,
-		// ale zawiera słownik o nazwach kluczy takich, jak pole jest nazwane, czyli np. mając w formularzu
-		// inputy dla pól roles oraz firstName, to dostaniemy słowniki o kluczu roles oraz firstName, a dla nich mamy jako valuesy
-		// już podaną arrayke detailedErrorów
-
-		if (data.errors) {
-			// 400-tka zwykła(nieformularzowa)
-
-			let mainErrorObject = data.errors;
-			if (mainErrorObject.detailedErrors) {
-				let detailedErrors = mainErrorObject.detailedErrors as DetailedError[];
-				detailedErrors.forEach((detailedError) => {
-					notification['error']({
-						message: 'Błąd',
-						description: detailedError.description
-					});
-				});
-			}
-
-			if (mainErrorObject.commonErrors) {
-				console.log(mainErrorObject.commonErrors);
-			}
-		} else if (data && Array.isArray(data)) {
-			// 400-tka formularzowa
-
-			Object.keys(data).forEach((key) => {
-				let detailedErrorsForCurrentKey = data[key] as DetailedError[];
-				detailedErrorsForCurrentKey.forEach((detailedErrorsForCurrentKey) => {
-					notification['error']({
-						message: 'Błąd',
-						description: `${key}: ${detailedErrorsForCurrentKey.description}`
-					});
-				});
-			});
-		} else {
-			notification['error']({
-				message: 'Błąd',
-				description: `Wystąpił błąd`
-			});
-		}
+		let description = data.message.join(' || \n');
+		notification['error']({
+			message: 'Błąd',
+			description
+		});
 	}
 
 	throw error.response;

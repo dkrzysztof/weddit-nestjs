@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Col, Form, Input, PageHeader, Row } from 'antd';
+import { PageHeader } from 'antd';
 
 import Center from 'App/common/components/Center';
 import { RegisterRequest } from 'App/api/auth/requests';

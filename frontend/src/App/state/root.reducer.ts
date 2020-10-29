@@ -1,4 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux';
 
 import adminUsersSlice from './admin/users/users.slice';
 import { registerSlice } from './public/register/register.slice';

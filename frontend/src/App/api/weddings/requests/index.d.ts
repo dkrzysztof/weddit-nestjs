@@ -1,2 +1,4 @@
-export { GetUserWeddingsRequest as GetUserWeddings } from './getUserWeddingsResponse';
+export { GetUserWeddingsRequest as GetUserWeddings } from './getUserWeddingsRequest';
 export { CreateWeddingPlanRequest } from './createWeddingPlanRequest';
+export { UpdateWeddingDetailsRequest } from './updateWeddingDetailsRequest';
+export { UpdateUserAccessToWeddingRequest } from './updateUserAccessToWedding';

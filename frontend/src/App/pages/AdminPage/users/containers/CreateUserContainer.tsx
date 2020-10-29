@@ -1,17 +1,14 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, Row, Col, notification } from 'antd';
-import { ArrowLeftOutlined, UserAddOutlined } from '@ant-design/icons';
+import { Row, Col, notification } from 'antd';
+import { UserAddOutlined } from '@ant-design/icons';
 
 import CreateUserForm from '../components/CreateUserForm';
 import { CreateUserRequest } from 'App/api/admin/requests';
 import { cleanUpUserStatus, createUser } from 'App/state/admin/users/users.thunk';
 import { RootState } from 'App/state/root.reducer';
 import { StatusType } from 'App/types/requestStatus';
-import Role from 'App/types/role';
-import i18next from 'i18next';
 import PageTitle from 'App/common/components/PageTitle';
 import GoToPreviousPageButton from 'App/common/components/handleGoBack';
 
@@ -19,7 +16,6 @@ const { LOADING } = StatusType;
 
 export const CreateUserContainer = () => {
 	const dispatch = useDispatch();
-	const history = useHistory();
 
 	let usersStatus = useSelector((state: RootState) => state.admin.users.status);
 

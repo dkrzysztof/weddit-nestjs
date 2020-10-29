@@ -2,9 +2,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { weddingInitialState, WeddingsState } from './weddings.state';
 import StatusType from 'App/types/requestStatus';
-import { GetUserWeddingsRequest } from 'App/api/weddings/requests/getUserWeddingsResponse';
+import { GetUserWeddingsRequest } from 'App/api/weddings/requests/getUserWeddingsRequest';
 import { notification } from 'antd';
-import { GetWeddingDetailsResponse } from 'App/api/weddings/responses';
+import { GetUsersWithAccessToWeddingResponse, GetWeddingDetailsResponse } from 'App/api/weddings/responses';
 
 const { FAILED, INITIAL, LOADING, SUCCESS } = StatusType;
 
@@ -43,7 +43,7 @@ export const weddingSlice = createSlice({
 			state.status.createWedding = FAILED;
 			notification.error({
 				message: 'Błąd!',
-				description: 'Wystapił błąd przy tworzeniu użytkownika!'
+				description: 'Wystapił błąd przy tworzeniu wesela!'
 			});
 			console.log('ERROR at createWedding', action.payload);
 		},
@@ -61,6 +61,35 @@ export const weddingSlice = createSlice({
 		getWeddingDetailsFailure: (state: WeddingsState, action: PayloadAction<string>) => {
 			state.status.getWeddingDetails = FAILED;
 			state.selectedWedding = null;
+		},
+
+		///
+
+		deleteWeddingStart: (state: WeddingsState) => {
+			state.status.deleteWedding = LOADING;
+		},
+		deleteWeddingSuccess: (state: WeddingsState) => {
+			state.status.deleteWedding = SUCCESS;
+		},
+		deleteWeddingFailure: (state: WeddingsState) => {
+			state.status.deleteWedding = FAILED;
+		},
+
+		///
+
+		getUsersWithAccessToWeddingStart: (state: WeddingsState) => {
+			state.status.getUsersWithAccessToWedding = LOADING;
+		},
+		getUsersWithAccessToWeddingSuccess: (
+			state: WeddingsState,
+			action: PayloadAction<GetUsersWithAccessToWeddingResponse[]>
+		) => {
+			state.status.getUsersWithAccessToWedding = SUCCESS;
+			state.getUsersWithAccessToWedding = action.payload;
+		},
+		getUsersWithAccessToWeddingFailure: (state: WeddingsState, action: PayloadAction<any>) => {
+			state.status.getUsersWithAccessToWedding = LOADING;
+			state.getUsersWithAccessToWedding = null;
 		}
 	}
 });
@@ -74,5 +103,11 @@ export const {
 	createWeddingSuccess,
 	getWeddingDetailsFailure,
 	getWeddingDetailsStart,
-	getWeddingDetailsSuccess
+	getWeddingDetailsSuccess,
+	deleteWeddingFailure,
+	deleteWeddingStart,
+	deleteWeddingSuccess,
+	getUsersWithAccessToWeddingFailure,
+	getUsersWithAccessToWeddingStart,
+	getUsersWithAccessToWeddingSuccess
 } = weddingSlice.actions;
