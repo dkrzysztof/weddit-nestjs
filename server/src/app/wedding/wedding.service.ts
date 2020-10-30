@@ -187,18 +187,17 @@ export class WeddingService {
 		idWedding: number,
 		body: AllowUserToAccessWedding,
 	): Promise<boolean> {
-		try {
-			if (await this.checkIfUserHasPermission(user, idWedding, true)) {
-				const { userEmail, canEdit: userCanEdit } = body;
-				const userPermissionToBeChanged = await this.userService.findOne(userEmail);
-				if (userPermissionToBeChanged) {
-					const { idUser, email } = userPermissionToBeChanged;
-					return await this.updateUserPermission(idUser, idWedding, userCanEdit);
-				} else throw new BadRequestException('Podany email użytkownika nie istnieje w bazie!');
-			} else throw new ForbiddenException('Nie masz pozwolenia na wykonanie tej akcji!');
-		} catch (error) {
-			throw new InternalServerErrorException(error.message);
-		}
+		if (await this.checkIfUserHasPermission(user, idWedding, true)) {
+			const { userEmail, canEdit: userCanEdit } = body;
+			const userPermissionToBeChanged = await this.userService.findOne(userEmail);
+			if (userPermissionToBeChanged) {
+				const { idUser, email } = userPermissionToBeChanged;
+				return await this.updateUserPermission(idUser, idWedding, userCanEdit);
+			} else
+				throw new BadRequestException({
+					code: 'EMAIL_NOT_FOUND',
+				});
+		} else throw new ForbiddenException('Nie masz pozwolenia na wykonanie tej akcji!');
 	}
 
 	async getUsersWithAccess(user: JwtPayload, idWedding: number): Promise<any> {
@@ -230,13 +229,16 @@ export class WeddingService {
 				.andWhere('U.idUser = :idUser', { idUser })
 				.getRawOne();
 
-			const { affected } = await this.userWeddingRepository
-				.createQueryBuilder()
-				.delete()
-				.from(UserWedding)
-				.where('idUserWedding = :id', { id: found.idUserWedding })
-				.execute();
-			return affected === 1;
+			if (found) {
+				const { affected } = await this.userWeddingRepository
+					.createQueryBuilder()
+					.delete()
+					.from(UserWedding)
+					.where('idUserWedding = :id', { id: found.idUserWedding })
+					.execute();
+				return affected === 1;
+			}
+			return true;
 		} else throw new ForbiddenException('Nie masz uprawnień do wykonania tej akcji!');
 	}
 }

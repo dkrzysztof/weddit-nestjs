@@ -4,7 +4,11 @@ import { weddingInitialState, WeddingsState } from './weddings.state';
 import StatusType from 'App/types/requestStatus';
 import { GetUserWeddingsRequest } from 'App/api/weddings/requests/getUserWeddingsRequest';
 import { notification } from 'antd';
-import { GetUsersWithAccessToWeddingResponse, GetWeddingDetailsResponse } from 'App/api/weddings/responses';
+import {
+	GetUsersWithAccessToWeddingResponse,
+	GetWeddingDetailsResponse,
+	UpdateUserAccessToWeddingResponse
+} from 'App/api/weddings/responses';
 
 const { FAILED, INITIAL, LOADING, SUCCESS } = StatusType;
 
@@ -90,6 +94,46 @@ export const weddingSlice = createSlice({
 		getUsersWithAccessToWeddingFailure: (state: WeddingsState, action: PayloadAction<any>) => {
 			state.status.getUsersWithAccessToWedding = LOADING;
 			state.getUsersWithAccessToWedding = null;
+		},
+
+		///
+
+		updateUserAccessToWeddingStart: (state: WeddingsState) => {
+			state.status.updateUserAccessToWedding = LOADING;
+		},
+		updateUserAccessToWeddingSuccess: (
+			state: WeddingsState,
+			action: PayloadAction<UpdateUserAccessToWeddingResponse>
+		) => {
+			state.status.updateUserAccessToWedding = SUCCESS;
+			notification.success({
+				message: 'Sukces',
+				description: `Przyznano dostęp użytkownikowi!`
+			});
+		},
+		updateUserAccessToWeddingFailure: (state: WeddingsState, action: PayloadAction<string>) => {
+			state.status.updateUserAccessToWedding = FAILED;
+		},
+
+		///
+
+		removeUserAccessToWeddingStart: (state: WeddingsState) => {
+			state.status.removeUserAccessToWedding = LOADING;
+		},
+		removeUserAccessToWeddingSuccess: (state: WeddingsState, action: PayloadAction<boolean>) => {
+			state.status.removeUserAccessToWedding = SUCCESS;
+			notification.success({
+				message: 'Sukces',
+				description: `Usunięto użytkownika z listy dostępowej!`
+			});
+		},
+		removeUserAccessToWeddingFailure: (state: WeddingsState, action: PayloadAction<string>) => {
+			state.status.removeUserAccessToWedding = FAILED;
+			notification.error({
+				message: 'Błąd!',
+				description: 'Wystapił błąd przy usuwaniu dostępu!'
+			});
+			console.log('ERROR at removeUserAccessToWedding', action.payload);
 		}
 	}
 });
@@ -109,5 +153,11 @@ export const {
 	deleteWeddingSuccess,
 	getUsersWithAccessToWeddingFailure,
 	getUsersWithAccessToWeddingStart,
-	getUsersWithAccessToWeddingSuccess
+	getUsersWithAccessToWeddingSuccess,
+	updateUserAccessToWeddingFailure,
+	updateUserAccessToWeddingStart,
+	updateUserAccessToWeddingSuccess,
+	removeUserAccessToWeddingFailure,
+	removeUserAccessToWeddingStart,
+	removeUserAccessToWeddingSuccess
 } = weddingSlice.actions;

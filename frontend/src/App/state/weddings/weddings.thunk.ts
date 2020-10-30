@@ -1,5 +1,5 @@
 import agent from 'App/api/agent';
-import { CreateWeddingPlanRequest } from 'App/api/weddings/requests';
+import { CreateWeddingPlanRequest, UpdateUserAccessToWeddingRequest } from 'App/api/weddings/requests';
 import { IPageQueryParams } from 'App/types/pagination/pagination';
 import { AppThunk } from '../store';
 import {
@@ -17,7 +17,13 @@ import {
 	getWeddingDetailsSuccess,
 	getUsersWithAccessToWeddingSuccess,
 	getUsersWithAccessToWeddingFailure,
-	getUsersWithAccessToWeddingStart
+	getUsersWithAccessToWeddingStart,
+	updateUserAccessToWeddingStart,
+	updateUserAccessToWeddingSuccess,
+	updateUserAccessToWeddingFailure,
+	removeUserAccessToWeddingFailure,
+	removeUserAccessToWeddingStart,
+	removeUserAccessToWeddingSuccess
 } from './weddings.slice';
 
 export const getUserWeddings = (params: IPageQueryParams): AppThunk => async (dispatch) => {
@@ -56,4 +62,29 @@ export const getUsersWithAccessToWedding = (idWedding: number): AppThunk => asyn
 	agent.Weddings.getUsersWithAccessToWedding(idWedding)
 		.then((res) => dispatch(getUsersWithAccessToWeddingSuccess(res)))
 		.catch((err) => dispatch(getUsersWithAccessToWeddingFailure(err)));
+};
+
+export const updateUserAccessToWedding = (
+	idWedding: number,
+	body: UpdateUserAccessToWeddingRequest,
+	onSuccess: () => void
+): AppThunk => async (dispatch) => {
+	dispatch(updateUserAccessToWeddingStart());
+	agent.Weddings.updateUserAccessToWedding(idWedding, body)
+		.then((res) => {
+			onSuccess();
+			dispatch(updateUserAccessToWeddingSuccess(res));
+			dispatch(getUsersWithAccessToWedding(idWedding));
+		})
+		.catch((err) => dispatch(updateUserAccessToWeddingFailure(err)));
+};
+
+export const removeUserAccessToWedding = (idWedding: number, idUser: number): AppThunk => async (dispatch) => {
+	dispatch(removeUserAccessToWeddingStart());
+	agent.Weddings.removeUserAccessToWeddings(idWedding, idUser)
+		.then((res) => {
+			dispatch(removeUserAccessToWeddingSuccess(res));
+			dispatch(getUsersWithAccessToWedding(idWedding));
+		})
+		.catch((err) => dispatch(removeUserAccessToWeddingFailure(err)));
 };

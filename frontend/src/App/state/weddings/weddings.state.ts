@@ -14,7 +14,7 @@ export interface WeddingsState {
 		createWedding: StatusType;
 		deleteWedding: StatusType;
 		updateUserAccessToWedding: StatusType;
-		deleteUserAccessToWedding: StatusType;
+		removeUserAccessToWedding: StatusType;
 		getUsersWithAccessToWedding: StatusType;
 	};
 	getUserWeddingsQueryParams: IPageQueryParams;
@@ -29,7 +29,7 @@ export const weddingInitialState: WeddingsState = {
 		getUserWeddings: INITIAL,
 		getWeddingDetails: INITIAL,
 		deleteWedding: INITIAL,
-		deleteUserAccessToWedding: INITIAL,
+		removeUserAccessToWedding: INITIAL,
 		updateUserAccessToWedding: INITIAL,
 		getUsersWithAccessToWedding: INITIAL
 	},

@@ -81,18 +81,28 @@ axios.interceptors.response.use(undefined, (error: AxiosError) => {
 	}
 
 	if (status === 400) {
-		let description = data.message.join(' || \n');
-		notification['error']({
-			message: 'Błąd',
-			description
-		});
+		if (data.message) {
+			let description = data.message.join(' || \n');
+			notification['error']({
+				message: 'Błąd',
+				description
+			});
+		}
+		if (data.code) {
+			throw data.code;
+		}
 	}
 
 	throw error.response;
 });
 
 const responseBodyAxios = (response: AxiosResponse) => {
-	if (response.data && 'data' in response.data && Object.keys(response.data).length === 1) {
+	if (
+		response.data &&
+		typeof response.data === 'object' &&
+		'data' in response.data &&
+		Object.keys(response.data).length === 1
+	) {
 		return response.data.data;
 	}
 

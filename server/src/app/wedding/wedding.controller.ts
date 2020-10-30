@@ -50,7 +50,7 @@ export class WeddingController {
 
 	@UseGuards(JwtAuthGuard)
 	@Post(':id/users')
-	async addUserToWedding(
+	async updateUserAccessToWedding(
 		@Req() { user },
 		@Param('id') idWedding,
 		@Body() body: AllowUserToAccessWedding,
