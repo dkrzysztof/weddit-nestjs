@@ -17,8 +17,8 @@ const UserNavbar: React.FC<UserNavbarProps> = ({ onLogOut, location }) => {
 				</Link>
 			</Menu.Item>
 
-			<Menu.Item key='/user/weddings'>
-				<Link to='/user/weddings'>
+			<Menu.Item key='/weddings'>
+				<Link to='/weddings'>
 					<span style={{ margin: 'auto' }}>Plany Wesel</span>
 				</Link>
 			</Menu.Item>

@@ -96,10 +96,10 @@ export class WeddingService {
 		if (await this.checkIfUserHasPermission(userPayload, idWedding, false)) {
 			let weddingDetails = await this.weddingRepository
 				.createQueryBuilder('wedding')
-				.leftJoinAndSelect('wedding.userWeddings', 'userWedding')
+				.leftJoinAndSelect('wedding.userWeddings', 'uw')
 				.where('wedding.idWedding = :idWedding', { idWedding })
-				.leftJoin('userWedding.users', 'users')
-				.andWhere('users.idUser = :idUser', { idUser: userPayload.idUser })
+				.leftJoin('uw.users', 'u')
+				.andWhere('u.idUser = :idUser', { idUser: userPayload.idUser })
 				.getOne();
 
 			const { userWeddings } = weddingDetails;
@@ -239,6 +239,14 @@ export class WeddingService {
 				return affected === 1;
 			}
 			return true;
+		} else throw new ForbiddenException('Nie masz uprawnień do wykonania tej akcji!');
+	}
+
+	async deleteWedding(user: JwtPayload, idWedding: number): Promise<boolean> {
+		if (await this.checkIfUserHasPermission(user, idWedding, true)) {
+			const { affected } = await this.weddingRepository.delete(idWedding);
+
+			return affected === 1;
 		} else throw new ForbiddenException('Nie masz uprawnień do wykonania tej akcji!');
 	}
 }

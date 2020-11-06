@@ -1,0 +1,1 @@
+export { GetGuestTypesResponse } from './GetGuestTypesResponse';

@@ -57,7 +57,7 @@ const WeddingUsersPermissions: React.FC<WeddingUsersPermissionsProps> = ({ idWed
 	const handleUpdateUserAccessToWeddingConfirmClick = () => {
 		form.validateFields().then(({ userEmail }: UpdateUserAccessToWeddingRequest) => {
 			setConfirmLoading(true);
-			agent.Weddings.updateUserAccessToWedding(idWedding, { userEmail, canEdit: editPermission })
+			agent.Wedding.updateUserAccessToWedding(idWedding, { userEmail, canEdit: editPermission })
 				.then((res) => {
 					setEmailValidation({
 						validateStatus: 'success',

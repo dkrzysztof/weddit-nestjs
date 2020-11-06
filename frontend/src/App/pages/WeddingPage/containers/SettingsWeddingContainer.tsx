@@ -4,7 +4,8 @@ import Center from 'App/common/components/Center';
 import LoadingScreen from 'App/common/components/LoadingScreen';
 import PageTitle from 'App/common/components/PageTitle';
 import { RootState } from 'App/state/root.reducer';
-import { getWeddingDetails } from 'App/state/weddings/weddings.thunk';
+import { getWeddingDetails, updateWedding } from 'App/state/weddings/weddings.thunk';
+import StatusType from 'App/types/requestStatus';
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,13 +24,14 @@ const SettingsWeddingContainer: React.FC<RouteComponentProps<WeddingRouteProps>>
 
 	const dispatch = useDispatch();
 	const wedding = useSelector((state: RootState) => state.weddings.selectedWedding);
+	const isUpdating = useSelector((state: RootState) => state.weddings.status.updateWedding === StatusType.LOADING);
 
 	useEffect(() => {
 		dispatch(getWeddingDetails(idWedding));
 	}, [dispatch, idWedding]);
 
 	const handleUpdateWeddingDetailsFormSubmit = (values: UpdateWeddingDetailsRequest) => {
-		console.log(values);
+		dispatch(updateWedding(idWedding, values));
 	};
 
 	if (!wedding) {
@@ -38,9 +40,13 @@ const SettingsWeddingContainer: React.FC<RouteComponentProps<WeddingRouteProps>>
 		return (
 			<Center size='medium'>
 				<PageTitle title={`Ustawienia wesela ${wedding.name}`} />
-				<Collapse defaultActiveKey={['2']}>
+				<Collapse defaultActiveKey={['1']}>
 					<Panel header='Szczegółowe dane wesela' key='1'>
-						<UpdateWeddingForm onFinish={handleUpdateWeddingDetailsFormSubmit} />
+						<UpdateWeddingForm
+							initialValues={wedding}
+							onFinish={handleUpdateWeddingDetailsFormSubmit}
+							loading={isUpdating}
+						/>
 					</Panel>
 					<Panel header='Zarządzanie dostępem użytkowników' key='2'>
 						<WeddingUsersPermissions idWedding={idWedding} />

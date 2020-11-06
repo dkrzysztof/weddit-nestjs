@@ -1,0 +1,1 @@
+export { GetBeveragesResponse } from './GetAllBeveragesResponse';

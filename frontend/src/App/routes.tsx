@@ -22,7 +22,7 @@ const Routes: React.FC = () => {
 			<Route exact path='/reset-password' component={ResetPasswordPage} />
 			<ProtectedRoute path='/auth' exact component={AuthPage} adminRestriced />
 			<ProtectedRoute exact path='/user' component={AuthPage} />
-			<ProtectedRoute path='/user/weddings' component={WeddingPageContainer} />
+			<ProtectedRoute path='/weddings' component={WeddingPageContainer} />
 			<ProtectedRoute adminRestriced path='/admin' component={AdminPage} />
 			<Route path='/404' component={NotFoundPage} />
 			<Route path='/403' component={ForbiddenPage} />

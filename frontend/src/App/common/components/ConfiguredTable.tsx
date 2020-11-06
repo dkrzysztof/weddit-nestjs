@@ -6,16 +6,16 @@ import { Table } from 'antd';
 import defaultPageQueryParams from 'App/common/utils/defaultPageQueryParams';
 import { StatusType } from 'App/types/requestStatus';
 import { IPageQueryParams } from 'App/types/pagination/pagination';
-import { ColumnsType } from 'antd/lib/table';
+import { ColumnsType, TableProps } from 'antd/lib/table';
 import { PaginationConfig } from 'antd/lib/pagination';
 import { RootState } from 'App/state/root.reducer';
-import { Dispatch } from '@reduxjs/toolkit';
+import { Dispatch, ThunkAction } from '@reduxjs/toolkit';
 
 const { LOADING } = StatusType;
 
-interface ConfiguredTableProps {
+interface ConfiguredTableProps extends TableProps<{}> {
 	selectCollection: (state: RootState) => any;
-	getCollectionThunkAction: any;
+	getCollectionThunkAction: (pagination: IPageQueryParams) => any;
 	selectCollectionGetStatus: (state: RootState) => StatusType;
 	selectCollectionGetQueryParams: (state: RootState) => IPageQueryParams;
 	rowKey: string;

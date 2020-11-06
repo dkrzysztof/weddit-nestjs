@@ -5,7 +5,7 @@ import { Button, Modal, Dropdown, Menu } from 'antd';
 import { ExclamationCircleOutlined, SettingFilled } from '@ant-design/icons';
 
 import store from 'App/state/store';
-import { WeddingForGetUserWeddings } from 'App/api/weddings/requests/getUserWeddingsRequest';
+import { WeddingForGetUserWeddings } from 'App/api/weddings/requests/GetUserWeddingsRequest';
 import { deleteWedding } from 'App/state/weddings/weddings.thunk';
 
 const squareOutlineStyle = {
@@ -18,7 +18,7 @@ export const renderWeddingTableColumns = (weddings: WeddingForGetUserWeddings[],
 	{
 		title: 'Wesele',
 		render: (record: WeddingForGetUserWeddings) => (
-			<Link to={`/user/weddings/${record.idWedding}/view`}>{record.name}</Link>
+			<Link to={`/weddings/${record.idWedding}/view`}>{record.name}</Link>
 		)
 	},
 	{ title: 'Dzień wesela', dataIndex: 'dateOfWedding' },

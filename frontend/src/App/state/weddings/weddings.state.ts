@@ -1,5 +1,5 @@
 import { GetUserWeddings } from 'App/api/weddings/requests';
-import { WeddingForGetUserWeddings } from 'App/api/weddings/requests/getUserWeddingsRequest';
+import { WeddingForGetUserWeddings } from 'App/api/weddings/requests/GetUserWeddingsRequest';
 import { GetUsersWithAccessToWeddingResponse, GetWeddingDetailsResponse } from 'App/api/weddings/responses';
 import defaultPageQueryParams from 'App/common/utils/defaultPageQueryParams';
 import { IPageQueryParams } from 'App/types/pagination/pagination';
@@ -9,16 +9,17 @@ const { INITIAL } = StatusType;
 
 export interface WeddingsState {
 	status: {
-		getUserWeddings: StatusType;
-		getWeddingDetails: StatusType;
+		getWedding: StatusType;
 		createWedding: StatusType;
 		deleteWedding: StatusType;
+		updateWedding: StatusType;
+		getUserWeddings: StatusType;
 		updateUserAccessToWedding: StatusType;
 		removeUserAccessToWedding: StatusType;
 		getUsersWithAccessToWedding: StatusType;
 	};
 	getUserWeddingsQueryParams: IPageQueryParams;
-	weddings: WeddingForGetUserWeddings[];
+	weddings: WeddingForGetUserWeddings[] | null;
 	selectedWedding: GetWeddingDetailsResponse | null;
 	getUsersWithAccessToWedding: GetUsersWithAccessToWeddingResponse[] | null;
 }
@@ -26,9 +27,10 @@ export interface WeddingsState {
 export const weddingInitialState: WeddingsState = {
 	status: {
 		createWedding: INITIAL,
-		getUserWeddings: INITIAL,
-		getWeddingDetails: INITIAL,
+		getWedding: INITIAL,
 		deleteWedding: INITIAL,
+		updateWedding: INITIAL,
+		getUserWeddings: INITIAL,
 		removeUserAccessToWedding: INITIAL,
 		updateUserAccessToWedding: INITIAL,
 		getUsersWithAccessToWedding: INITIAL

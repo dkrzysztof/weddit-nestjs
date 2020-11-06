@@ -12,12 +12,14 @@ export class UserWedding {
 	@ManyToOne(
 		type => User,
 		user => user.userWeddings,
+		{ onDelete: 'CASCADE' },
 	)
 	users!: User;
 
 	@ManyToOne(
 		type => Wedding,
 		wedding => wedding.userWeddings,
+		{ onDelete: 'CASCADE' },
 	)
 	wedding!: Wedding;
 

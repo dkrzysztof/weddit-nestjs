@@ -1,4 +1,4 @@
-import { IsOptional, IsString, IsNotEmpty } from 'class-validator';
+import { IsOptional, IsString, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class UpdateGuestDto {
 	@IsOptional()
@@ -22,5 +22,6 @@ export class UpdateGuestDto {
 	numberSeat: number;
 
 	@IsOptional()
+	@IsNumber()
 	idGuestType: number;
 }

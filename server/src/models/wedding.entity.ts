@@ -45,7 +45,7 @@ export class Wedding {
 	@Column('decimal', { nullable: true })
 	sumCost: number;
 
-	@Column('decimal', { nullable: true })
+	@Column('decimal', { nullable: true, precision: 8, scale: 2 })
 	budget: number;
 
 	@Column('decimal', { nullable: true })

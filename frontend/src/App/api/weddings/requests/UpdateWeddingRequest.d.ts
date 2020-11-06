@@ -1,4 +1,4 @@
-export interface UpdateWeddingDetailsRequest {
+export interface UpdateWeddingRequest {
 	name: string;
 	dateOfWedding: Date;
 	hourOfWedding: Date;
@@ -8,7 +8,7 @@ export interface UpdateWeddingDetailsRequest {
 	tablesTotalCount: number;
 	tableNumberOfMarried: number;
 	sumCostTask: number;
-	sumCostDrink: number;
+	sumCostBeverages: number;
 	sumCost: number;
 	budget: number;
 	exceedBudget: number;

@@ -28,7 +28,7 @@ const GetUserWeddingsContainer: React.FC<{}> = () => {
 	const selectCollectionGetStatus = (state: RootState) => state.weddings.status.getUserWeddings;
 
 	const handleRedirectToCreateWeddingPlanButtonClick = () => {
-		history.push('/user/weddings/create');
+		history.push('/weddings/create');
 	};
 
 	return (
@@ -45,7 +45,7 @@ const GetUserWeddingsContainer: React.FC<{}> = () => {
 			<ConfiguredTable
 				rowKey='idWedding'
 				columnsRenderMethod={renderWeddingTableColumns}
-				getCollectionThunkAction={getUserWeddings}
+				getCollectionThunkAction={(pagination) => getUserWeddings(pagination)}
 				selectCollection={selectCollection}
 				selectCollectionGetQueryParams={selectCollectionGetQueryParams}
 				selectCollectionGetStatus={selectCollectionGetStatus}

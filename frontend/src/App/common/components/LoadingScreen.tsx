@@ -1,5 +1,5 @@
 import React, { CSSProperties } from 'react';
-import { Spin } from 'antd';
+import { Col, Row, Spin } from 'antd';
 
 export declare type ContainerType = 'screen' | 'fill';
 
@@ -8,6 +8,7 @@ interface LoadingScreenProps {
 }
 const LoadingScreen: React.FC<LoadingScreenProps> = ({ container }: LoadingScreenProps) => {
 	let style: CSSProperties = {};
+	let styleSpinner: CSSProperties = {};
 
 	if (container === 'screen') {
 		style = {
@@ -30,11 +31,18 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ container }: LoadingScree
 			position: 'inherit',
 			overflow: 'hidden'
 		};
+		styleSpinner = {
+			margin: '2em auto'
+		};
 	}
 
 	return (
 		<div className='overlay' style={style}>
-			<Spin size='large' />
+			<Row justify='center' align='middle'>
+				<Col>
+					<Spin size='large' style={styleSpinner} />
+				</Col>
+			</Row>
 		</div>
 	);
 };

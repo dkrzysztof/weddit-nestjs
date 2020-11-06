@@ -73,4 +73,10 @@ export class WeddingController {
 	): Promise<boolean> {
 		return await this.weddingService.removeUserAccessToWedding(user, idWedding, idUser);
 	}
+
+	@UseGuards(JwtAuthGuard)
+	@Delete(':id')
+	async deleteWedding(@Req() { user }, @Param('id') idWedding): Promise<boolean> {
+		return await this.weddingService.deleteWedding(user, idWedding);
+	}
 }

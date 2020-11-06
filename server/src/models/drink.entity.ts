@@ -10,6 +10,7 @@ export class Drink {
 	@ManyToOne(
 		type => Wedding,
 		wedding => wedding.drinks,
+		{ onDelete: 'CASCADE' },
 	)
 	wedding: Wedding;
 

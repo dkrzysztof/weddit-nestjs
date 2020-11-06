@@ -2,9 +2,12 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 
 import adminUsersSlice from './admin/users/users.slice';
+import beveragesSlice from './beverages/beverages.slice';
+import guestsSlice from './guests/guests.slice';
 import { registerSlice } from './public/register/register.slice';
 
 import sessionSlice from './session/session.slice';
+import tasksSlice from './tasks/tasks.slice';
 import { weddingSlice } from './weddings/weddings.slice';
 
 const rootReducer = combineReducers({
@@ -15,7 +18,10 @@ const rootReducer = combineReducers({
 	public: combineReducers({
 		register: registerSlice.reducer
 	}),
-	weddings: weddingSlice.reducer
+	weddings: weddingSlice.reducer,
+	guests: guestsSlice.reducer,
+	beverages: beveragesSlice.reducer,
+	tasks: tasksSlice.reducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

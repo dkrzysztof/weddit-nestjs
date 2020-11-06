@@ -7,6 +7,10 @@ import { notification } from 'antd';
 import { AuthApi } from './auth/authApi';
 import store from 'App/state/store';
 import { WeddingsApi } from './weddings/weddingsApi';
+import GuestApi from './guests/guestApi';
+import { BeverageApi } from './beverages/beveragesApi';
+import { GuestTypesApi } from './guestTypes/guestTypesApi';
+import { TaskListApi } from './taskLists/taskListsApi';
 
 const baseURL = `http://localhost:5000/`;
 
@@ -33,6 +37,12 @@ interface DetailedError {
 	errorCode: string;
 	errorParameters: string[];
 	isArchived: boolean;
+}
+
+export interface ErrorApi {
+	statusCode: number;
+	message: string;
+	error: string;
 }
 
 axios.interceptors.response.use(undefined, (error: AxiosError) => {
@@ -157,7 +167,11 @@ export const requests = {
 export default {
 	Account: AccountApi,
 	Auth: AuthApi,
-	Logs: LogsApi,
 	Admin: AdminApi,
-	Weddings: WeddingsApi
+	Logs: LogsApi,
+	Guests: GuestApi,
+	Wedding: WeddingsApi,
+	TaskList: TaskListApi,
+	Beverages: BeverageApi,
+	GuestTypes: GuestTypesApi
 };

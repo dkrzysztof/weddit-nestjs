@@ -22,11 +22,11 @@ const styles: ObjectOfStyles = {
 	}
 };
 
-const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>> = ({ match }) => {
+const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>> = ({ match, history }) => {
 	const idWedding = Number.parseInt(match.params.idWedding);
 	const dispatch = useDispatch();
 	const wedding = useSelector((state: RootState) => state.weddings.selectedWedding);
-	const getWeddingDetailsStatus = useSelector((state: RootState) => state.weddings.status.getWeddingDetails);
+	const getWeddingDetailsStatus = useSelector((state: RootState) => state.weddings.status.getWedding);
 
 	useEffect(() => {
 		dispatch(getWeddingDetails(idWedding));
@@ -51,52 +51,54 @@ const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>
 							column={{ xxl: 4, xl: 3, lg: 2, md: 2, sm: 2, xs: 1 }}
 							style={styles.description}
 						>
-							<Descriptions.Item label='Nazwa wesela'>{wedding.name || <em>brak</em>}</Descriptions.Item>
+							<Descriptions.Item label='Nazwa wesela'>{wedding.name || <em>-</em>}</Descriptions.Item>
 							<Descriptions.Item label='Data ślubu'>
-								{wedding.dateOfWedding || <em>brak</em>}
+								{wedding.dateOfWedding || <em>-</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Godzina rozpoczęcia'>
-								{wedding.hourOfWedding || <em>brak</em>}
+								{wedding.hourOfWedding || <em>-</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Godzina mszy świętej'>
-								{wedding.hourOfChurchService || <em>brak</em>}
+								{wedding.hourOfChurchService || <em>-</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Czy będą poprawiny?'>
-								{wedding.hasAfters || <em>brak</em>}
+								{wedding.hasAfters ? 'Tak' : <em>-</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Adres sali weselnej'>
-								{wedding.address || <em>brak</em>}
+								{wedding.address || <em>-</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Liczba stolików na sali'>
-								{wedding.tablesTotalCount || <em>brak</em>}
+								{wedding.tablesTotalCount || <em>-</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Numer Stolika Pary młodej'>
-								{wedding.tableNumberOfMarried || <em>brak</em>}
+								{wedding.tableNumberOfMarried || <em>-</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Koszt usług'>
-								{wedding.sumCostTask || <em>brak</em>}
+								{wedding.sumCostTask || <em>-</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Koszt napojów'>
-								{wedding.sumCostDrink || <em>brak</em>}
+								{wedding.sumCostBeverages || <em>-</em>}
 							</Descriptions.Item>
-							<Descriptions.Item label='Suma Kosztów'>
-								{wedding.sumCost || <em>brak</em>}
-							</Descriptions.Item>
-							<Descriptions.Item label='Budżet'>{wedding.budget || <em>brak</em>}</Descriptions.Item>
+							<Descriptions.Item label='Suma Kosztów'>{wedding.sumCost || <em>-</em>}</Descriptions.Item>
+							<Descriptions.Item label='Budżet'>{wedding.budget || <em>-</em>}</Descriptions.Item>
 							<Descriptions.Item label='Przkroczony budżet'>
-								{wedding.exceedBudget || <em>brak</em>}
+								{wedding.exceedBudget || <em>-</em>}
 							</Descriptions.Item>
 						</Descriptions>
 						<Divider>Akcje</Divider>
 						<Row justify='space-between'>
 							<Col xs={24} sm={24} md={11} lg={5}>
-								<ConfiguredCard>Lista Gości</ConfiguredCard>
+								<ConfiguredCard onClick={() => history.push(`/weddings/${idWedding}/guests`)}>
+									Lista Gości
+								</ConfiguredCard>
 							</Col>
 							<Col xs={24} sm={24} md={11} lg={5}>
 								<ConfiguredCard>Napoje na weselu</ConfiguredCard>
 							</Col>
 							<Col xs={24} sm={24} md={11} lg={5}>
-								<ConfiguredCard>Lista zadań</ConfiguredCard>
+								<ConfiguredCard onClick={() => history.push(`/weddings/${idWedding}/task-list`)}>
+									Lista zadań
+								</ConfiguredCard>
 							</Col>
 							<Col xs={24} sm={24} md={11} lg={5}>
 								<ConfiguredCard>Rozstawienie gości</ConfiguredCard>

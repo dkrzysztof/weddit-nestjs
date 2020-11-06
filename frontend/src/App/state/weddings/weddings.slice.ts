@@ -2,12 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { weddingInitialState, WeddingsState } from './weddings.state';
 import StatusType from 'App/types/requestStatus';
-import { GetUserWeddingsRequest } from 'App/api/weddings/requests/getUserWeddingsRequest';
+import { GetUserWeddingsRequest } from 'App/api/weddings/requests/GetUserWeddingsRequest';
 import { notification } from 'antd';
 import {
 	GetUsersWithAccessToWeddingResponse,
 	GetWeddingDetailsResponse,
-	UpdateUserAccessToWeddingResponse
+	UpdateUserAccessToWeddingResponse,
+	UpdateWeddingResponse
 } from 'App/api/weddings/responses';
 
 const { FAILED, INITIAL, LOADING, SUCCESS } = StatusType;
@@ -55,15 +56,17 @@ export const weddingSlice = createSlice({
 		///
 
 		getWeddingDetailsStart: (state: WeddingsState) => {
-			state.status.getWeddingDetails = LOADING;
+			state.status.getWedding = LOADING;
 			state.selectedWedding = null;
 		},
 		getWeddingDetailsSuccess: (state: WeddingsState, action: PayloadAction<GetWeddingDetailsResponse>) => {
-			state.status.getWeddingDetails = SUCCESS;
+			state.status.getWedding = SUCCESS;
 			state.selectedWedding = action.payload;
+			if (state.selectedWedding.budget)
+				state.selectedWedding.budget = Number.parseFloat(state.selectedWedding.budget.toString());
 		},
 		getWeddingDetailsFailure: (state: WeddingsState, action: PayloadAction<string>) => {
-			state.status.getWeddingDetails = FAILED;
+			state.status.getWedding = FAILED;
 			state.selectedWedding = null;
 		},
 
@@ -134,6 +137,27 @@ export const weddingSlice = createSlice({
 				description: 'Wystapił błąd przy usuwaniu dostępu!'
 			});
 			console.log('ERROR at removeUserAccessToWedding', action.payload);
+		},
+
+		///
+
+		updateWeddingStart: (state: WeddingsState) => {
+			state.status.updateWedding = LOADING;
+		},
+		updateWeddingSuccess: (state: WeddingsState, action: PayloadAction<UpdateWeddingResponse>) => {
+			state.status.updateWedding = SUCCESS;
+			notification.success({
+				message: 'Sukces',
+				description: `Pomyślnie zaaktualizowano dane!`
+			});
+		},
+		updateWeddingFailure: (state: WeddingsState, action: PayloadAction<string>) => {
+			state.status.updateWedding = FAILED;
+			notification.error({
+				message: 'Błąd!',
+				description: 'Wystapił błąd przy aktualizacji danych wesela!'
+			});
+			console.log('ERROR at updateWedding', action.payload);
 		}
 	}
 });
@@ -159,5 +183,8 @@ export const {
 	updateUserAccessToWeddingSuccess,
 	removeUserAccessToWeddingFailure,
 	removeUserAccessToWeddingStart,
-	removeUserAccessToWeddingSuccess
+	removeUserAccessToWeddingSuccess,
+	updateWeddingFailure,
+	updateWeddingStart,
+	updateWeddingSuccess
 } = weddingSlice.actions;

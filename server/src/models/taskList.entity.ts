@@ -9,6 +9,7 @@ export class TaskList {
 	@ManyToOne(
 		type => Wedding,
 		wedding => wedding.taskLists,
+		{ onDelete: 'CASCADE' },
 	)
 	wedding: Wedding;
 

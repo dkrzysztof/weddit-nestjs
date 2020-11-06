@@ -27,7 +27,7 @@ const routes: Routes = [
 				module: GuestModule,
 			},
 			{
-				path: '/:idWedding/drinks',
+				path: '/:idWedding/beverages',
 				module: DrinksModule,
 			},
 			{

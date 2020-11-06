@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
 import { request } from 'http';
+import { IPageQueryParams } from 'src/types/PageQueryParams';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { AddGuestDto } from './dto/add-guest.dto';
 import { UpdateGuestDto } from './dto/update-geust.dto';
@@ -11,8 +12,8 @@ export class GuestController {
 
 	@Get()
 	@UseGuards(JwtAuthGuard)
-	async getAllGuests(@Req() request, @Param('idWedding') idWedding) {
-		return await this.guestService.getAllGuests(request.user, idWedding);
+	async getAllGuests(@Req() request, @Param('idWedding') idWedding, @Query() query: IPageQueryParams) {
+		return await this.guestService.getAllGuests(request.user, idWedding, query);
 	}
 
 	@Post()

@@ -1,5 +1,6 @@
 import agent from 'App/api/agent';
 import { CreateWeddingPlanRequest, UpdateUserAccessToWeddingRequest } from 'App/api/weddings/requests';
+import { UpdateWeddingRequest } from 'App/api/weddings/requests/UpdateWeddingRequest';
 import { IPageQueryParams } from 'App/types/pagination/pagination';
 import { AppThunk } from '../store';
 import {
@@ -23,33 +24,36 @@ import {
 	updateUserAccessToWeddingFailure,
 	removeUserAccessToWeddingFailure,
 	removeUserAccessToWeddingStart,
-	removeUserAccessToWeddingSuccess
+	removeUserAccessToWeddingSuccess,
+	updateWeddingFailure,
+	updateWeddingStart,
+	updateWeddingSuccess
 } from './weddings.slice';
 
 export const getUserWeddings = (params: IPageQueryParams): AppThunk => async (dispatch) => {
 	dispatch(getUserWeddingsStart());
-	agent.Weddings.getUserWeddings(params)
+	agent.Wedding.getUserWeddings(params)
 		.then((res) => dispatch(getUserWeddingsSuccess(res)))
 		.catch((err) => dispatch(getUserWeddingsFailure(err)));
 };
 
 export const createUserWedding = (body: CreateWeddingPlanRequest): AppThunk => async (dispatch) => {
 	dispatch(createWeddingStart());
-	agent.Weddings.createWedding(body)
+	agent.Wedding.createWedding(body)
 		.then(() => dispatch(createWeddingSuccess()))
 		.catch((err) => dispatch(createWeddingFailure(err)));
 };
 
 export const getWeddingDetails = (idWedding: number): AppThunk => async (dispatch) => {
 	dispatch(getWeddingDetailsStart());
-	agent.Weddings.getWeddingDetails(idWedding)
+	agent.Wedding.getWeddingDetails(idWedding)
 		.then((res) => dispatch(getWeddingDetailsSuccess(res)))
 		.catch((err) => dispatch(getWeddingDetailsFailure(err)));
 };
 
 export const deleteWedding = (idWedding: number, params: IPageQueryParams): AppThunk => async (dispatch) => {
 	dispatch(deleteWeddingStart());
-	agent.Weddings.deleteWedding(idWedding)
+	agent.Wedding.deleteWedding(idWedding)
 		.then(() => {
 			dispatch(deleteWeddingSuccess());
 			dispatch(getUserWeddings(params));
@@ -59,7 +63,7 @@ export const deleteWedding = (idWedding: number, params: IPageQueryParams): AppT
 
 export const getUsersWithAccessToWedding = (idWedding: number): AppThunk => async (dispatch) => {
 	dispatch(getUsersWithAccessToWeddingStart());
-	agent.Weddings.getUsersWithAccessToWedding(idWedding)
+	agent.Wedding.getUsersWithAccessToWedding(idWedding)
 		.then((res) => dispatch(getUsersWithAccessToWeddingSuccess(res)))
 		.catch((err) => dispatch(getUsersWithAccessToWeddingFailure(err)));
 };
@@ -70,7 +74,7 @@ export const updateUserAccessToWedding = (
 	onSuccess: () => void
 ): AppThunk => async (dispatch) => {
 	dispatch(updateUserAccessToWeddingStart());
-	agent.Weddings.updateUserAccessToWedding(idWedding, body)
+	agent.Wedding.updateUserAccessToWedding(idWedding, body)
 		.then((res) => {
 			onSuccess();
 			dispatch(updateUserAccessToWeddingSuccess(res));
@@ -81,10 +85,19 @@ export const updateUserAccessToWedding = (
 
 export const removeUserAccessToWedding = (idWedding: number, idUser: number): AppThunk => async (dispatch) => {
 	dispatch(removeUserAccessToWeddingStart());
-	agent.Weddings.removeUserAccessToWeddings(idWedding, idUser)
+	agent.Wedding.removeUserAccessToWeddings(idWedding, idUser)
 		.then((res) => {
 			dispatch(removeUserAccessToWeddingSuccess(res));
 			dispatch(getUsersWithAccessToWedding(idWedding));
 		})
 		.catch((err) => dispatch(removeUserAccessToWeddingFailure(err)));
+};
+
+export const updateWedding = (idWedding: number, body: UpdateWeddingRequest): AppThunk => async (dispatch) => {
+	dispatch(updateWeddingStart());
+	const promise = agent.Wedding.updateWeddingDetails(idWedding, body);
+	console.log(body);
+	setTimeout(() => {
+		promise.then((res) => dispatch(updateWeddingSuccess(res))).catch((err) => dispatch(updateWeddingFailure(err)));
+	}, 750);
 };

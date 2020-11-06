@@ -1,3 +1,4 @@
-export { GetWeddingDetailsResponse } from './getWeddingDetailsResponse';
-export { GetUsersWithAccessToWeddingResponse } from './getUsersWithAccessToWeddingResponse';
-export { UpdateUserAccessToWeddingResponse } from './updateUserAccessToWeddingResponse';
+export { GetWeddingDetailsResponse } from './GetWeddingResponse';
+export { GetUsersWithAccessToWeddingResponse } from './GetUsersWithAccessToWeddingResponse';
+export { UpdateUserAccessToWeddingResponse } from './UpdateUserAccessToWeddingResponse';
+export { UpdateWeddingResponse } from './UpdateWeddingResponse';

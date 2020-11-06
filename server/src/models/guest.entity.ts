@@ -32,12 +32,14 @@ export class Guest {
 	@ManyToOne(
 		type => GuestType,
 		guestType => guestType.guests,
+		{ onDelete: 'SET NULL' },
 	)
 	guestType!: GuestType;
 
 	@ManyToOne(
 		type => Wedding,
 		wedding => wedding.guests,
+		{ onDelete: 'CASCADE' },
 	)
 	wedding!: Wedding;
 }

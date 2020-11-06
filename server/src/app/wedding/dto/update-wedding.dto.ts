@@ -14,8 +14,6 @@ export class UpdateWeddingDto {
 	@IsOptional()
 	hourOfWedding: Date;
 
-	@Type(() => Date)
-	@IsDate()
 	@IsOptional()
 	hourOfChurchService: Date;
 
@@ -47,7 +45,7 @@ export class UpdateWeddingDto {
 	@IsOptional()
 	sumCost: number;
 
-	@IsNumber()
+	@IsNumber({ maxDecimalPlaces: 2 })
 	@IsOptional()
 	budget: number;
 
