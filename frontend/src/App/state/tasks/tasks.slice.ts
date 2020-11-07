@@ -65,7 +65,9 @@ const tasksSlice = createSlice({
 		},
 		getTaskDetailsSuccess: (state: TaskState, action: PayloadAction<GetTaskResponse>) => {
 			state.status.getTaskDetails = SUCCESS;
-			state.selectedTask = null;
+
+			state.selectedTask = action.payload;
+			state.selectedTask.deadline = new Date(state.selectedTask.deadline);
 		},
 		getTaskDetailsFailure: (state: TaskState, action: PayloadAction<ErrorApi>) => {
 			state.status.getTaskDetails = FAILED;

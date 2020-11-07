@@ -1,5 +1,9 @@
+import { Row, Col, Button } from 'antd';
+import PageTitle from 'App/common/components/PageTitle';
 import React from 'react';
+import { useState } from 'react';
 import { RouteComponentProps } from 'react-router';
+import CreateTaskContainer from './containers/CreateTaskContainer';
 import GetTasksContainer from './containers/GetTasksContainer';
 
 interface WeddingRouteProps {
@@ -11,6 +15,9 @@ const TaskListPageContainer: React.FC<RouteComponentProps<WeddingRouteProps>> = 
 
 	return (
 		<>
+			<PageTitle title='Zadania do wykonania' />
+
+			<CreateTaskContainer idWedding={idWedding} />
 			<GetTasksContainer idWedding={idWedding} />
 		</>
 	);

@@ -1,10 +1,14 @@
+import React, { useEffect, useState } from 'react';
+import { Button, List } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+
 import LoadingScreen from 'App/common/components/LoadingScreen';
+import PageTitle from 'App/common/components/PageTitle';
 import { RootState } from 'App/state/root.reducer';
 import { getTasks } from 'App/state/tasks/tasks.thunk';
 import { isStatusLoading } from 'App/types/requestStatus';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import GetTasks from '../components/GetTasks';
+import TaskDetailsContainer from './TaskDetailsContainer';
+import '../styles/GetTasksContainer.less';
 
 export interface GetTasksContainer {
 	idWedding: number;
@@ -19,14 +23,22 @@ const GetTasksContainer: React.FC<GetTasksContainer> = ({ idWedding }) => {
 		dispatch(getTasks(idWedding));
 	}, [dispatch, idWedding]);
 
-	if (isStatusLoading(tasksStatus) || !tasks) {
+	if (isStatusLoading(tasksStatus) || tasks === null) {
 		return <LoadingScreen container='screen' />;
 	}
 
 	return (
-		<>
-			<GetTasks dataSource={tasks} />
-		</>
+		<div style={{ padding: '1.5em 1em' }}>
+			<List
+				grid={{ gutter: 16, xs: 1, sm: 1, md: 2, lg: 3, xl: 3, xxl: 5 }}
+				dataSource={tasks}
+				renderItem={(item, index) => (
+					<List.Item>
+						<TaskDetailsContainer idWedding={idWedding} key={index} task={item} />
+					</List.Item>
+				)}
+			></List>
+		</div>
 	);
 };
 

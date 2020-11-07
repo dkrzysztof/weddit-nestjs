@@ -16,6 +16,7 @@ export class CreateTaskDto {
 	dutyHolderFullName: string;
 
 	@IsNumber()
+	@IsNotEmpty()
 	cost: number;
 
 	@IsOptional()

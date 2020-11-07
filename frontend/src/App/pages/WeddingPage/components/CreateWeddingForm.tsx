@@ -2,7 +2,7 @@ import { Button, Checkbox, DatePicker, Form, Input } from 'antd';
 import { CreateWeddingPlanRequest } from 'App/api/weddings/requests';
 import { RootState } from 'App/state/root.reducer';
 import StatusType from 'App/types/requestStatus';
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 interface CreateWeddingFormProps {
@@ -11,8 +11,16 @@ interface CreateWeddingFormProps {
 }
 
 const CreateWeddingForm: React.FC<CreateWeddingFormProps> = ({ onFinish, loading }) => {
+	const [hasAfters, setCheckedAfters] = useState<boolean>(false);
+
+	const wrapOnFinish = (values: CreateWeddingPlanRequest) => {
+		values.hasAfters = hasAfters;
+
+		onFinish(values);
+	};
+
 	return (
-		<Form labelCol={{ span: 7 }} wrapperCol={{ span: 14 }} onFinish={onFinish}>
+		<Form labelCol={{ span: 7 }} wrapperCol={{ span: 14 }} onFinish={wrapOnFinish}>
 			<Form.Item label='Nazwa własna' rules={[{ required: true, type: 'string' }]} name='name'>
 				<Input />
 			</Form.Item>
@@ -26,7 +34,7 @@ const CreateWeddingForm: React.FC<CreateWeddingFormProps> = ({ onFinish, loading
 				<Input type='time' />
 			</Form.Item>
 			<Form.Item label='Czy będą wyprawiane poprawiny?' name='hasAfters'>
-				<Input type='checkbox' />
+				<Input type='checkbox' checked={hasAfters} onChange={() => setCheckedAfters(!hasAfters)} />
 			</Form.Item>
 			<Form.Item label='Adres sali weselnej' name='address'>
 				<Input type='text' />

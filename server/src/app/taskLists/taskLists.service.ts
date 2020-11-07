@@ -47,15 +47,16 @@ export class TaskListsService {
 				.createQueryBuilder('t')
 				.leftJoinAndSelect('t.wedding', 'w')
 				.select([
-					't.idTaskList',
-					't.description',
-					't.deadline',
-					't.dutyHolderFullName',
-					't.isComplete',
-					't.cost',
-					'w.idWedding',
+					't.idTaskList AS "idTaskList"',
+					't.description AS "description"',
+					't.deadline AS "deadline"',
+					't.dutyHolderFullName AS "dutyHolderFullName"',
+					't.isComplete AS "isComplete"',
+					't.cost AS "cost"',
+					'w.idWedding AS "idWedding"',
 				])
 				.where('w.idWedding = :idWedding', { idWedding })
+				.orderBy('t.deadline', 'ASC')
 				.getRawMany()) as GetTaskDetailsDto[];
 
 			return taskList;
