@@ -1,5 +1,5 @@
 import { CheckCircleOutlined, CloseOutlined, EditOutlined, SyncOutlined } from '@ant-design/icons';
-import { Row, Col, Card, Modal, Checkbox, Button, Tag, Popconfirm } from 'antd';
+import { Row, Col, Card, Modal, Checkbox, Button, Tag, Popconfirm, Typography } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { List, useForm } from 'antd/lib/form/Form';
 import { UpdateTaskRequest } from 'App/api/taskLists/requests/UpdateTaskRequest';
@@ -7,6 +7,7 @@ import { TaskForGetTasksResponse } from 'App/api/taskLists/responses/GetAllTasks
 import LoadingScreen from 'App/common/components/LoadingScreen';
 import { RootState } from 'App/state/root.reducer';
 import { deleteTask, getTaskDetails, getTasks, updateTask } from 'App/state/tasks/tasks.thunk';
+import { isStatusLoading } from 'App/types/requestStatus';
 import React, { CSSProperties, ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TaskDetailsForm from '../components/TaskDetailsForm';
@@ -17,9 +18,8 @@ interface TaskDetailsContainerProps {
 }
 
 const completedTaskCardStyle: CSSProperties = {
-	border: '1px solid #52c41a',
-	borderRadius: '0.25rem',
-	backgroundColor: '#52c41a10'
+	border: '2px solid #52c41a',
+	borderRadius: '0.25rem'
 };
 
 const incompletedTaskCardStyle: CSSProperties = {
@@ -31,8 +31,8 @@ const TaskDetailsContainer: React.FC<TaskDetailsContainerProps> = ({ task, idWed
 	const [visible, setVisible] = useState<boolean>(false);
 	const dispatch = useDispatch();
 	const selectedTask = useSelector((state: RootState) => state.tasks.selectedTask);
+	const taskIsUpdating = useSelector((state: RootState) => isStatusLoading(state.tasks.status.updateTask));
 	const [editView, toggleEditView] = useState(false);
-	const [isComplete, setComplete] = useState(task.isComplete);
 	const [form] = useForm();
 
 	let t = new Date(task.deadline);
@@ -43,40 +43,50 @@ const TaskDetailsContainer: React.FC<TaskDetailsContainerProps> = ({ task, idWed
 	};
 
 	const handleClick = () => {
-		dispatch(getTaskDetails(idWedding, task.idTaskList));
-		setVisible(true);
+		dispatch(
+			getTaskDetails(idWedding, task.idTaskList, () => {
+				setVisible(true);
+			})
+		);
 	};
 
 	const handleCompleteClick = () => {
 		dispatch(
-			updateTask(idWedding, task.idTaskList, {
-				description: selectedTask.description,
-				isComplete: !selectedTask.isComplete
-			})
+			updateTask(
+				idWedding,
+				task.idTaskList,
+				{
+					description: selectedTask.description,
+					isComplete: !selectedTask.isComplete
+				},
+				() => {
+					setVisible(false);
+					dispatch(getTasks(idWedding));
+				}
+			)
 		);
-		setVisible(false);
-		dispatch(getTasks(idWedding));
 	};
 
 	const handleDeleteClick = () => {
-		dispatch(deleteTask(idWedding, task.idTaskList));
-		setVisible(false);
-		dispatch(getTasks(idWedding));
+		dispatch(
+			deleteTask(idWedding, task.idTaskList, () => {
+				setVisible(false);
+				dispatch(getTasks(idWedding));
+			})
+		);
 	};
 
 	const title = (
-		<Row justify='space-between'>
-			<Col span={8}>{task.description}</Col>
-			<Col span={16} style={{ textAlign: 'right' }}>
+		<div>
+			<Typography.Text ellipsis style={{ fontSize: '0.9em', fontWeight: 400 }}>
 				{t.toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' })}
-			</Col>
-		</Row>
+			</Typography.Text>
+			<p style={{ whiteSpace: 'break-spaces', textAlign: 'justify' }}>{task.description}</p>
+		</div>
 	);
 
 	const handleTaskUpdate = () => {
 		form.validateFields().then((values: UpdateTaskRequest) => {
-			form.resetFields();
-
 			for (let key in values) {
 				if (!values[key]) {
 					delete values[key];
@@ -87,9 +97,16 @@ const TaskDetailsContainer: React.FC<TaskDetailsContainerProps> = ({ task, idWed
 				values.cost = Number.parseFloat(values.cost.toString());
 			}
 
-			dispatch(updateTask(idWedding, task.idTaskList, values));
-			setVisible(false);
-			dispatch(getTasks(idWedding));
+			if (values.deadline) {
+				values.deadline = (values.deadline as any).toISOString();
+			}
+
+			dispatch(
+				updateTask(idWedding, task.idTaskList, values, () => {
+					dispatch(getTasks(idWedding));
+					setVisible(false);
+				})
+			);
 		});
 	};
 
@@ -98,7 +115,7 @@ const TaskDetailsContainer: React.FC<TaskDetailsContainerProps> = ({ task, idWed
 			<Button type='default' onClick={() => toggleEditView(false)}>
 				Anuluj
 			</Button>
-			<Button type='primary' onClick={handleTaskUpdate}>
+			<Button type='primary' loading={taskIsUpdating} onClick={handleTaskUpdate}>
 				Akceptuj
 			</Button>
 		</>
@@ -125,7 +142,7 @@ const TaskDetailsContainer: React.FC<TaskDetailsContainerProps> = ({ task, idWed
 					<Button danger type='default' shape='circle' icon={<CloseOutlined />}></Button>
 				</Popconfirm>
 			</div>
-			<Button type='primary' onClick={handleCompleteClick}>
+			<Button type='primary' onClick={handleCompleteClick} loading={taskIsUpdating}>
 				{task.isComplete ? 'Cofnij wykonanie zadania' : 'Ustaw zadanie jako ukończone'}
 			</Button>
 		</>
@@ -136,6 +153,7 @@ const TaskDetailsContainer: React.FC<TaskDetailsContainerProps> = ({ task, idWed
 			onClick={handleClick}
 			title={title}
 			style={task.isComplete ? completedTaskCardStyle : incompletedTaskCardStyle}
+			className={task.isComplete ? 'ant-card-green' : '.ant-card-default'}
 		>
 			<Row justify='space-between'>
 				<Col span={12}>Osoba odpowiedzialna:</Col>

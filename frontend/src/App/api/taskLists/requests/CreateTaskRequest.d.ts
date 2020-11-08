@@ -1,7 +1,7 @@
 export interface CreateTaskRequest {
 	description: string;
 
-	deadline: Date;
+	deadline: Date | string;
 
 	dutyHolderFullName: string;
 

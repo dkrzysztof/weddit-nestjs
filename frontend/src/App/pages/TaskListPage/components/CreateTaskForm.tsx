@@ -19,7 +19,7 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({ form, loading }) => {
 				<Input type='text' disabled={loading} />
 			</Form.Item>
 			<Form.Item label='Termin' name='deadline' rules={[{ required: true }]}>
-				<Input type='date' disabled={loading} />
+				<Input type='date' disabled={loading} min={new Date().toDateString()} />
 			</Form.Item>
 			<Form.Item label='Osoba odpowiedzialna' name='dutyHolderFullName' rules={[{ required: true }]}>
 				<Input type='text' disabled={loading} />

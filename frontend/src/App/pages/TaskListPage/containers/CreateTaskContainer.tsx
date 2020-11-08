@@ -2,8 +2,9 @@ import { Row, Col, Button, Modal } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { CreateTaskRequest } from 'App/api/taskLists/requests/CreateTaskRequest';
 import { RootState } from 'App/state/root.reducer';
-import { createTask } from 'App/state/tasks/tasks.thunk';
+import { createTask, getTasks } from 'App/state/tasks/tasks.thunk';
 import { isStatusLoading, isStatusSuccess } from 'App/types/requestStatus';
+import { Moment } from 'moment';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,17 +22,23 @@ const CreateTaskContainer: React.FC<CreateTaskContainerProps> = ({ idWedding }) 
 
 	const handleOk = () => {
 		form.validateFields()
-			.then((values) => {
+			.then((values: CreateTaskRequest) => {
 				form.resetFields();
 
 				for (let key in values) {
-					if (!values[key]) {
+					if (values[key] === undefined || values[key] === null) {
 						delete values[key];
 					}
 				}
 
-				dispatch(createTask(idWedding, values as CreateTaskRequest));
-				setVisible(false);
+				// values.deadline = ((values.deadline as any) as Moment).toISOString();
+
+				dispatch(
+					createTask(idWedding, values, () => {
+						dispatch(getTasks(idWedding));
+						setVisible(false);
+					})
+				);
 			})
 			.catch(() => {});
 	};
