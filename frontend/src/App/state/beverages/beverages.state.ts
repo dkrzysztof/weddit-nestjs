@@ -1,4 +1,7 @@
 import { GetBeveragesResponse } from 'App/api/beverages/responses';
+import { BeverageForGetBeveragesResponse } from 'App/api/beverages/responses/GetAllBeveragesResponse';
+import defaultPageQueryParams from 'App/common/utils/defaultPageQueryParams';
+import { IPageQueryParams } from 'App/types/pagination/pagination';
 import StatusType from 'App/types/requestStatus';
 
 export interface BeveragesState {
@@ -8,7 +11,8 @@ export interface BeveragesState {
 		deleteBeverage: StatusType;
 		updateBeverage: StatusType;
 	};
-	beverages: GetBeveragesResponse;
+	beverages: BeverageForGetBeveragesResponse[];
+	queryParams: IPageQueryParams;
 }
 
 export const initialBeveragesState: BeveragesState = {
@@ -18,5 +22,6 @@ export const initialBeveragesState: BeveragesState = {
 		getBeverages: StatusType.INITIAL,
 		updateBeverage: StatusType.INITIAL
 	},
-	beverages: null
+	beverages: null,
+	queryParams: defaultPageQueryParams
 };

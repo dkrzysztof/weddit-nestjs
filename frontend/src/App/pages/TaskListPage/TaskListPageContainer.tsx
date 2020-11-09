@@ -16,7 +16,6 @@ const TaskListPageContainer: React.FC<RouteComponentProps<WeddingRouteProps>> = 
 	return (
 		<>
 			<PageTitle title='Zadania do wykonania' />
-
 			<CreateTaskContainer idWedding={idWedding} />
 			<GetTasksContainer idWedding={idWedding} />
 		</>

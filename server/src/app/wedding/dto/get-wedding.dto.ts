@@ -17,7 +17,7 @@ export class GetWeddingDto {
 
 	sumCostTask: number;
 
-	sumCostDrink: number;
+	sumCostBeverage: number;
 
 	sumCost: number;
 

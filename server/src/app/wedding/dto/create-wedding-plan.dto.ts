@@ -39,7 +39,7 @@ export class CreateWeddingPlanDto {
 
 	@IsNumber()
 	@IsOptional()
-	sumCostDrink: number;
+	sumCostBeverage: number;
 
 	@IsNumber()
 	@IsOptional()

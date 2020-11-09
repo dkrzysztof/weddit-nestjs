@@ -19,7 +19,7 @@ interface ConfiguredTableProps extends TableProps<{}> {
 	selectCollectionGetStatus: (state: RootState) => StatusType;
 	selectCollectionGetQueryParams: (state: RootState) => IPageQueryParams;
 	rowKey: string;
-	columnsRenderMethod: (collection: any[], dispatch: Dispatch) => ColumnsType;
+	columnsRenderMethod: (collection: any[], dispatch: Dispatch) => any[];
 	style?: CSSProperties;
 }
 

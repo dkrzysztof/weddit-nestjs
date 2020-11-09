@@ -38,7 +38,18 @@ const TaskDetailsForm: React.FC<TaskDetailsFormProps> = ({ form, task, editable 
 				</Descriptions.Item>
 				<Descriptions.Item label='Koszt'>{task.cost ? task.cost : <em>-</em>}</Descriptions.Item>
 				<Descriptions.Item label='Opis' span={2}>
-					{task.notes ? task.notes : <em>-</em>}
+					{task.notes ? (
+						<div style={{ padding: '0 1em' }}>
+							{task.notes.split(/(?:\r\n|\r|\n)/g).map((x) => (
+								<>
+									{x}
+									<br />
+								</>
+							))}
+						</div>
+					) : (
+						<em>-</em>
+					)}
 				</Descriptions.Item>
 			</Descriptions>
 		</>

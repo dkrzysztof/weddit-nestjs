@@ -1,8 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Drink } from './drink.entity';
+import { Beverage } from './beverages.entity';
 import { Guest } from './guest.entity';
 import { TaskList } from './taskList.entity';
-import { User } from './user.entity';
 import { UserWedding } from './userWedding.entity';
 
 @Entity('Wedding')
@@ -40,7 +39,7 @@ export class Wedding {
 	sumCostTask: number;
 
 	@Column('decimal', { nullable: true })
-	sumCostDrink: number;
+	sumCostBeverage: number;
 
 	@Column('decimal', { nullable: true })
 	sumCost: number;
@@ -52,11 +51,11 @@ export class Wedding {
 	exceedBudget: number;
 
 	@OneToMany(
-		type => Drink,
-		drink => drink.wedding,
+		type => Beverage,
+		beverage => beverage.wedding,
 		{ cascade: true },
 	)
-	drinks: Drink[];
+	beverages: Beverage[];
 
 	@OneToMany(
 		type => TaskList,

@@ -2,14 +2,14 @@ import { IsNotEmpty } from 'class-validator';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Wedding } from './wedding.entity';
 
-@Entity('Drink')
-export class Drink {
+@Entity('Beverage')
+export class Beverage {
 	@PrimaryGeneratedColumn()
-	idDrink: number;
+	idBeverage: number;
 
 	@ManyToOne(
 		type => Wedding,
-		wedding => wedding.drinks,
+		wedding => wedding.beverages,
 		{ onDelete: 'CASCADE' },
 	)
 	wedding: Wedding;

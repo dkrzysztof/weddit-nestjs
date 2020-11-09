@@ -1,7 +1,9 @@
-export type GetBeveragesResponse = BeverageForGetBeveragesResponse[];
+import { ICollectionResponse } from 'App/types/pagination/pagination';
+
+export interface GetBeveragesResponse extends ICollectionResponse<BeverageForGetBeveragesResponse> {}
 
 export interface BeverageForGetBeveragesResponse {
-	idBeverages: number;
+	idBeverage: number;
 	name: string;
 	bottleCapacity: string; //string
 	consumingFactor: string; //string

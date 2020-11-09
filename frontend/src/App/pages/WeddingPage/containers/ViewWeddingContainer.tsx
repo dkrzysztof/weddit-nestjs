@@ -1,3 +1,4 @@
+import { BarsOutlined, ExperimentOutlined, PartitionOutlined, TeamOutlined } from '@ant-design/icons';
 import { Card, Col, Descriptions, Divider, Result, Row } from 'antd';
 import Center from 'App/common/components/Center';
 import ConfiguredCard from 'App/common/components/ConfiguredCard';
@@ -89,19 +90,51 @@ const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>
 						<Row justify='space-between'>
 							<Col xs={24} sm={24} md={11} lg={5}>
 								<ConfiguredCard onClick={() => history.push(`/weddings/${idWedding}/guests`)}>
+									<TeamOutlined
+										style={{
+											color: '#4d4dff',
+											fontSize: '2em',
+											marginRight: '0.5em'
+										}}
+									/>{' '}
 									Lista Gości
 								</ConfiguredCard>
 							</Col>
 							<Col xs={24} sm={24} md={11} lg={5}>
-								<ConfiguredCard>Napoje na weselu</ConfiguredCard>
+								<ConfiguredCard onClick={() => history.push(`/weddings/${idWedding}/beverages`)}>
+									<ExperimentOutlined
+										style={{
+											color: '#ffc14d',
+											fontSize: '2em',
+											marginRight: '0.5em'
+										}}
+									/>
+									Napoje na weselu
+								</ConfiguredCard>
 							</Col>
 							<Col xs={24} sm={24} md={11} lg={5}>
 								<ConfiguredCard onClick={() => history.push(`/weddings/${idWedding}/task-list`)}>
+									<BarsOutlined
+										style={{
+											color: '#58b368',
+											fontSize: '2em',
+											marginRight: '0.5em'
+										}}
+									/>
 									Lista zadań
 								</ConfiguredCard>
 							</Col>
 							<Col xs={24} sm={24} md={11} lg={5}>
-								<ConfiguredCard>Rozstawienie gości</ConfiguredCard>
+								<ConfiguredCard>
+									<PartitionOutlined
+										style={{
+											color: '#a862ea',
+											fontSize: '2em',
+											marginRight: '0.5em'
+										}}
+									/>
+									Rozstawienie gości
+								</ConfiguredCard>
 							</Col>
 						</Row>
 					</Col>

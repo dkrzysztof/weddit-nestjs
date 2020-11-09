@@ -11,11 +11,9 @@ import { WeddingModule } from './wedding/wedding.module';
 import { GuestModule } from './guest/guest.module';
 import { RouterModule, Routes } from 'nest-router';
 import { GuestTypesModule } from './guest/guest-types/guest-types.module';
-import { DrinksModule } from './drinks/drinks.module';
 import { TaskListsModule } from './taskLists/taskLists.module';
 import { AccountModule } from './account/account.module';
-import { UserService } from './users/users.service';
-import { User } from 'src/models/user.entity';
+import { BeveragesModule } from './beverages/beverages.module';
 
 const routes: Routes = [
 	{
@@ -28,7 +26,7 @@ const routes: Routes = [
 			},
 			{
 				path: '/:idWedding/beverages',
-				module: DrinksModule,
+				module: BeveragesModule,
 			},
 			{
 				path: '/:idWedding/task-lists',
@@ -43,7 +41,7 @@ const routes: Routes = [
 	imports: [
 		RouterModule.forRoutes(routes),
 		TaskListsModule,
-		DrinksModule,
+		BeveragesModule,
 		GuestModule,
 		AuthModule,
 		UsersModule,

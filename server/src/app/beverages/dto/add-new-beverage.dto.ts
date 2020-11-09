@@ -1,12 +1,13 @@
-import { IsNotEmpty, IsString, IsNumber, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { Column } from 'typeorm';
 
-export class UpdateDrinkDetailsDto {
-	@IsOptional()
+export class AddNewBeverageDto {
+	@IsNotEmpty()
 	@IsString()
 	name: string;
 
 	@IsNumber()
-	@IsOptional()
+	@IsNotEmpty()
 	bottleCapacity: number;
 
 	@IsNumber()
