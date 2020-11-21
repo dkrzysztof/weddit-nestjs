@@ -11,6 +11,8 @@ import GuestApi from './guests/guestApi';
 import { BeverageApi } from './beverages/beveragesApi';
 import { GuestTypesApi } from './guestTypes/guestTypesApi';
 import { TaskListApi } from './taskLists/taskListsApi';
+import { ErrorHandledResponse } from 'App/types/error';
+import responseParser from './utils/responseParser';
 
 const baseURL = `http://localhost:5000/`;
 
@@ -45,8 +47,17 @@ export interface ErrorApi {
 	error: string;
 }
 
-axios.interceptors.response.use(undefined, (error: AxiosError) => {
+axios.interceptors.response.use(undefined, (error: AxiosError<{ code: number; message: string[] }>) => {
 	const { status, data } = error.response || {};
+	const { message } = error;
+
+	if (message.toUpperCase() === 'NETWORK ERROR') {
+		throw {
+			message: 'Błąd połączenia z serwerem',
+			description: 'Nie można nawiązać połączenia z serwerem',
+			code: 400
+		} as ErrorHandledResponse;
+	}
 
 	if (status === 404) {
 		notification['error']({
@@ -58,6 +69,14 @@ axios.interceptors.response.use(undefined, (error: AxiosError) => {
 
 	if (status === 403) {
 		console.log('403: ' + error.response);
+		if (error.config.url === 'auth/login') {
+			throw {
+				message: 'Błędny login lub hasło',
+				code: 403,
+				description: 'Podane login i hasło są nieprawidłowe'
+			} as ErrorHandledResponse;
+		}
+
 		notification['error']({
 			message: 'Błąd',
 			description: 'Nie masz dostępu do tego zasobu'
@@ -116,6 +135,7 @@ const responseBodyAxios = (response: AxiosResponse) => {
 		return response.data.data;
 	}
 
+	responseParser(response);
 	return response.data;
 };
 const responseBodyFetch = async (response: Response) => {

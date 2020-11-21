@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ErrorApi } from 'App/api/agent';
 import { DeleteGuestResponse, GetGuestsResponse, GuestForGetGuestsResponse } from 'App/api/guests/responses';
+import { GetGuestsShortCollectionResponse } from 'App/api/guests/responses/GetGuestsShortCollectionResponse';
 import { GetGuestTypesResponse } from 'App/api/guestTypes/responses';
 import StatusType from 'App/types/requestStatus';
 import { GuestState, initialGuestState } from './guests.state';
@@ -96,6 +97,23 @@ const guestsSlice = createSlice({
 		},
 		updateGuestTypeFailure: (state: GuestState, action: PayloadAction<ErrorApi>) => {
 			state.status.updateGuestType = FAILED;
+		},
+
+		///
+
+		getGuestsShortCollectionStart: (state: GuestState) => {
+			state.status.getGuestsShortCollection = LOADING;
+		},
+		getGuestsShortCollectionSuccess: (
+			state: GuestState,
+			action: PayloadAction<GetGuestsShortCollectionResponse[]>
+		) => {
+			state.status.getGuestsShortCollection = SUCCESS;
+
+			state.guestsShort = action.payload;
+		},
+		getGuestsShortCollectionFailure: (state: GuestState, action: PayloadAction<ErrorApi>) => {
+			state.status.getGuestsShortCollection = FAILED;
 		}
 	}
 });
@@ -121,7 +139,10 @@ export const {
 	getGuestTypesSuccess,
 	updateGuestTypeFailure,
 	updateGuestTypeStart,
-	updateGuestTypeSuccess
+	updateGuestTypeSuccess,
+	getGuestsShortCollectionFailure,
+	getGuestsShortCollectionStart,
+	getGuestsShortCollectionSuccess
 } = guestsSlice.actions;
 
 export default guestsSlice;

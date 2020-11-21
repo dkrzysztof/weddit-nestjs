@@ -15,11 +15,12 @@ import { LoginRequest } from 'App/api/auth/requests';
 import agent from 'App/api/agent';
 import { LoginResponse } from 'App/api/auth/responses';
 import { GetAccountDetailsResponse } from 'App/api/account/responses';
+import { ErrorHandledResponse } from 'App/types/error';
 
 export const authenticateUser = (
 	payload?: LoginRequest,
 	onSuccess?: () => void,
-	onError?: (error: string[]) => void
+	onError?: (error: ErrorHandledResponse) => void
 ): AppThunk => async (dispatch) => {
 	dispatch(authenticationStart());
 	agent.Auth.login(payload)
@@ -35,10 +36,9 @@ export const authenticateUser = (
 					dispatch(getUserDetailsFailure());
 				});
 		})
-		.catch((e) => {
-			const err = ['Provided credentials are incorrect'];
-			onError(err);
-			dispatch(authenticationFailure(err));
+		.catch((e: ErrorHandledResponse) => {
+			if (e.code === 403) onError(e);
+			dispatch(authenticationFailure(e));
 		});
 };
 

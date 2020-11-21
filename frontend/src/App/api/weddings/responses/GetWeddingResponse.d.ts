@@ -24,4 +24,6 @@ export interface GetWeddingDetailsResponse {
 	budget: number;
 
 	exceedBudget: number;
+
+	seatChart: string | null;
 }

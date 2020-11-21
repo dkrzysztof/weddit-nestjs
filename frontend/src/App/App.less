@@ -1,82 +1,117 @@
-
-.bg-site{
-  background-color: white !important;
+.bg-site {
+	background-color: white !important;
 }
 
 .content-layout {
-  background: #fff;
-  /* padding: 24px; */
-  min-height: calc(100vh - 64px);
-  width: 100%;
-  /* display: flex; */
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
+	background: #fff;
+	/* padding: 24px; */
+	min-height: calc(100vh - 64px);
+	width: 100%;
+	/* display: flex; */
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: flex-start;
 }
 
-.body{
-  overflow-y: hidden;
-  height:100vh;
+.body {
+	overflow-y: hidden;
+	height: 100vh;
 }
 
-div.fix-large-addon{
-  margin-bottom: 0;
+div.fix-large-addon {
+	margin-bottom: 0;
 }
 
-div.fix-large-addon .ant-form-item-control-input{
-  min-height:unset;
+div.fix-large-addon .ant-form-item-control-input {
+	min-height: unset;
 }
 
-span.red-outline{
-  font-size: 1em;
-  transform: scale(1.0);
-  transition: all 0.2s ease-out;
-  color: #e73a3a;
+span.red-outline {
+	font-size: 1em;
+	transform: scale(1);
+	transition: all 0.2s ease-out;
+	color: #e73a3a;
 }
 
-span.red-outline:hover{
-  cursor: pointer;
-  transform: scale(1.1);
+span.red-outline:hover {
+	cursor: pointer;
+	transform: scale(1.1);
 }
 
-.w-256px{
-  width:256px !important;
+.w-256px {
+	width: 256px !important;
 }
 
-.w-fit{
-  width: fit-content !important;
+.w-fit {
+	width: fit-content !important;
 }
 
-.p-6{
-  padding:2em;
+.p-6 {
+	padding: 2em;
 }
 
 // stylowanie scrollbara
 body::-webkit-scrollbar {
-  width: 0.5em;
+	width: 0.5em;
 }
- 
+
 body::-webkit-scrollbar-track {
-  border: 0.1px solid lightgray;
-  border-radius: 0.25em;
+	border: 0.1px solid lightgray;
+	border-radius: 0.25em;
 }
- 
+
 body::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
-  outline: 1px solid slategrey;
-  border-radius: 0.25em;
+	background-color: darkgrey;
+	outline: 1px solid slategrey;
+	border-radius: 0.25em;
 }
 
-.ant-table-content > table{
-  table-layout: fixed !important;
+.ant-table-content > table {
+	table-layout: fixed !important;
 }
 
-.fixed-header{
-  position: fixed;
-  z-index: 1;
-  width: 100% ;
+.fixed-header {
+	position: fixed;
+	z-index: 1;
+	width: 100%;
 }
 
-.ant-menu{
-  height:100%;
+.ant-menu {
+	height: 100%;
+}
+
+.diagram-component {
+	width: 900px;
+	height: 600px;
+	border: solid 1px black;
+	background-color: white;
+}
+
+.guest-component {
+	width: 100px;
+	height: 600px;
+	margin-right: 1em;
+	border: solid 1px black;
+	background-color: white;
+}
+
+#myFlexDiv {
+	display: -webkit-flex;
+	display: flex;
+	flex-flow: row wrap;
+	width: 100%;
+	justify-content: center;
+}
+
+.diagram-on-top {
+	width: 100%;
+	justify-items: end;
+}
+
+.tables-container {
+	float: right;
+	width: calc(100% - 114px);
+	margin-bottom: 1em;
+	height: 500px;
+	border: solid 1px black;
 }

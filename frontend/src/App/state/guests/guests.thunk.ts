@@ -25,7 +25,10 @@ import {
 	createGuestTypeSuccess,
 	updateGuestTypeFailure,
 	updateGuestTypeStart,
-	updateGuestTypeSuccess
+	updateGuestTypeSuccess,
+	getGuestsShortCollectionStart,
+	getGuestsShortCollectionSuccess,
+	getGuestsShortCollectionFailure
 } from './guests.slice';
 
 export const getGuests = (idWedding: number, params: GetGuestsRequest): AppThunk => async (dispatch) => {
@@ -33,6 +36,16 @@ export const getGuests = (idWedding: number, params: GetGuestsRequest): AppThunk
 	agent.Guests.getGuests(idWedding, params)
 		.then((res) => dispatch(getGuestsSuccess(res)))
 		.catch((err) => dispatch(getGuestsFailure(err)));
+};
+
+export const getGuestsShort = (idWedding: number, onSuccess?: () => void): AppThunk => async (dispatch) => {
+	dispatch(getGuestsShortCollectionStart());
+	agent.Guests.getGuestsShort(idWedding)
+		.then((res) => {
+			dispatch(getGuestsShortCollectionSuccess(res));
+			onSuccess();
+		})
+		.catch((err) => dispatch(getGuestsShortCollectionFailure(err)));
 };
 
 export const createGuest = (idWedding: number, body: CreateGuestRequest, params?: IPageQueryParams): AppThunk => async (

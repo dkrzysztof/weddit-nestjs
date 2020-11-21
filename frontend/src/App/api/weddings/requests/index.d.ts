@@ -2,3 +2,4 @@ export { GetUserWeddingsRequest as GetUserWeddings } from './GetUserWeddingsRequ
 export { CreateWeddingPlanRequest } from './CreateWeddingRequest';
 export { UpdateWeddingDetailsRequest } from './UpdateWeddingRequest';
 export { UpdateUserAccessToWeddingRequest } from './UpdateUserAccessToWedding';
+export { AddSeatChartRequest } from './AddSeatChartRequest';

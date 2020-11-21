@@ -12,6 +12,7 @@ import { transactionWrapper } from '../../utilities/transaction-wrapper.utility'
 import { updateAllObjectKeyValues } from '../../utilities/update-all-keys.utilities';
 import { JwtPayload } from '../interfaces/jwt-payload.interface';
 import { UserService } from '../users/users.service';
+import { AddSeatDiagram } from './dto/add-chart-diagram';
 import { AllowUserToAccessWedding } from './dto/allow-user-to-access-wedding.dto';
 import { CreateWeddingPlanDto } from './dto/create-wedding-plan.dto';
 import { GetUserWeddingsDto } from './dto/get-user-weddings.dto';
@@ -152,17 +153,21 @@ export class WeddingService {
 			(skip, take) => {
 				return this.userWeddingRepository
 					.createQueryBuilder('T')
-					.leftJoinAndSelect('T.wedding', 'W')
-					.leftJoinAndSelect('T.users', 'U')
+					.leftJoinAndSelect('T.users', 'u')
+					.leftJoinAndSelect('T.wedding', 'w')
+					.leftJoinAndSelect('w.guests', 'g')
+					.groupBy('w.idWedding, u.idUser, w.name, w.dateOfWedding, w.address')
 					.select([
-						'W.idWedding as "idWedding"',
-						'W.name AS "name"',
-						'W.dateOfWedding as "dateOfWedding"',
-						'W.address AS "address"',
+						'w.idWedding as "idWedding"',
+						'w.name AS "name"',
+						'w.dateOfWedding as "dateOfWedding"',
+						'w.address AS "address"',
 					])
-					.where('U.idUser = :idUser', { idUser: user.idUser })
+					.addSelect('COUNT(g.idGuest) as "size"')
+					.having('u.idUser = :idUser', { idUser: user.idUser })
 					.skip(skip)
 					.take(take)
+					.orderBy('w.name', 'ASC')
 					.getRawMany() as Promise<GetUserWeddingsDto[]>;
 			},
 			() => {
@@ -247,6 +252,17 @@ export class WeddingService {
 			const { affected } = await this.weddingRepository.delete(idWedding);
 
 			return affected === 1;
+		} else throw new ForbiddenException('Nie masz uprawnień do wykonania tej akcji!');
+	}
+
+	async addSeatDiagram(user: JwtPayload, idWedding: number, body: AddSeatDiagram): Promise<boolean> {
+		if (await this.checkIfUserHasPermission(user, idWedding, true)) {
+			const wedding = await this.weddingRepository.findOne({ idWedding });
+
+			wedding.seatChart = body.model;
+			await this.weddingRepository.save(wedding);
+
+			return true;
 		} else throw new ForbiddenException('Nie masz uprawnień do wykonania tej akcji!');
 	}
 }

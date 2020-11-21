@@ -3,15 +3,16 @@ import React, { CSSProperties } from 'react';
 
 interface ConfiguredCardProps {
 	onClick?: () => void;
+	className: string;
 }
 
 const cardStyle: CSSProperties = {
 	marginBottom: '1em'
 };
 
-const ConfiguredCard: React.FC<ConfiguredCardProps> = ({ onClick, children }) => {
+const ConfiguredCard: React.FC<ConfiguredCardProps> = ({ onClick, children, className }) => {
 	return (
-		<Card hoverable onClick={onClick} style={cardStyle}>
+		<Card onClick={onClick} style={cardStyle} className={className}>
 			{children}
 		</Card>
 	);

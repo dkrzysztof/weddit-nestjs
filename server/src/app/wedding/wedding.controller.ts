@@ -5,6 +5,7 @@ import { IPageQueryParams } from 'src/types/PageQueryParams';
 import { Wedding } from '../../models/wedding.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { GetUserDto } from '../users/dto/get-user.dto';
+import { AddSeatDiagram } from './dto/add-chart-diagram';
 import { AllowUserToAccessWedding } from './dto/allow-user-to-access-wedding.dto';
 import { CreateWeddingPlanDto } from './dto/create-wedding-plan.dto';
 import { GetUserWeddingsDto } from './dto/get-user-weddings.dto';
@@ -78,5 +79,11 @@ export class WeddingController {
 	@Delete(':id')
 	async deleteWedding(@Req() { user }, @Param('id') idWedding): Promise<boolean> {
 		return await this.weddingService.deleteWedding(user, idWedding);
+	}
+
+	@UseGuards(JwtAuthGuard)
+	@Post(':id')
+	async addSeatDiagram(@Req() { user }, @Param('id') idWedding, @Body() body: AddSeatDiagram): Promise<boolean> {
+		return await this.weddingService.addSeatDiagram(user, idWedding, body);
 	}
 }

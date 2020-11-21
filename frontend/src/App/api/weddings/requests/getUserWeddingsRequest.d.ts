@@ -7,4 +7,5 @@ export interface WeddingForGetUserWeddings {
 	name: string;
 	dateOfWedding: Date;
 	address: string;
+	size: number;
 }

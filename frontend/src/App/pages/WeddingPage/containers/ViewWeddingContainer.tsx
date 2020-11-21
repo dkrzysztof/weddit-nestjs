@@ -12,6 +12,7 @@ import StatusType from 'App/types/requestStatus';
 import React, { CSSProperties, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import '../styles/ViewWeddingContainer.less';
 
 interface ViewWeddingRouteParams {
 	idWedding: string;
@@ -89,7 +90,10 @@ const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>
 						<Divider>Akcje</Divider>
 						<Row justify='space-between'>
 							<Col xs={24} sm={24} md={11} lg={5}>
-								<ConfiguredCard onClick={() => history.push(`/weddings/${idWedding}/guests`)}>
+								<ConfiguredCard
+									onClick={() => history.push(`/weddings/${idWedding}/guests`)}
+									className='ant-card-hover guests'
+								>
 									<TeamOutlined
 										style={{
 											color: '#4d4dff',
@@ -101,7 +105,10 @@ const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>
 								</ConfiguredCard>
 							</Col>
 							<Col xs={24} sm={24} md={11} lg={5}>
-								<ConfiguredCard onClick={() => history.push(`/weddings/${idWedding}/beverages`)}>
+								<ConfiguredCard
+									onClick={() => history.push(`/weddings/${idWedding}/beverages`)}
+									className='ant-card-hover beverages'
+								>
 									<ExperimentOutlined
 										style={{
 											color: '#ffc14d',
@@ -113,7 +120,10 @@ const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>
 								</ConfiguredCard>
 							</Col>
 							<Col xs={24} sm={24} md={11} lg={5}>
-								<ConfiguredCard onClick={() => history.push(`/weddings/${idWedding}/task-list`)}>
+								<ConfiguredCard
+									onClick={() => history.push(`/weddings/${idWedding}/task-list`)}
+									className='ant-card-hover task-list'
+								>
 									<BarsOutlined
 										style={{
 											color: '#58b368',
@@ -125,7 +135,10 @@ const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>
 								</ConfiguredCard>
 							</Col>
 							<Col xs={24} sm={24} md={11} lg={5}>
-								<ConfiguredCard>
+								<ConfiguredCard
+									onClick={() => history.push(`/weddings/${idWedding}/seat-chart`)}
+									className='ant-card-hover seat-chart'
+								>
 									<PartitionOutlined
 										style={{
 											color: '#a862ea',

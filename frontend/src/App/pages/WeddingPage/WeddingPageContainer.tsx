@@ -11,6 +11,7 @@ import SettingsWeddingContainer from './containers/SettingsWeddingContainer';
 import GuestsPageContainer from '../GuestsPage/GuestsPageContainer';
 import TaskListPageContainer from '../TaskListPage/TaskListPageContainer';
 import BeveragePageContainer from '../BeveragePage/BeveragePageContainer';
+import SeatChartPageContainer from '../SeatChartPage/SeatDiagramPageContainer';
 
 const WeddingPageContainer: React.FC<RouteComponentProps> = () => {
 	return (
@@ -22,6 +23,7 @@ const WeddingPageContainer: React.FC<RouteComponentProps> = () => {
 				<ProtectedRoute exact path='/weddings/:idWedding/guests' component={GuestsPageContainer} />
 				<ProtectedRoute exact path='/weddings/:idWedding/beverages' component={BeveragePageContainer} />
 				<ProtectedRoute exact path='/weddings/:idWedding/task-list' component={TaskListPageContainer} />
+				<ProtectedRoute exact path='/weddings/:idWedding/seat-chart' component={SeatChartPageContainer} />
 				<ProtectedRoute exact path='/weddings' component={GetUserWeddingsContainer} />
 			</Switch>
 		</Layout.Content>

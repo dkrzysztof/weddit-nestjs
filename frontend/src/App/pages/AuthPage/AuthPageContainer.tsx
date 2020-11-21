@@ -37,7 +37,7 @@ const AuthPageContainer: React.FC<AuthPageContainerProps> = ({ history, text }: 
 					</Descriptions.Item>
 				</Descriptions>
 			</Center>
-			<Center size='medium'>
+			<Center size='large'>
 				<Divider>Akcje</Divider>
 				<AuthUserHomePage />
 			</Center>

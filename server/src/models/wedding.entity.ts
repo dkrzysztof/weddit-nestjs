@@ -50,6 +50,9 @@ export class Wedding {
 	@Column('decimal', { nullable: true })
 	exceedBudget: number;
 
+	@Column('json', { nullable: true })
+	seatChart: string;
+
 	@OneToMany(
 		type => Beverage,
 		beverage => beverage.wedding,

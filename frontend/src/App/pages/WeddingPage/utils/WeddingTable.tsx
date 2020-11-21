@@ -1,12 +1,13 @@
 import React, { Dispatch } from 'react';
 
 import { Link } from 'react-router-dom';
-import { Button, Modal, Dropdown, Menu } from 'antd';
+import { Button, Modal, Dropdown, Menu, Tag } from 'antd';
 import { ExclamationCircleOutlined, SettingFilled } from '@ant-design/icons';
 
 import store from 'App/state/store';
 import { WeddingForGetUserWeddings } from 'App/api/weddings/requests/GetUserWeddingsRequest';
 import { deleteWedding } from 'App/state/weddings/weddings.thunk';
+import { dateLocale } from 'App/types/dateLocale';
 
 const squareOutlineStyle = {
 	fontSize: '1.3em',
@@ -18,11 +19,32 @@ export const renderWeddingTableColumns = (weddings: WeddingForGetUserWeddings[],
 	{
 		title: 'Wesele',
 		render: (record: WeddingForGetUserWeddings) => (
-			<Link to={`/weddings/${record.idWedding}/view`}>{record.name}</Link>
+			<Button type='default' style={{ margin: 'auto' }}>
+				<Link to={`/weddings/${record.idWedding}/view`}>{record.name}</Link>
+			</Button>
 		)
 	},
-	{ title: 'Dzień wesela', dataIndex: 'dateOfWedding' },
+	{
+		title: 'Dzień wesela',
+		render: (row: WeddingForGetUserWeddings) => row.dateOfWedding.toLocaleDateString('pl', dateLocale)
+	},
 	{ title: 'Adres', dataIndex: 'address' },
+	{
+		title: 'Ilość gości',
+		render: (row: WeddingForGetUserWeddings) => {
+			if (row.size < 50) {
+				return <Tag color='#FFC75F'>{row.size}</Tag>;
+			}
+			if (row.size < 100) {
+				return <Tag color='#FF9671'>{row.size}</Tag>;
+			}
+			if (row.size < 150) {
+				return <Tag color='#D65DB1'>{row.size}</Tag>;
+			} else {
+				return <Tag color='#845EC2'>{row.size}</Tag>;
+			}
+		}
+	},
 	{
 		title: 'Opcje',
 		render: (record: WeddingForGetUserWeddings) => (

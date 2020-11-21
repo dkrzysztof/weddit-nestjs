@@ -1,12 +1,16 @@
 import { configureStore, Action, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { ThunkAction } from 'redux-thunk';
+import logActionMiddleware from './middleware/logAction';
 import rootReducer, { RootState } from './root.reducer';
 
 const store = configureStore({
 	reducer: rootReducer,
-	middleware: getDefaultMiddleware({
-		serializableCheck: false
-	})
+	middleware: [
+		logActionMiddleware,
+		...getDefaultMiddleware({
+			serializableCheck: false
+		})
+	]
 });
 
 if (process.env.NODE_ENV === 'development' && module.hot) {

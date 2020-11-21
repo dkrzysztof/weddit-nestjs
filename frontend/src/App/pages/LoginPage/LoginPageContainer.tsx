@@ -13,6 +13,7 @@ import { RootState } from 'App/state/root.reducer';
 import LoadingScreen from 'App/common/components/LoadingScreen';
 import StatusType from 'App/types/requestStatus';
 import Center from 'App/common/components/Center';
+import { ErrorHandledResponse } from 'App/types/error';
 
 interface LoginPageContainerProps extends RouteChildrenProps {
 	name?: string;
@@ -22,7 +23,7 @@ const LoginPageContainer: React.FC<LoginPageContainerProps> = ({ history }: Logi
 	type FinishFormType = (values: Store) => void;
 
 	const dispatch = useDispatch();
-	const [loginError, setLoginError] = useState<string[] | boolean>(false);
+	const [loginError, setLoginError] = useState<string[] | string | boolean>(false);
 	const status = useSelector((state: RootState) => state.session.status.authentication);
 
 	const formInitialValues = {
@@ -35,8 +36,8 @@ const LoginPageContainer: React.FC<LoginPageContainerProps> = ({ history }: Logi
 			history.push('/user');
 		};
 
-		let handleError: (errorMessages: string[]) => void = (errors: string[]) => {
-			setLoginError(errors);
+		let handleError: (errorMessages: ErrorHandledResponse) => void = (err: ErrorHandledResponse) => {
+			setLoginError(err.description);
 		};
 
 		setLoginError(false);

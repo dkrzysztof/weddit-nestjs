@@ -5,6 +5,7 @@ import { GetAccountDetailsResponse } from 'App/api/account/responses/getAccountD
 import { LoginResponse } from 'App/api/auth/responses';
 import { StatusType } from 'App/types/requestStatus';
 import { notification } from 'antd';
+import { ErrorHandledResponse } from 'App/types/error';
 
 const { FAILED, SUCCESS, LOADING } = StatusType;
 
@@ -22,8 +23,11 @@ const sessionSlice = createSlice({
 			// TODO usunac token z local Storage
 			localStorage.setItem('token', action.payload.token);
 		},
-		authenticationFailure: (state: SessionState, action: PayloadAction<string[]>) => {
-			notification.error({ message: action.payload && action.payload.length > 0 && action.payload[0] });
+		authenticationFailure: (state: SessionState, action: PayloadAction<ErrorHandledResponse>) => {
+			const { description, message, code } = action.payload;
+			if (code === 400) {
+				notification.error({ message, description });
+			}
 			state.status.authentication = FAILED;
 		},
 

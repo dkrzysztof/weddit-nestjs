@@ -1,10 +1,23 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
-import { request } from 'http';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Post,
+	Put,
+	Query,
+	Req,
+	UploadedFile,
+	UseGuards,
+	UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express/multer/interceptors/file.interceptor';
 import { IPageQueryParams } from 'src/types/PageQueryParams';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { AddGuestDto } from './dto/add-guest.dto';
 import { UpdateGuestDto } from './dto/update-geust.dto';
-import { GuestService } from './guest.service';
+import { GuestService, File } from './guest.service';
 
 @Controller()
 export class GuestController {
@@ -14,6 +27,12 @@ export class GuestController {
 	@UseGuards(JwtAuthGuard)
 	async getAllGuests(@Req() request, @Param('idWedding') idWedding, @Query() query: IPageQueryParams) {
 		return await this.guestService.getAllGuests(request.user, idWedding, query);
+	}
+
+	@Get('/short')
+	@UseGuards(JwtAuthGuard)
+	async getAllGuestsShort(@Req() request, @Param('idWedding') idWedding) {
+		return await this.guestService.getAllGuestsShort(request.user, idWedding);
 	}
 
 	@Post()
@@ -41,5 +60,11 @@ export class GuestController {
 		@Param('id') idGuest: number,
 	): Promise<boolean> {
 		return await this.guestService.deleteGuest(user, idWedding, idGuest);
+	}
+
+	@Post('upload')
+	@UseInterceptors(FileInterceptor('file'))
+	async uploadFile(@Req() { user }, @UploadedFile() file: File, @Param('idWedding') idWedding: number) {
+		return await this.guestService.uploadGuestsFromFile(user, idWedding, file);
 	}
 }

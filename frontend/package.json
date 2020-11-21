@@ -21,6 +21,8 @@
     "antd": "^4.2.0",
     "axios": "^0.19.2",
     "craco-less": "^1.17.0",
+    "gojs": "^2.1.28",
+    "gojs-react": "^1.0.9",
     "i18next": "^19.7.0",
     "i18next-browser-languagedetector": "^6.0.1",
     "moment": "^2.24.0",

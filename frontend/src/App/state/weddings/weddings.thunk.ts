@@ -1,5 +1,9 @@
 import agent from 'App/api/agent';
-import { CreateWeddingPlanRequest, UpdateUserAccessToWeddingRequest } from 'App/api/weddings/requests';
+import {
+	AddSeatChartRequest,
+	CreateWeddingPlanRequest,
+	UpdateUserAccessToWeddingRequest
+} from 'App/api/weddings/requests';
 import { UpdateWeddingRequest } from 'App/api/weddings/requests/UpdateWeddingRequest';
 import { IPageQueryParams } from 'App/types/pagination/pagination';
 import { AppThunk } from '../store';
@@ -27,7 +31,10 @@ import {
 	removeUserAccessToWeddingSuccess,
 	updateWeddingFailure,
 	updateWeddingStart,
-	updateWeddingSuccess
+	updateWeddingSuccess,
+	addSeatChartFailure,
+	addSeatChartStart,
+	addSeatChartSuccess
 } from './weddings.slice';
 
 export const getUserWeddings = (params: IPageQueryParams): AppThunk => async (dispatch) => {
@@ -35,6 +42,13 @@ export const getUserWeddings = (params: IPageQueryParams): AppThunk => async (di
 	agent.Wedding.getUserWeddings(params)
 		.then((res) => dispatch(getUserWeddingsSuccess(res)))
 		.catch((err) => dispatch(getUserWeddingsFailure(err)));
+};
+
+export const addSeatChart = (idWedding: number, body: AddSeatChartRequest): AppThunk => async (dispatch) => {
+	dispatch(addSeatChartStart());
+	agent.Wedding.addSeatChart(idWedding, body)
+		.then((res) => dispatch(addSeatChartSuccess(res)))
+		.catch((err) => dispatch(addSeatChartFailure(err)));
 };
 
 export const createUserWedding = (body: CreateWeddingPlanRequest): AppThunk => async (dispatch) => {

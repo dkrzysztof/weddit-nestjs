@@ -14,6 +14,9 @@ import { JwtPayload } from '../interfaces/jwt-payload.interface';
 import { WeddingService } from '../wedding/wedding.service';
 import { AddGuestDto } from './dto/add-guest.dto';
 import { UpdateGuestDto } from './dto/update-geust.dto';
+import * as csv from '@fast-csv/parse';
+import { parseStream } from 'fast-csv';
+import * as stream from 'stream';
 
 @Injectable()
 export class GuestService {
@@ -52,6 +55,20 @@ export class GuestService {
 						.getRawMany(),
 				async () => await query.getCount(),
 			);
+		} else throw new ForbiddenException('You have no access to this resource!');
+	}
+
+	async getAllGuestsShort(userPayload: JwtPayload, idWedding: number) {
+		if (await this.weddingService.checkIfUserHasPermission(userPayload, idWedding, false)) {
+			const query = await this.guestRepository
+				.createQueryBuilder('G')
+				.leftJoin('G.wedding', 'W')
+				.select(['G.idGuest AS "idGuest"', 'G.firstName AS "firstName"', 'G.lastName AS "lastName"'])
+				.where('W.idWedding = :idWedding', { idWedding })
+				.orderBy('G.lastName', 'ASC')
+				.getRawMany();
+
+			return query;
 		} else throw new ForbiddenException('You have no access to this resource!');
 	}
 
@@ -109,4 +126,54 @@ export class GuestService {
 			return true;
 		} else throw new ForbiddenException('You have no access to this resource or permission to this action!');
 	}
+
+	async uploadGuestsFromFile(user: JwtPayload, idWedding: number, file: File) {
+		let bufferStream = new stream.PassThrough();
+		bufferStream.end(file.buffer);
+
+		let guestsArrayToCreate = [];
+
+		let parseFilePromise = new Promise<any>((resolve, reject) => {
+			parseStream(bufferStream, {
+				headers: ['firstName', 'lastName', 'confirmed', 'confirmedAfters'],
+				delimiter: ';',
+			})
+				.on('error', error => reject(error))
+				.on('data', row =>
+					guestsArrayToCreate.push({
+						...row,
+						confirmed: row.confirmed == 'true',
+						confirmedAfters: row.confirmedAfters == 'true',
+					}),
+				)
+				.on('end', rowsNumber => resolve(rowsNumber));
+		});
+
+		await parseFilePromise;
+
+		return await transactionWrapper(async queryRunner => {
+			const wedding = await queryRunner.manager.findOne(Wedding, { idWedding }, { relations: ['guests'] });
+
+			for (const guestToCreate of guestsArrayToCreate) {
+				const newGuest = await queryRunner.manager.create(Guest, guestToCreate);
+
+				appendOrCreateArray(wedding, 'guests', newGuest);
+
+				await queryRunner.manager.save(Guest, newGuest);
+			}
+
+			await queryRunner.manager.save(Wedding, wedding);
+
+			return guestsArrayToCreate.length;
+		});
+	}
+}
+
+export interface File {
+	fieldname: string;
+	originalname: string;
+	encoding: string;
+	mimetype: string;
+	buffer: Buffer;
+	size: number;
 }

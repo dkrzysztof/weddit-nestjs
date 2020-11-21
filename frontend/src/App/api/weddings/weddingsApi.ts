@@ -2,7 +2,12 @@ import appConfig from 'app.config';
 import { IPageQueryParams } from 'App/types/pagination/pagination';
 import { request } from 'http';
 import { requests } from '../agent';
-import { CreateWeddingPlanRequest, GetUserWeddings, UpdateUserAccessToWeddingRequest } from './requests';
+import {
+	AddSeatChartRequest,
+	CreateWeddingPlanRequest,
+	GetUserWeddings,
+	UpdateUserAccessToWeddingRequest
+} from './requests';
 import { UpdateWeddingRequest } from './requests/UpdateWeddingRequest';
 import {
 	GetUsersWithAccessToWeddingResponse,
@@ -32,5 +37,8 @@ export const WeddingsApi = {
 	removeUserAccessToWeddings: (idWedding: number, idUser: number): Promise<boolean> =>
 		requests.delete(`weddings/${idWedding}/users/${idUser}`),
 
-	getUserWeddings: (params: IPageQueryParams): Promise<GetUserWeddings> => requests.get('weddings', params)
+	getUserWeddings: (params: IPageQueryParams): Promise<GetUserWeddings> => requests.get('weddings', params),
+
+	addSeatChart: (idWedding: number, body: AddSeatChartRequest): Promise<boolean> =>
+		requests.post(`weddings/${idWedding}`, body)
 };

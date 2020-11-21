@@ -1,4 +1,5 @@
 import { GetGuestsResponse, GuestForGetGuestsResponse } from 'App/api/guests/responses';
+import { GetGuestsShortCollectionResponse } from 'App/api/guests/responses/GetGuestsShortCollectionResponse';
 import { GetGuestTypesResponse } from 'App/api/guestTypes/responses';
 import defaultPageQueryParams from 'App/common/utils/defaultPageQueryParams';
 import { IPageQueryParams } from 'App/types/pagination/pagination';
@@ -13,8 +14,10 @@ export interface GuestState {
 		getGuestTypes: StatusType;
 		updateGuestType: StatusType;
 		createGuestType: StatusType;
+		getGuestsShortCollection: StatusType;
 	};
 	guests: GuestForGetGuestsResponse[] | null;
+	guestsShort: GetGuestsShortCollectionResponse[] | null;
 	guestTypes: GetGuestTypesResponse;
 	selectedGuest: GuestForGetGuestsResponse | null;
 	selectedGuestId: number | null;
@@ -23,6 +26,7 @@ export interface GuestState {
 
 export const initialGuestState: GuestState = {
 	status: {
+		getGuestsShortCollection: StatusType.INITIAL,
 		getGuests: StatusType.INITIAL,
 		createGuest: StatusType.INITIAL,
 		updateGuest: StatusType.INITIAL,
@@ -32,6 +36,7 @@ export const initialGuestState: GuestState = {
 		createGuestType: StatusType.INITIAL
 	},
 	guests: null,
+	guestsShort: null,
 	guestTypes: null,
 	selectedGuest: null,
 	selectedGuestId: null,

@@ -158,6 +158,34 @@ export const weddingSlice = createSlice({
 				description: 'Wystapił błąd przy aktualizacji danych wesela!'
 			});
 			console.log('ERROR at updateWedding', action.payload);
+		},
+
+		///
+
+		addSeatChartStart: (state: WeddingsState) => {
+			state.status.addSeatChart = LOADING;
+		},
+		addSeatChartSuccess: (state: WeddingsState, action: PayloadAction<boolean>) => {
+			state.status.addSeatChart = SUCCESS;
+			if (action.payload) {
+				notification.success({
+					message: 'Sukces',
+					description: `Pomyślnie zapisano dane o sali weselnej!`
+				});
+			} else {
+				notification.error({
+					message: 'Hmmm?',
+					description: `Coś nie tak z zapisaniem sali...`
+				});
+			}
+		},
+		addSeatChartFailure: (state: WeddingsState, action: PayloadAction<string>) => {
+			state.status.addSeatChart = FAILED;
+			notification.error({
+				message: 'Błąd!',
+				description: 'Wystapił błąd przy zapisywaniu układu sali!'
+			});
+			console.log('ERROR at addSeatChart', action.payload);
 		}
 	}
 });
@@ -186,5 +214,8 @@ export const {
 	removeUserAccessToWeddingSuccess,
 	updateWeddingFailure,
 	updateWeddingStart,
-	updateWeddingSuccess
+	updateWeddingSuccess,
+	addSeatChartFailure,
+	addSeatChartStart,
+	addSeatChartSuccess
 } = weddingSlice.actions;
