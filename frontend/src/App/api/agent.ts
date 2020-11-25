@@ -111,11 +111,17 @@ axios.interceptors.response.use(undefined, (error: AxiosError<{ code: number; me
 
 	if (status === 400) {
 		if (data.message) {
-			let description = data.message.join(' || \n');
-			notification['error']({
-				message: 'Błąd',
-				description
-			});
+			let description: any = '';
+			if (data.message && Array.isArray(data.message)) {
+				description = data.message.join(' || \n');
+			} else {
+				description = data.message;
+			}
+
+			// notification['error']({
+			// 	message: 'Błąd',
+			// 	description
+			// });
 		}
 		if (data.code) {
 			throw data.code;

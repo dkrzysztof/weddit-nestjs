@@ -13,6 +13,7 @@ export interface BeveragesState {
 	};
 	beverages: BeverageForGetBeveragesResponse[];
 	queryParams: IPageQueryParams;
+	error: any;
 }
 
 export const initialBeveragesState: BeveragesState = {
@@ -23,5 +24,6 @@ export const initialBeveragesState: BeveragesState = {
 		updateBeverage: StatusType.INITIAL
 	},
 	beverages: null,
-	queryParams: defaultPageQueryParams
+	queryParams: defaultPageQueryParams,
+	error: null
 };

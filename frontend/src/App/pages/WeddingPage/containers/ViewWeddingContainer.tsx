@@ -1,5 +1,14 @@
-import { BarsOutlined, ExperimentOutlined, PartitionOutlined, TeamOutlined } from '@ant-design/icons';
-import { Card, Col, Descriptions, Divider, Result, Row } from 'antd';
+import {
+	BarsOutlined,
+	ExperimentOutlined,
+	PartitionOutlined,
+	SettingFilled,
+	SettingOutlined,
+	SettingTwoTone,
+	TeamOutlined
+} from '@ant-design/icons';
+import { Button, Card, Col, Descriptions, Divider, Dropdown, Result, Row, Typography } from 'antd';
+import { WeddingForGetUserWeddings } from 'App/api/weddings/requests/GetUserWeddingsRequest';
 import Center from 'App/common/components/Center';
 import ConfiguredCard from 'App/common/components/ConfiguredCard';
 import GoToPreviousPageButton from 'App/common/components/handleGoBack';
@@ -12,6 +21,7 @@ import StatusType from 'App/types/requestStatus';
 import React, { CSSProperties, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 import '../styles/ViewWeddingContainer.less';
 
 interface ViewWeddingRouteParams {
@@ -45,7 +55,22 @@ const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>
 		return (
 			<>
 				<GoToPreviousPageButton />
-				<PageTitle title={`Dane szczegółowe wesela ${wedding.name}`} />
+				<Row justify='center'>
+					<Col xs={22} sm={22} md={20} lg={16}>
+						<Row justify='space-between'>
+							<Col span={23}>
+								<PageTitle title={`Dane szczegółowe wesela ${wedding.name}`} />
+							</Col>
+							<Col span={1}>
+								<Link to={`/weddings/${idWedding}/update`}>
+									<Button type='link' style={{ color: '#5923ef' }}>
+										<SettingOutlined />
+									</Button>
+								</Link>
+							</Col>
+						</Row>
+					</Col>
+				</Row>
 				<Row justify='center'>
 					<Col xs={22} sm={22} md={20} lg={16}>
 						<Descriptions
@@ -55,36 +80,44 @@ const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>
 						>
 							<Descriptions.Item label='Nazwa wesela'>{wedding.name || <em>-</em>}</Descriptions.Item>
 							<Descriptions.Item label='Data ślubu'>
-								{wedding.dateOfWedding || <em>-</em>}
+								{wedding.dateOfWedding || <em>--</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Godzina rozpoczęcia'>
-								{wedding.hourOfWedding || <em>-</em>}
+								{wedding.hourOfWedding || <em>--</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Godzina mszy świętej'>
-								{wedding.hourOfChurchService || <em>-</em>}
+								{wedding.hourOfChurchService || <em>--</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Czy będą poprawiny?'>
-								{wedding.hasAfters ? 'Tak' : <em>-</em>}
+								{wedding.hasAfters ? 'Tak' : <em>--</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Adres sali weselnej'>
-								{wedding.address || <em>-</em>}
+								{wedding.address || <em>--</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Liczba stolików na sali'>
-								{wedding.tablesTotalCount || <em>-</em>}
+								{wedding.tablesTotalCount || <em>--</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Numer Stolika Pary młodej'>
-								{wedding.tableNumberOfMarried || <em>-</em>}
+								{wedding.tableNumberOfMarried || <em>--</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Koszt usług'>
-								{wedding.sumCostTask || <em>-</em>}
+								{wedding.sumCostTask ? `${wedding.sumCostTask} zł` : <em>--</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Koszt napojów'>
-								{wedding.sumCostBeverages || <em>-</em>}
+								{wedding.sumCostBeverages ? `${wedding.sumCostBeverages} zł` : <em>--</em>}
 							</Descriptions.Item>
-							<Descriptions.Item label='Suma Kosztów'>{wedding.sumCost || <em>-</em>}</Descriptions.Item>
-							<Descriptions.Item label='Budżet'>{wedding.budget || <em>-</em>}</Descriptions.Item>
-							<Descriptions.Item label='Przkroczony budżet'>
-								{wedding.exceedBudget || <em>-</em>}
+							<Descriptions.Item label='Suma Kosztów'>
+								{wedding.sumCost ? `${wedding.sumCost} zł` : <em>--</em>}
+							</Descriptions.Item>
+							<Descriptions.Item label='Budżet'>
+								<Typography.Text strong style={{ color: wedding.budget > 0 && '#4ad453' }}>
+									{wedding.budget > 0 ? `${wedding.budget} zł` : <em>0 zł</em>}
+								</Typography.Text>
+							</Descriptions.Item>
+							<Descriptions.Item label='Przekroczony budżet'>
+								<Typography.Text strong style={{ color: '#e35252' }}>
+									{wedding.exceedBudget ? `${wedding.exceedBudget} zł` : <em>-</em>}
+								</Typography.Text>
 							</Descriptions.Item>
 						</Descriptions>
 						<Divider>Akcje</Divider>

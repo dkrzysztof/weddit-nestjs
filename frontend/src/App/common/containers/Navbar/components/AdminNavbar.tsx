@@ -10,9 +10,6 @@ interface AdminNavbarProps {
 const AdminNavbar: React.FC<AdminNavbarProps> = ({ onLogOut, location }) => {
 	return (
 		<Menu mode='horizontal' defaultSelectedKeys={[location.pathname]} className='menu-padding'>
-			<Menu.Item key='/auth'>
-				<Link to='/auth'>Strona Domowa Adminów</Link>
-			</Menu.Item>
 			<Menu.Item key='/user'>
 				<Link to='/user'>Strona Domowa</Link>
 			</Menu.Item>

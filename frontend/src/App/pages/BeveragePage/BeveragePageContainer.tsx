@@ -1,4 +1,5 @@
 import { Button, Col, Row } from 'antd';
+import GoToPreviousPageButton from 'App/common/components/handleGoBack';
 import PageTitle from 'App/common/components/PageTitle';
 import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router';
@@ -15,7 +16,14 @@ const BeveragePageContainer: React.FC<RouteComponentProps<WeddingRouteProps>> = 
 	return (
 		<>
 			<PageTitle title='Lista napojów na weselu' />
-			<CreateBeverageContainer idWedding={idWedding} />
+			<Row align='middle' justify='space-around'>
+				<Col>
+					<GoToPreviousPageButton />
+				</Col>
+				<Col>
+					<CreateBeverageContainer idWedding={idWedding} />
+				</Col>
+			</Row>
 			<GetBeveragesContainer idWedding={idWedding} />
 		</>
 	);

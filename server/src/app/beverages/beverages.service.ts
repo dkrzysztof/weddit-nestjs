@@ -49,8 +49,10 @@ export class BeveragesService {
 		idWedding: number,
 		addNewBeverageDto: AddNewBeverageDto,
 	): Promise<AddNewBeverageDto> {
-		if (this.weddingService.checkIfUserHasPermission(userPayload, idWedding, false)) {
+		if (this.weddingService.checkIfUserHasPermission(userPayload, idWedding, true)) {
 			return await transactionWrapper(async queryRunner => {
+				const { bottleCapacity, consumersCount, consumingFactor } = addNewBeverageDto;
+				addNewBeverageDto.neededAmount = Math.ceil((consumingFactor * consumersCount) / bottleCapacity);
 				const beverage = await queryRunner.manager.create(Beverage, addNewBeverageDto);
 				const wedding = await queryRunner.manager.findOne(Wedding, { idWedding }, { relations: ['beverages'] });
 
@@ -73,6 +75,11 @@ export class BeveragesService {
 			const beverage = await this.beverageRepository.findOne({ idBeverage });
 
 			updateAllObjectKeyValues(updateBeverageDetailsDto, beverage);
+
+			const { bottleCapacity, consumersCount, consumingFactor } = beverage;
+			if (bottleCapacity || consumersCount || consumingFactor) {
+				beverage.neededAmount = Math.ceil((consumingFactor * consumersCount) / bottleCapacity);
+			}
 
 			return await this.beverageRepository.save(beverage);
 		} else throw new ForbiddenException('You have no permission to do this action!');

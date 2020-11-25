@@ -24,7 +24,7 @@ const App: React.FC = () => {
 				<Header className='fixed-header bg-site'>
 					<NavbarContainer />
 				</Header>
-				<Content style={{ marginTop: NAVBAR_HEIGHT }}>
+				<Content style={{ marginTop: NAVBAR_HEIGHT, backgroundColor: '#fff' }}>
 					<div className='content-layout'>
 						<Routes />
 					</div>

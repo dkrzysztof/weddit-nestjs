@@ -7,6 +7,7 @@ import { deleteGuest, getGuests, updateGuest } from 'App/state/guests/guests.thu
 import { RootState } from 'App/state/root.reducer';
 import React, { Dispatch } from 'react';
 import { useSelector } from 'react-redux';
+import TagWithDropdown from '../components/TagWithDropdown';
 
 const GetGuestsContainer: React.FC<{ idWedding: number }> = ({ idWedding }) => {
 	const params = useSelector((state: RootState) => state.guests.guestsQueryParams);
@@ -71,14 +72,9 @@ const GetGuestsContainer: React.FC<{ idWedding: number }> = ({ idWedding }) => {
 		},
 		{
 			title: 'Rodzaj gościa',
-			render: (record: GuestForGetGuestsResponse) => {
-				if (record.idGuestType === 1) return <Tag color='purple'>{record.guestType}</Tag>;
-				if (record.idGuestType === 2) return <Tag color='green'>{record.guestType}</Tag>;
-				if (record.idGuestType === 3) return <Tag color='orange'>{record.guestType}</Tag>;
-				if (record.idGuestType === 4) return <Tag color='blue'>{record.guestType}</Tag>;
-				if (record.idGuestType === 5) return <Tag color='volcano'>{record.guestType}</Tag>;
-				return <Tag color='default'>{record.guestType}</Tag>;
-			}
+			render: (record: GuestForGetGuestsResponse) => (
+				<TagWithDropdown record={record} dispatch={dispatch} params={params} idWedding={idWedding} />
+			)
 		},
 		{
 			title: 'Usuń',

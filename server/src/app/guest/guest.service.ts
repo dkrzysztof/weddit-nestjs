@@ -94,7 +94,7 @@ export class GuestService {
 
 				return guest;
 			});
-		} else throw new ForbiddenException('You have no access to this resource or permission to this action!');
+		} else throw new ForbiddenException('Nie masz uprawnień do tego zasobu!');
 	}
 
 	async updateGuestDetails(
@@ -109,22 +109,34 @@ export class GuestService {
 
 		if (await this.weddingService.checkIfUserHasPermission(userPayload, idWedding, true)) {
 			const guest = await this.guestRepository.findOne({ idGuest }, { relations: ['guestType'] });
-
+			const typeBefore = await this.guestTypeRepository.findOne(
+				{ idGuestType: guest.guestType.idGuestType },
+				{ relations: ['guests'] },
+			);
+			const typeAfter = await this.guestTypeRepository.findOne(
+				{ idGuestType: updateGuestDto.idGuestType },
+				{ relations: ['guests'] },
+			);
 			updateAllObjectKeyValues(updateGuestDto, guest);
 
+			typeBefore.guests = typeBefore.guests.filter(guest => guest.idGuest === guest.idGuest);
+			appendOrCreateArray(typeAfter, 'guests', guest);
+
 			await this.guestRepository.save(guest);
+			await this.guestTypeRepository.save(typeBefore);
+			await this.guestTypeRepository.save(typeAfter);
 
 			const idGuestType = guest.guestType && guest.guestType.idGuestType;
 
 			return { idGuestType, ...guest } as UpdateGuestDto;
-		} else throw new ForbiddenException('You have no access to this action!');
+		} else throw new ForbiddenException('Nie masz uprawnień do wykonania tej akcji!');
 	}
 
 	async deleteGuest(userPayload: JwtPayload, idWedding: number, idGuest: number): Promise<boolean> {
 		if (await this.weddingService.checkIfUserHasPermission(userPayload, idWedding, true)) {
 			await this.guestRepository.delete({ idGuest });
 			return true;
-		} else throw new ForbiddenException('You have no access to this resource or permission to this action!');
+		} else throw new ForbiddenException('Nie masz uprawnień do wykonania tej akcji!');
 	}
 
 	async uploadGuestsFromFile(user: JwtPayload, idWedding: number, file: File) {
@@ -144,6 +156,7 @@ export class GuestService {
 						...row,
 						confirmed: row.confirmed == 'true',
 						confirmedAfters: row.confirmedAfters == 'true',
+						idGuestType: 3,
 					}),
 				)
 				.on('end', rowsNumber => resolve(rowsNumber));
@@ -153,13 +166,25 @@ export class GuestService {
 
 		return await transactionWrapper(async queryRunner => {
 			const wedding = await queryRunner.manager.findOne(Wedding, { idWedding }, { relations: ['guests'] });
-
+			const guestTypeIds = await this.guestTypeRepository.find({ select: ['idGuestType', 'name'] });
+			console.log('\n', guestTypeIds, '\n');
 			for (const guestToCreate of guestsArrayToCreate) {
 				const newGuest = await queryRunner.manager.create(Guest, guestToCreate);
+				const guestType = await queryRunner.manager.findOne(
+					GuestType,
+					{
+						idGuestType: guestTypeIds.find(x => x.idGuestType === guestToCreate.idGuestType)
+							? guestToCreate.idGuestType
+							: guestTypeIds.find(x => x.name === 'Osoba Dorosła').idGuestType,
+					},
+					{ relations: ['guests'] },
+				);
 
 				appendOrCreateArray(wedding, 'guests', newGuest);
+				appendOrCreateArray(guestType, 'guests', newGuest);
 
 				await queryRunner.manager.save(Guest, newGuest);
+				await queryRunner.manager.save(GuestType, guestType);
 			}
 
 			await queryRunner.manager.save(Wedding, wedding);

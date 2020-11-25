@@ -22,6 +22,7 @@ const beveragesSlice = createSlice({
 		},
 		getBeveragesFailure: (state: BeveragesState, action: PayloadAction<ErrorApi>) => {
 			state.status.getBeverages = FAILED;
+			state.error = action.payload;
 		},
 
 		///
@@ -34,6 +35,7 @@ const beveragesSlice = createSlice({
 		},
 		createBeverageFailure: (state: BeveragesState, action: PayloadAction<ErrorApi>) => {
 			state.status.createBeverage = FAILED;
+			state.error = action.payload;
 		},
 
 		///
@@ -46,6 +48,7 @@ const beveragesSlice = createSlice({
 		},
 		updateBeverageFailure: (state: BeveragesState, action: PayloadAction<ErrorApi>) => {
 			state.status.updateBeverage = FAILED;
+			state.error = action.payload;
 		},
 
 		///
@@ -58,6 +61,7 @@ const beveragesSlice = createSlice({
 		},
 		deleteBeverageFailure: (state: BeveragesState, action: PayloadAction<ErrorApi>) => {
 			state.status.deleteBeverage = FAILED;
+			state.error = action.payload;
 		}
 	}
 });

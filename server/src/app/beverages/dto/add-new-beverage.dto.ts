@@ -11,11 +11,11 @@ export class AddNewBeverageDto {
 	bottleCapacity: number;
 
 	@IsNumber()
-	@IsOptional()
+	@IsNotEmpty()
 	consumingFactor: number;
 
 	@IsNumber()
-	@IsOptional()
+	@IsNotEmpty()
 	consumersCount: number;
 
 	@IsNumber()
@@ -31,6 +31,6 @@ export class AddNewBeverageDto {
 	remainingAmount: number;
 
 	@IsNumber()
-	@IsOptional()
+	@IsNotEmpty()
 	price: number;
 }

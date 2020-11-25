@@ -31,7 +31,7 @@ const HomePageContainer: React.FC<{}> = () => {
 						textAlign: 'center'
 					}}
 				>
-					<h1 style={{ fontSize: '3rem' }}>Witaj na weddit!</h1>
+					<h1 style={{ fontSize: '3rem' }}>Witaj na Organizerze imprez weselnych!</h1>
 				</Col>
 			</Row>
 		</div>

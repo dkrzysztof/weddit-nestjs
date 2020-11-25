@@ -12,11 +12,13 @@ import { AnyCnameRecord } from 'dns';
 import HorizontalTextRotatingTool from '../utils/HorizontalDraggingTool';
 import SpecialDraggingTool from '../utils/SpecialDragginTool';
 import { GetGuestsShortCollectionResponse } from 'App/api/guests/responses';
-import { Button } from 'antd';
+import { Button, Col, Row } from 'antd';
 import positionPeopleAtSeats from '../utils/positionPeopleAtSeats';
 import { useEffect } from 'react';
 import { addSeatChart } from 'App/state/weddings/weddings.thunk';
 import { useDispatch } from 'react-redux';
+import GoToPreviousPageButton from 'App/common/components/handleGoBack';
+import { SaveOutlined } from '@ant-design/icons';
 
 export var seatDiagram = null;
 export var guestDiagram = null;
@@ -161,20 +163,20 @@ function initDiagram(saveModel: (model: string) => void) {
 			switch (number) {
 				case 8:
 					return [
-						Seat(1, '0.50 0', '0 0'),
-						Seat(2, '0.85 0.15', '0 0'),
-						Seat(3, '1 0.5', '0 0'),
-						Seat(4, '0.85 0.85', '0 0'),
-						Seat(5, '0.50 1', '0 0'),
-						Seat(6, '0.15 0.85', '0 0'),
-						Seat(7, '0 0.5', '0 0'),
-						Seat(8, '0.15 0.15', '0 0')
+						Seat(1, '0.50 0', '0.5 1'),
+						Seat(2, '0.85 0.15', '0.15 0.85'),
+						Seat(3, '1 0.5', '0 0.5'),
+						Seat(4, '0.85 0.85', '0.15 0.15'),
+						Seat(5, '0.50 1', '0.5 0'),
+						Seat(6, '0.15 0.85', '0.85 0.15'),
+						Seat(7, '0 0.5', '1 0.5'),
+						Seat(8, '0.15 0.15', '0.85 0.85')
 					];
 
 				case 9:
 					return [
-						Seat(1, '1	0.5', '0 0'),
-						Seat(2, '0.885	0.82', '0 0'),
+						Seat(1, '0.5 0', '0.5 1'),
+						Seat(2, '0.885	0.82', '0.15 0'),
 						Seat(3, '0.585	0.99', '0 0'),
 						Seat(4, '0.25	0.935', '0 0'),
 						Seat(5, '0.03	0.67', '0 0'),
@@ -728,14 +730,23 @@ const SeatDiagram: React.FC<SeatDiagramProps> = ({ guests, idWedding, initialMod
 
 	return (
 		<React.Fragment>
-			<Button
-				onClick={() => {
-					console.log(model);
-					dispatch(addSeatChart(idWedding, { model }));
-				}}
-			>
-				Save
-			</Button>
+			<Row justify='space-around' align='middle' style={{ margin: '2em auto 1em' }}>
+				<Col>
+					<GoToPreviousPageButton />
+				</Col>
+				<Col>
+					<Button
+						onClick={() => {
+							console.log(model);
+							dispatch(addSeatChart(idWedding, { model }));
+						}}
+					>
+						Save
+						<SaveOutlined />
+					</Button>
+				</Col>
+			</Row>
+
 			<div style={{ margin: 'auto', width: 'fit-content', display: 'flex', marginBottom: '1em' }}>
 				<ReactDiagram
 					initDiagram={initGuests(() => setGuestDiagramCreated(true))}

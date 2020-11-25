@@ -13,7 +13,12 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({ form, loading }) => {
 		<Form
 			form={form}
 			layout='vertical'
-			initialValues={{ description: 'TEST', deadline: '12.12.2020', dutyHolderFullName: 'tp', cost: 120.0 }}
+			initialValues={{
+				description: 'Zamówić kwiaty',
+				deadline: '12.12.2020',
+				dutyHolderFullName: 'Adam Nowak',
+				cost: 120.0
+			}}
 		>
 			<Form.Item label='Treść zadania' name='description' rules={[{ required: true }]}>
 				<Input type='text' disabled={loading} />

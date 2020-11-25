@@ -39,7 +39,7 @@ export class UserService {
 			return this.userRepository.save({ ...userData, password: hashedPassword });
 		}
 
-		throw new BadRequestException('Email already assigned to an account!');
+		throw new BadRequestException('Email jest już w użyciu!');
 	}
 
 	async editUser(id: number, user: EditUserDto): Promise<GetUserDto> {

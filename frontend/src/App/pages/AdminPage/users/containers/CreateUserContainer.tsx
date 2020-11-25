@@ -45,10 +45,10 @@ export const CreateUserContainer = () => {
 						notification.success({ message: 'Sukces', description: 'Pomyślnie dodano użytkownika' })}
 					<CreateUserForm
 						initialValues={{
-							email: 'pitula.szymon123@gmail.com',
+							email: 'new.user@user.com',
 							password: 'Password123!',
-							firstName: 'Szymon',
-							lastName: 'Pituła',
+							firstName: 'Adam',
+							lastName: 'Kowalski',
 							isAdmin: false
 						}}
 						loading={usersStatus.createUser === LOADING}

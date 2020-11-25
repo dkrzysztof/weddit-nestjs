@@ -1,3 +1,4 @@
+import { Row } from 'antd';
 import GoToPreviousPageButton from 'App/common/components/handleGoBack';
 import LoadingScreen from 'App/common/components/LoadingScreen';
 import { getGuestsShort } from 'App/state/guests/guests.thunk';
@@ -32,19 +33,6 @@ const SeatChartPageContainer: React.FC<RouteComponentProps<IdWeddingRouteParam>>
 
 	return (
 		<div>
-			<GoToPreviousPageButton />
-			{/* <div style={{ height: 'calc(100vh - 65px)', width: '100vw', paddingTop: '5em' }}>
-				<div
-					id='myDiagramDiv'
-					style={{
-						width: '1200px',
-						height: '600px',
-						margin: 'auto',
-						backgroundColor: '#DAE4E4'
-					}}
-				></div>
-			</div> */}
-
 			<SeatDiagram guests={guests} idWedding={idWedding} initialModel={JSON.parse(wedding.seatChart)} />
 			<div
 				style={{

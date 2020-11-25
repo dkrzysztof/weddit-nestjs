@@ -14,9 +14,9 @@ const formItemLayout = {
 };
 
 const initialValues: RegisterRequest = {
-	firstName: 'Alicja',
-	lastName: 'Koniczyna',
-	email: 'user@user.com',
+	firstName: 'Jan',
+	lastName: 'Kowalski',
+	email: 'user@email.com',
 	password: 'Admin123!',
 	confirmPassword: 'Admin123!'
 };

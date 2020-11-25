@@ -49,7 +49,7 @@ const EditBeverageForm: React.FC<EditBeverageFormProps> = ({ loading, form, init
 			<Row justify='space-between'>
 				<Col xs={20} sm={13} md={12} lg={10} xl={10} xxl={10}>
 					<Form.Item label='Zakupiona ilość' name='boughtAmount'>
-						<InputNumber disabled={loading} precision={0} step={1} min={1} />
+						<InputNumber disabled={loading} precision={0} step={1} min={0} />
 					</Form.Item>
 				</Col>
 			</Row>

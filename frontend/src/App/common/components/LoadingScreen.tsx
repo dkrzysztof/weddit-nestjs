@@ -12,8 +12,8 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ container }: LoadingScree
 
 	if (container === 'screen') {
 		style = {
-			width: '100vw',
-			height: '100vh',
+			width: '100%',
+			height: '100%',
 			position: 'absolute',
 			display: 'flex',
 			justifyContent: 'center',

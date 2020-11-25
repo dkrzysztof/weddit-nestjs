@@ -9,6 +9,7 @@ import { RootState } from 'App/state/root.reducer';
 import StatusType from 'App/types/requestStatus';
 import GoToPreviousPageButton from 'App/common/components/handleGoBack';
 import { useHistory } from 'react-router';
+import { Col, Row } from 'antd';
 
 const CreateWeddingContainer: React.FC<{}> = () => {
 	const dispatch = useDispatch();
@@ -30,7 +31,11 @@ const CreateWeddingContainer: React.FC<{}> = () => {
 
 	return (
 		<Center size='large'>
-			<GoToPreviousPageButton />
+			<Row align='middle' justify='start' style={{ marginTop: '2em' }}>
+				<Col>
+					<GoToPreviousPageButton />
+				</Col>
+			</Row>
 			<CreateWeddingForm
 				loading={createWeddingStatus === StatusType.LOADING}
 				onFinish={handleCreateWeddingFormFinish}

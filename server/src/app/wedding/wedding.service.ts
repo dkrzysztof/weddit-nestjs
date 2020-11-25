@@ -103,14 +103,53 @@ export class WeddingService {
 				.andWhere('u.idUser = :idUser', { idUser: userPayload.idUser })
 				.getOne();
 
+			const sumCostTask = await this.calculateTaskBudget(idWedding);
+			const sumCostBeverage = await this.calculateBeveragesCost(idWedding);
+
 			const { userWeddings } = weddingDetails;
 
 			let weddingDetailsDto = Object.assign({}, weddingDetails, { userWedding: { ...userWeddings.pop() } });
 			delete weddingDetailsDto.userWeddings;
 
-			return weddingDetailsDto;
+			return {
+				...weddingDetailsDto,
+				sumCostTask,
+				sumCostBeverage,
+				sumCost: sumCostTask + sumCostBeverage,
+				budget: weddingDetailsDto.budget ? weddingDetailsDto.budget - sumCostTask - sumCostBeverage : 0,
+				exceedBudget:
+					weddingDetailsDto.budget <= sumCostTask + sumCostBeverage
+						? weddingDetailsDto.budget - sumCostTask - sumCostBeverage
+						: 0,
+			} as GetWeddingDto;
 		}
 		throw new ForbiddenException('You have no access to this resource!');
+	}
+
+	async calculateTaskBudget(idWedding: number): Promise<any> {
+		return transactionWrapper(async queryRunner => {
+			let { sum } = await queryRunner.manager
+				.createQueryBuilder(Wedding, 'w')
+				.leftJoinAndSelect('w.taskLists', 't')
+				.where('w.idWedding = :idWedding', { idWedding })
+				.select(`SUM(t."cost")`)
+				.getRawOne();
+
+			return Number.parseFloat(sum);
+		});
+	}
+
+	async calculateBeveragesCost(idWedding: number): Promise<any> {
+		return transactionWrapper(async queryRunner => {
+			let { cost } = await queryRunner.manager
+				.createQueryBuilder(Wedding, 'w')
+				.leftJoinAndSelect('w.beverages', 'b')
+				.where('w.idWedding = :idWedding', { idWedding })
+				.select(`SUM(b."boughtAmount"*b."price")`, 'cost')
+				.getRawOne();
+
+			return Number.parseFloat(cost);
+		});
 	}
 
 	async updateUserPermission(idUserToBeUpdated: number, idWedding: number, canEdit: boolean): Promise<any> {

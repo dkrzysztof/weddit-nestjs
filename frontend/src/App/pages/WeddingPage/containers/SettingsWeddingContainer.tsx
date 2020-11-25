@@ -1,6 +1,7 @@
-import { Collapse } from 'antd';
+import { Col, Collapse, Row } from 'antd';
 import { UpdateWeddingDetailsRequest } from 'App/api/weddings/requests';
 import Center from 'App/common/components/Center';
+import GoToPreviousPageButton from 'App/common/components/handleGoBack';
 import LoadingScreen from 'App/common/components/LoadingScreen';
 import PageTitle from 'App/common/components/PageTitle';
 import { RootState } from 'App/state/root.reducer';
@@ -39,6 +40,11 @@ const SettingsWeddingContainer: React.FC<RouteComponentProps<WeddingRouteProps>>
 	} else {
 		return (
 			<Center size='medium'>
+				<Row justify='start'>
+					<Col>
+						<GoToPreviousPageButton />
+					</Col>
+				</Row>
 				<PageTitle title={`Ustawienia wesela ${wedding.name}`} />
 				<Collapse defaultActiveKey={['1']}>
 					<Panel header='Szczegółowe dane wesela' key='1'>

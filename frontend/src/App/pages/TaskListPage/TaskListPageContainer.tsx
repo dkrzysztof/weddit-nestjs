@@ -1,4 +1,5 @@
 import { Row, Col, Button } from 'antd';
+import GoToPreviousPageButton from 'App/common/components/handleGoBack';
 import PageTitle from 'App/common/components/PageTitle';
 import React from 'react';
 import { useState } from 'react';
@@ -16,7 +17,14 @@ const TaskListPageContainer: React.FC<RouteComponentProps<WeddingRouteProps>> = 
 	return (
 		<>
 			<PageTitle title='Zadania do wykonania' />
-			<CreateTaskContainer idWedding={idWedding} />
+			<Row justify='space-around' align='middle'>
+				<Col>
+					<GoToPreviousPageButton />
+				</Col>
+				<Col>
+					<CreateTaskContainer idWedding={idWedding} />
+				</Col>
+			</Row>
 			<GetTasksContainer idWedding={idWedding} />
 		</>
 	);

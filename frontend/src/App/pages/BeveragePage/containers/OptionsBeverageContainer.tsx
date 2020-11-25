@@ -59,7 +59,7 @@ const OptionsBeverageContainer: React.FC<OptionsBeverageContainerProps> = ({ bev
 
 	return (
 		<>
-			<Menu style={{ border: '1px solid #5923ef', borderRadius: '0.15rem', zIndex: 2 }}>
+			<Menu style={{ border: '1px solid #5923ef', borderRadius: '0.15rem', zIndex: 1 }} className='z-index-2'>
 				<Menu.Item onClick={openModal}>Edytuj</Menu.Item>
 				<Menu.Item onClick={handleDeleteBeverage}>Usuń</Menu.Item>
 			</Menu>
