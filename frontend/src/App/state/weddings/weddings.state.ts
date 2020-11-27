@@ -19,6 +19,7 @@ export interface WeddingsState {
 		getUsersWithAccessToWedding: StatusType;
 		addSeatChart: StatusType;
 	};
+	notify: boolean;
 	getUserWeddingsQueryParams: IPageQueryParams;
 	weddings: WeddingForGetUserWeddings[] | null;
 	selectedWedding: GetWeddingDetailsResponse | null;
@@ -37,6 +38,7 @@ export const weddingInitialState: WeddingsState = {
 		getUsersWithAccessToWedding: INITIAL,
 		addSeatChart: INITIAL
 	},
+	notify: true,
 	selectedWedding: null,
 	getUsersWithAccessToWedding: null,
 	weddings: null,

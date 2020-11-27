@@ -57,7 +57,6 @@ const TagWithDropdown: React.FC<TagWithDropdownProps> = ({
 	let color = switchColor(idGuestType);
 
 	const handleTagClick = (typeId) => {
-		console.log(typeId, idGuestType);
 		if (typeId !== idGuestType) dispatch(updateGuest(idWedding, idGuest, { idGuestType: typeId }, params));
 	};
 

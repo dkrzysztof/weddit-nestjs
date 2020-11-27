@@ -19,12 +19,16 @@ import { addSeatChart } from 'App/state/weddings/weddings.thunk';
 import { useDispatch } from 'react-redux';
 import GoToPreviousPageButton from 'App/common/components/handleGoBack';
 import { SaveOutlined } from '@ant-design/icons';
+import menuDiagramInitalNode from '../utils/nodeInitalModels/menuDiagramInitalNode';
+import { GuestForSeatChartModel, TableForSeatChartModel } from 'App/types/SeatChartNodeModel';
 
 export var seatDiagram = null;
 export var guestDiagram = null;
 export var myTables = null;
+let tableKey = 1;
+let guestKey = 1;
 
-function initDiagram(saveModel: (model: string) => void) {
+function initDiagram(onCreationSuccess: () => void, saveModel: (model: string) => void) {
 	return () => {
 		const $ = go.GraphObject.make;
 
@@ -351,7 +355,7 @@ function initDiagram(saveModel: (model: string) => void) {
 						$(
 							go.TextBlock,
 							{ editable: true, font: 'bold 11pt Verdana, sans-serif' },
-							new go.Binding('text', 'name').makeTwoWay(),
+							new go.Binding('text', 'key').makeTwoWay(),
 							new go.Binding('angle', 'angle', function (n) {
 								return -n;
 							})
@@ -495,7 +499,14 @@ function initDiagram(saveModel: (model: string) => void) {
 			// make sure the selected people no longer belong to any table
 			e.diagram.selection.each(function (n) {
 				if (isPerson(n)) unassignSeat(seatDiagram, n.data);
+				if (isTable(n)) {
+					let window1 = window as any;
+					window1.table = n;
+				}
 			});
+			if (isTable(e)) {
+				seatDiagram.nodeTemplateMap.add('TableRO2', createTableRectOneSide(2, 100, 60));
+			}
 		};
 
 		// to simulate a "move" from the Palette, the source Node must be deleted.
@@ -503,6 +514,10 @@ function initDiagram(saveModel: (model: string) => void) {
 			// if any Tables were dropped, don't delete from guestDiagram
 			if (!e.subject.any(isTable)) {
 				guestDiagram.commandHandler.deleteSelection();
+			}
+			if (isTable(e)) {
+				let newnode = myTables.selection.first();
+				seatDiagram.commandHandler.copySelection();
 			}
 		});
 
@@ -529,24 +544,31 @@ function initDiagram(saveModel: (model: string) => void) {
 
 		guestDiagram.model.undoManager = seatDiagram.model.undoManager; // shared UndoManager!
 
+		seatDiagram.model.makeUniqueKeyFunction = (model: go.Model, data: go.ObjectData) => {
+			tableKey = tableKey + 1;
+			return tableKey;
+		};
+
 		// To simulate a "move" from the Diagram back to the Palette, the source Node must be deleted.
 		guestDiagram.addDiagramListener('ExternalObjectsDropped', function (e) {
 			// e.subject is the guestDiagram.selection collection
 			// if the user dragged a Table to the guestDiagram diagram, cancel the drag
-			if (e.subject.any(isTable)) {
-				seatDiagram.currentTool.doCancel();
-				guestDiagram.currentTool.doCancel();
-				return;
+			if (isPerson(e)) {
+				if (e.subject.any(isTable)) {
+					seatDiagram.currentTool.doCancel();
+					guestDiagram.currentTool.doCancel();
+					return;
+				}
+				seatDiagram.selection.each(function (n) {
+					if (isPerson(n)) unassignSeat(seatDiagram, n.data);
+				});
+				seatDiagram.disableSelectionDeleted = true;
+				seatDiagram.commandHandler.deleteSelection();
+				seatDiagram.disableSelectionDeleted = false;
+				guestDiagram.selection.each(function (n) {
+					if (isPerson(n)) unassignSeat(seatDiagram, n.data);
+				});
 			}
-			seatDiagram.selection.each(function (n) {
-				if (isPerson(n)) unassignSeat(seatDiagram, n.data);
-			});
-			seatDiagram.disableSelectionDeleted = true;
-			seatDiagram.commandHandler.deleteSelection();
-			seatDiagram.disableSelectionDeleted = false;
-			guestDiagram.selection.each(function (n) {
-				if (isPerson(n)) unassignSeat(seatDiagram, n.data);
-			});
 		});
 
 		go.AnimationManager.defineAnimationEffect('location', function (
@@ -564,6 +586,8 @@ function initDiagram(saveModel: (model: string) => void) {
 			);
 		});
 
+		onCreationSuccess();
+
 		return seatDiagram;
 	};
 }
@@ -576,11 +600,12 @@ function initGuests(onSuccess: () => void) {
 				sorting: go.GridLayout.Ascending // sort by Node.text value
 			}),
 			allowDragOut: true, // to seatDiagram
-			allowMove: false
+			allowMove: false,
+			allowDrop: false
 		});
 
 		guestDiagram.model = $(go.GraphLinksModel, {
-			linkKeyProperty: 'id'
+			linkKeyProperty: 'key'
 		});
 
 		onSuccess();
@@ -592,12 +617,13 @@ function initGuests(onSuccess: () => void) {
 function initMenu() {
 	const $ = go.GraphObject.make;
 
-	myTables = $(go.Diagram, {
+	myTables = $(go.Palette, {
 		layout: $(go.GridLayout),
 		allowDragOut: true,
 		allowMove: false,
 		allowDelete: false,
-		allowDrop: false
+		allowDrop: false,
+		maxSelectionCount: 1
 	});
 
 	myTables.isReadOnly = true;
@@ -605,7 +631,7 @@ function initMenu() {
 
 	myTables.model.undoManager = seatDiagram.model.undoManager; // shared UndoManager!
 
-	myTables.model = new go.GraphLinksModel([
+	myTables.model = new go.Model([
 		{
 			key: 1,
 			category: 'TableRO2',
@@ -688,10 +714,6 @@ function initMenu() {
 	return myTables;
 }
 
-function handleModelChange(changes) {
-	// alert('GoJS model changed!');
-}
-
 interface Table {
 	key: number;
 	category: string;
@@ -710,10 +732,11 @@ interface SeatDiagramProps {
 
 const SeatDiagram: React.FC<SeatDiagramProps> = ({ guests, idWedding, initialModel }) => {
 	const [isGuestDiagramCreated, setGuestDiagramCreated] = useState(false);
+	const [isTableDiagramCreated, setTableDiagramCreated] = useState(false);
 	const [model, setModel] = useState<string>();
 	const dispatch = useDispatch();
 
-	const guestMap = guests.map((x) => ({
+	let guestMap = guests.map((x) => ({
 		idGuest: x.idGuest,
 		name: `${x.firstName} ${x.lastName}`
 	}));
@@ -726,18 +749,33 @@ const SeatDiagram: React.FC<SeatDiagramProps> = ({ guests, idWedding, initialMod
 				});
 			}
 		}, 500);
+		let tables = initialModel.nodeDataArray as TableForSeatChartModel[];
+		let guests = initialModel.nodeDataArray as GuestForSeatChartModel[];
+		tables.forEach((x) => {
+			if (x.hasOwnProperty('guests')) {
+				if (tableKey <= x.key) {
+					tableKey = x.key;
+				}
+			}
+		});
+		guests.forEach((x) => {
+			if (x.hasOwnProperty('table')) {
+				if (guestKey <= x.key) {
+					guestKey = x.key;
+				}
+			}
+		});
 	}, [isGuestDiagramCreated]);
 
 	return (
-		<React.Fragment>
-			<Row justify='space-around' align='middle' style={{ margin: '2em auto 1em' }}>
+		<div style={{ margin: '1em' }}>
+			<Row justify='space-between' align='middle' style={{ margin: '2em auto 1em', maxWidth: '1200px' }}>
 				<Col>
 					<GoToPreviousPageButton />
 				</Col>
 				<Col>
 					<Button
 						onClick={() => {
-							console.log(model);
 							dispatch(addSeatChart(idWedding, { model }));
 						}}
 					>
@@ -747,100 +785,36 @@ const SeatDiagram: React.FC<SeatDiagramProps> = ({ guests, idWedding, initialMod
 				</Col>
 			</Row>
 
-			<div style={{ margin: 'auto', width: 'fit-content', display: 'flex', marginBottom: '1em' }}>
-				<ReactDiagram
-					initDiagram={initGuests(() => setGuestDiagramCreated(true))}
-					divClassName='guest-component'
-					nodeDataArray={guestMap}
-					onModelChange={handleModelChange}
-					skipsDiagramUpdate
-				/>
-				{isGuestDiagramCreated && (
-					<>
-						<ReactDiagram
-							initDiagram={initDiagram((newModel) => setModel(newModel))}
-							divClassName='diagram-component'
-							nodeDataArray={initialModel && initialModel.nodeDataArray}
-							onModelChange={handleModelChange}
-							skipsDiagramUpdate
-						/>
-						<ReactDiagram
-							initDiagram={initMenu}
-							divClassName='tables-container'
-							nodeDataArray={[
-								{
-									key: 1,
-									category: 'TableRO2',
-									name: 'Jedno-\nstronny 2'
-								},
-								{
-									key: 2,
-									category: 'TableRO3',
-									name: 'Jednostronny 3'
-								},
-								{
-									key: 3,
-									category: 'TableRO4',
-									name: 'Jednostronny 4'
-								},
-								{
-									key: 4,
-									category: 'TableRO5',
-									name: 'Jednostronny 5'
-								},
-								{
-									key: 5,
-									category: 'TableR8',
-									name: 'Pełny 8'
-								},
-								{
-									key: 6,
-									category: 'TableR10',
-									name: 'Pełny 10'
-								},
-								{
-									key: 7,
-									category: 'TableR12',
-									name: 'Pełny 12'
-								},
-								{
-									key: 8,
-									category: 'TableR14',
-									name: 'Pełny 14'
-								},
-								{
-									key: 9,
-									category: 'TableC8',
-									name: 'Okrągły 8'
-								}
-								// {
-								// 	key: 10,
-								// 	category: 'TableC9',
-								// 	name: 'Okrągły 9'
-								// },
-								// {
-								// 	key: 11,
-								// 	category: 'TableC10',
-								// 	name: 'Okrągły 10'
-								// },
-								// {
-								// 	key: 12,
-								// 	category: 'TableC11',
-								// 	name: 'Okrągły 11'
-								// },
-								// {
-								// 	key: 14,
-								// 	category: 'TableC12',
-								// 	name: 'Okrągły 12'
-								// }
-							]}
-							onModelChange={handleModelChange}
-							skipsDiagramUpdate
-						/>
-					</>
+			<div className='diagrams-container'>
+				{isTableDiagramCreated && (
+					<ReactDiagram
+						initDiagram={initMenu}
+						divClassName='menu-diagram'
+						nodeDataArray={menuDiagramInitalNode}
+						skipsDiagramUpdate
+					/>
 				)}
+				<div className='d-flex-between'>
+					<ReactDiagram
+						initDiagram={initGuests(() => setGuestDiagramCreated(true))}
+						divClassName='guest-diagram'
+						nodeDataArray={guestMap}
+						skipsDiagramUpdate
+					/>
+					{isGuestDiagramCreated && (
+						<ReactDiagram
+							initDiagram={initDiagram(
+								() => setTableDiagramCreated(true),
+								(newModel) => setModel(newModel)
+							)}
+							divClassName='table-diagram'
+							nodeDataArray={initialModel && initialModel.nodeDataArray}
+							skipsDiagramUpdate
+						/>
+					)}
+				</div>
 			</div>
-		</React.Fragment>
+		</div>
 	);
 };
 

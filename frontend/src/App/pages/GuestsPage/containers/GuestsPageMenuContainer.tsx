@@ -21,7 +21,6 @@ const GuestsPageMenuContainer: React.FC<GuestsPageMenuContainerProps> = ({ idWed
 
 	const handleCreateUserFormCreate = (values: CreateGuestRequest) => {
 		dispatch(createGuest(idWedding, values, guestsQueryParams));
-		console.log(values);
 		setCreateUserModalVisible(false);
 	};
 

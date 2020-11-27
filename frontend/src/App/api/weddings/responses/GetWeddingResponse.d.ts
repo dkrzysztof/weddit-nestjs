@@ -17,7 +17,7 @@ export interface GetWeddingDetailsResponse {
 
 	sumCostTask: number;
 
-	sumCostBeverages: number;
+	sumCostBeverage: number;
 
 	sumCost: number;
 

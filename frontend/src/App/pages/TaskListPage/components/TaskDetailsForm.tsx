@@ -36,7 +36,7 @@ const TaskDetailsForm: React.FC<TaskDetailsFormProps> = ({ form, task, editable 
 				<Descriptions.Item label='Telefon osoby pierwszego kontaktu'>
 					{task.contactPersonPhone ? task.contactPersonPhone : <em>-</em>}
 				</Descriptions.Item>
-				<Descriptions.Item label='Koszt'>{task.cost ? task.cost : <em>-</em>}</Descriptions.Item>
+				<Descriptions.Item label='Koszt'>{task.cost ? `${task.cost} zł` : <em>-</em>}</Descriptions.Item>
 				<Descriptions.Item label='Opis' span={2}>
 					{task.notes ? (
 						<div style={{ padding: '0 1em' }}>

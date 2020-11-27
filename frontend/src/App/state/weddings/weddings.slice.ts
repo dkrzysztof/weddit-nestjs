@@ -23,6 +23,7 @@ export const weddingSlice = createSlice({
 		},
 		getUserWeddingsSuccess: (state: WeddingsState, action: PayloadAction<GetUserWeddingsRequest>) => {
 			state.status.getUserWeddings = SUCCESS;
+			state.notify = true;
 			const { data, ...queryParams } = action.payload;
 			state.weddings = data;
 			state.getUserWeddingsQueryParams = queryParams;
@@ -186,6 +187,14 @@ export const weddingSlice = createSlice({
 				description: 'Wystapił błąd przy zapisywaniu układu sali!'
 			});
 			console.log('ERROR at addSeatChart', action.payload);
+		},
+
+		userWasNotified: (state: WeddingsState) => {
+			state.notify = false;
+		},
+		deselectWedding: (state: WeddingsState) => {
+			state.notify = true;
+			state.selectedWedding = null;
 		}
 	}
 });
@@ -217,5 +226,7 @@ export const {
 	updateWeddingSuccess,
 	addSeatChartFailure,
 	addSeatChartStart,
-	addSeatChartSuccess
+	addSeatChartSuccess,
+	deselectWedding,
+	userWasNotified
 } = weddingSlice.actions;

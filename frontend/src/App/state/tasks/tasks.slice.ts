@@ -72,6 +72,8 @@ const tasksSlice = createSlice({
 		getTaskDetailsFailure: (state: TaskState, action: PayloadAction<ErrorApi>) => {
 			state.status.getTaskDetails = FAILED;
 		}
+
+		///
 	}
 });
 

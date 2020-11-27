@@ -10,7 +10,6 @@ export interface TaskState {
 		updateTask: StatusType;
 		getTaskDetails: StatusType;
 	};
-
 	tasks: GetTasksResponse;
 	selectedTask: GetTaskResponse;
 }

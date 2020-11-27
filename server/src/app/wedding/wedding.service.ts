@@ -17,6 +17,7 @@ import { AllowUserToAccessWedding } from './dto/allow-user-to-access-wedding.dto
 import { CreateWeddingPlanDto } from './dto/create-wedding-plan.dto';
 import { GetUserWeddingsDto } from './dto/get-user-weddings.dto';
 import { GetWeddingDto } from './dto/get-wedding.dto';
+import { TableForSeatChartModel } from './dto/SeatChartNodeModel';
 import { UpdateWeddingDto } from './dto/update-wedding.dto';
 
 @Injectable()
@@ -105,6 +106,7 @@ export class WeddingService {
 
 			const sumCostTask = await this.calculateTaskBudget(idWedding);
 			const sumCostBeverage = await this.calculateBeveragesCost(idWedding);
+			console.log(sumCostBeverage);
 
 			const { userWeddings } = weddingDetails;
 
@@ -299,6 +301,18 @@ export class WeddingService {
 			const wedding = await this.weddingRepository.findOne({ idWedding });
 
 			wedding.seatChart = body.model;
+			const seatDiagram = JSON.parse(body.model);
+			let tableCounter = 0;
+
+			seatDiagram.nodeDataArray.forEach(element => {
+				let table = element as TableForSeatChartModel;
+				if (table.hasOwnProperty('guests')) {
+					tableCounter = tableCounter + 1;
+				}
+			});
+
+			wedding.tablesTotalCount = tableCounter;
+
 			await this.weddingRepository.save(wedding);
 
 			return true;

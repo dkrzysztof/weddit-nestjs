@@ -7,7 +7,7 @@ import {
 	SettingTwoTone,
 	TeamOutlined
 } from '@ant-design/icons';
-import { Button, Card, Col, Descriptions, Divider, Dropdown, Result, Row, Typography } from 'antd';
+import { Button, Card, Col, Descriptions, Divider, Dropdown, notification, Result, Row, Typography } from 'antd';
 import { WeddingForGetUserWeddings } from 'App/api/weddings/requests/GetUserWeddingsRequest';
 import Center from 'App/common/components/Center';
 import ConfiguredCard from 'App/common/components/ConfiguredCard';
@@ -15,9 +15,12 @@ import GoToPreviousPageButton from 'App/common/components/handleGoBack';
 import LoadingScreen from 'App/common/components/LoadingScreen';
 import PageTitle from 'App/common/components/PageTitle';
 import { RootState } from 'App/state/root.reducer';
+import { getTasks } from 'App/state/tasks/tasks.thunk';
+import { deselectWedding, userWasNotified } from 'App/state/weddings/weddings.slice';
 import { getWeddingDetails } from 'App/state/weddings/weddings.thunk';
 import { ObjectOfStyles } from 'App/types/ObjectOfStyles.type';
-import StatusType from 'App/types/requestStatus';
+import StatusType, { isStatusLoading, isStatusSuccess } from 'App/types/requestStatus';
+import moment from 'moment';
 import React, { CSSProperties, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -39,10 +42,68 @@ const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>
 	const dispatch = useDispatch();
 	const wedding = useSelector((state: RootState) => state.weddings.selectedWedding);
 	const getWeddingDetailsStatus = useSelector((state: RootState) => state.weddings.status.getWedding);
+	const tasks = useSelector((state: RootState) => state.tasks.tasks);
+	const tasksStatus = useSelector((state: RootState) => state.tasks.status.getTasks);
+	const shouldNotifyUser = useSelector((state: RootState) => state.weddings.notify);
 
 	useEffect(() => {
 		dispatch(getWeddingDetails(idWedding));
+		dispatch(getTasks(idWedding));
+		console.log(idWedding);
 	}, [dispatch]);
+
+	useEffect(() => {
+		if (shouldNotifyUser && tasks && isStatusSuccess(tasksStatus) && !isStatusLoading(tasksStatus)) {
+			let inSevenDays = moment().add(1, 'week').endOf('day');
+			let outdatted = [];
+			let isDue = [];
+
+			tasks.forEach((x) => {
+				let date = moment(x.deadline);
+
+				if (date.isValid() && date.isBefore(moment().startOf('day'))) {
+					outdatted.push(`[${date.format('DD.MM.YYYY')}]: ${x.description}`);
+
+					console.log('is Outdated');
+				} else if (date.isValid() && date.isBefore(inSevenDays, 'week')) {
+					isDue.push(`[${date.format('DD.MM.YYYY')}]: ${x.description}`);
+				}
+			});
+
+			if (outdatted.length > 0) {
+				notification.error({
+					message: 'Termin zadań minął!',
+					description: (
+						<div>
+							Czas na realizacje poniższych zadań minął:
+							<Typography.Text strong style={{ whiteSpace: 'break-spaces' }}>
+								{`\n${outdatted.join('\n')}`}
+							</Typography.Text>
+						</div>
+					),
+					style: { border: 'solid 2px #f75b57', borderRadius: '0.25rem', backgroundColor: '#fff5f5' },
+					duration: 8
+				});
+			}
+
+			if (isDue.length > 0) {
+				notification.warn({
+					message: 'Zbliża się termin realizacji zadania!',
+					description: (
+						<div>
+							Czas na realizacje poniższych niedługo się skończy:
+							<Typography.Text strong style={{ whiteSpace: 'break-spaces' }}>
+								{`\n${isDue.join('\n')}`}
+							</Typography.Text>
+						</div>
+					),
+					style: { border: 'solid 2px #facc14', borderRadius: '0.25rem', backgroundColor: '#fffaf2' },
+					duration: 8
+				});
+			}
+			dispatch(userWasNotified());
+		}
+	}, [shouldNotifyUser, tasks, tasksStatus]);
 
 	if (getWeddingDetailsStatus === StatusType.LOADING)
 		return (
@@ -104,7 +165,7 @@ const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>
 								{wedding.sumCostTask ? `${wedding.sumCostTask} zł` : <em>--</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Koszt napojów'>
-								{wedding.sumCostBeverages ? `${wedding.sumCostBeverages} zł` : <em>--</em>}
+								{wedding.sumCostBeverage ? `${wedding.sumCostBeverage} zł` : <em>--</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Suma Kosztów'>
 								{wedding.sumCost ? `${wedding.sumCost} zł` : <em>--</em>}

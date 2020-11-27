@@ -44,7 +44,8 @@ export class GuestService {
 					'GT.name AS "guestType"',
 				])
 				.where('W.idWedding = :idWedding', { idWedding })
-				.orderBy('G.lastName', 'ASC');
+				.orderBy('G.lastName', 'ASC')
+				.orderBy('G.firstName', 'ASC');
 
 			return await getCollection(
 				queryParams,
@@ -108,27 +109,33 @@ export class GuestService {
 		}
 
 		if (await this.weddingService.checkIfUserHasPermission(userPayload, idWedding, true)) {
-			const guest = await this.guestRepository.findOne({ idGuest }, { relations: ['guestType'] });
-			const typeBefore = await this.guestTypeRepository.findOne(
-				{ idGuestType: guest.guestType.idGuestType },
-				{ relations: ['guests'] },
-			);
-			const typeAfter = await this.guestTypeRepository.findOne(
-				{ idGuestType: updateGuestDto.idGuestType },
-				{ relations: ['guests'] },
-			);
+			const { idGuestType } = updateGuestDto;
+			let guest = await this.guestRepository.findOne({ idGuest }, { relations: ['guestType'] });
+
+			if (idGuestType) {
+				const typeBefore = await this.guestTypeRepository.findOne(
+					{ idGuestType: guest.guestType && guest.guestType.idGuestType },
+					{ relations: ['guests'] },
+				);
+				const typeAfter = await this.guestTypeRepository.findOne(
+					{ idGuestType: updateGuestDto.idGuestType },
+					{ relations: ['guests'] },
+				);
+				if (typeBefore) typeBefore.guests = typeBefore.guests.filter(g => g.idGuest != guest.idGuest);
+
+				appendOrCreateArray(typeAfter, 'guests', guest);
+
+				if (typeBefore) await this.guestTypeRepository.save(typeBefore);
+				await this.guestTypeRepository.save(typeAfter);
+			}
+			guest = await this.guestRepository.findOne({ idGuest }, { relations: ['guestType'] });
+
 			updateAllObjectKeyValues(updateGuestDto, guest);
 
-			typeBefore.guests = typeBefore.guests.filter(guest => guest.idGuest === guest.idGuest);
-			appendOrCreateArray(typeAfter, 'guests', guest);
-
 			await this.guestRepository.save(guest);
-			await this.guestTypeRepository.save(typeBefore);
-			await this.guestTypeRepository.save(typeAfter);
+			const idGuestTypeNew = guest.guestType && guest.guestType.idGuestType;
 
-			const idGuestType = guest.guestType && guest.guestType.idGuestType;
-
-			return { idGuestType, ...guest } as UpdateGuestDto;
+			return { idGuestType: idGuestTypeNew, ...guest } as UpdateGuestDto;
 		} else throw new ForbiddenException('Nie masz uprawnień do wykonania tej akcji!');
 	}
 
@@ -167,7 +174,6 @@ export class GuestService {
 		return await transactionWrapper(async queryRunner => {
 			const wedding = await queryRunner.manager.findOne(Wedding, { idWedding }, { relations: ['guests'] });
 			const guestTypeIds = await this.guestTypeRepository.find({ select: ['idGuestType', 'name'] });
-			console.log('\n', guestTypeIds, '\n');
 			for (const guestToCreate of guestsArrayToCreate) {
 				const newGuest = await queryRunner.manager.create(Guest, guestToCreate);
 				const guestType = await queryRunner.manager.findOne(
