@@ -1,4 +1,4 @@
-import { Button, Col, Row } from 'antd';
+import { Button, Col, notification, Row } from 'antd';
 import ConfiguredTable from 'App/common/components/ConfiguredTable';
 import { RootState } from 'App/state/root.reducer';
 import { getUserWeddings } from 'App/state/weddings/weddings.thunk';
@@ -9,6 +9,9 @@ import { renderWeddingTableColumns } from '../utils/WeddingTable';
 import '../utils/GetUserWeddingsContainer.less';
 import PageTitle from 'App/common/components/PageTitle';
 import { ObjectOfStyles } from 'App/types/ObjectOfStyles.type';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { deselectWedding } from 'App/state/weddings/weddings.slice';
 
 const styles: ObjectOfStyles = {
 	table: {
@@ -23,6 +26,7 @@ const styles: ObjectOfStyles = {
 
 const GetUserWeddingsContainer: React.FC<{}> = () => {
 	const history = useHistory();
+	const dispatch = useDispatch();
 	const selectCollection = (state: RootState) => state.weddings.weddings;
 	const selectCollectionGetQueryParams = (state: RootState) => state.weddings.getUserWeddingsQueryParams;
 	const selectCollectionGetStatus = (state: RootState) => state.weddings.status.getUserWeddings;
@@ -30,6 +34,12 @@ const GetUserWeddingsContainer: React.FC<{}> = () => {
 	const handleRedirectToCreateWeddingPlanButtonClick = () => {
 		history.push('/weddings/create');
 	};
+
+	notification.destroy();
+
+	useEffect(() => {
+		dispatch(deselectWedding());
+	}, []);
 
 	return (
 		<div id='get-user-weddings-container'>

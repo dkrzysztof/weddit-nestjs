@@ -23,7 +23,6 @@ export const weddingSlice = createSlice({
 		},
 		getUserWeddingsSuccess: (state: WeddingsState, action: PayloadAction<GetUserWeddingsRequest>) => {
 			state.status.getUserWeddings = SUCCESS;
-			state.notify = true;
 			const { data, ...queryParams } = action.payload;
 			state.weddings = data;
 			state.getUserWeddingsQueryParams = queryParams;
@@ -194,6 +193,7 @@ export const weddingSlice = createSlice({
 		},
 		deselectWedding: (state: WeddingsState) => {
 			state.notify = true;
+			state.status.getWedding = INITIAL;
 			state.selectedWedding = null;
 		}
 	}

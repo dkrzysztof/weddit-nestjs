@@ -5,6 +5,7 @@ import { GetTaskResponse } from 'App/api/taskLists/responses/GetTask';
 import LoadingScreen from 'App/common/components/LoadingScreen';
 import { dateLocale } from 'App/types/dateLocale';
 import UpdateTaskForm from './UpdateTaskForm';
+import moment from 'moment';
 
 interface TaskDetailsFormProps {
 	task: GetTaskResponse;
@@ -22,7 +23,7 @@ const TaskDetailsForm: React.FC<TaskDetailsFormProps> = ({ form, task, editable 
 					{task.description ? task.description : <em>-</em>}
 				</Descriptions.Item>
 				<Descriptions.Item label='Termin'>
-					{task.deadline ? task.deadline.toLocaleDateString('pl', dateLocale) : <em>-</em>}
+					{task.deadline ? moment(task.deadline).format('DD MMMM YYYY') : <em>-</em>}
 				</Descriptions.Item>
 				<Descriptions.Item label='Osoba odpowiedzialna'>
 					{task.dutyHolderFullName ? task.dutyHolderFullName : <em>-</em>}

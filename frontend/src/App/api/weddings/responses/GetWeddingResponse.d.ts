@@ -1,4 +1,5 @@
 export interface GetWeddingDetailsResponse {
+	idWedding: number;
 	name: string;
 
 	dateOfWedding: Date;

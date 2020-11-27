@@ -22,6 +22,7 @@ export class TaskListsService {
 	async createTask(userPayload: JwtPayload, idWedding: number, createTaskDto: CreateTaskDto): Promise<CreateTaskDto> {
 		if (this.weddingService.checkIfUserHasPermission(userPayload, idWedding, true)) {
 			return await transactionWrapper(async queryRunner => {
+				console.log('due date', createTaskDto.deadline);
 				const task = await queryRunner.manager.create(TaskList, createTaskDto);
 				const wedding = await queryRunner.manager.findOne(Wedding, { idWedding }, { relations: ['taskLists'] });
 

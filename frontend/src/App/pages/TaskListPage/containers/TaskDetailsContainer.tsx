@@ -8,6 +8,7 @@ import LoadingScreen from 'App/common/components/LoadingScreen';
 import { RootState } from 'App/state/root.reducer';
 import { deleteTask, getTaskDetails, getTasks, updateTask } from 'App/state/tasks/tasks.thunk';
 import { isStatusLoading } from 'App/types/requestStatus';
+import { Moment } from 'moment';
 import React, { CSSProperties, ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TaskDetailsForm from '../components/TaskDetailsForm';
@@ -98,7 +99,7 @@ const TaskDetailsContainer: React.FC<TaskDetailsContainerProps> = ({ task, idWed
 			}
 
 			if (values.deadline) {
-				values.deadline = (values.deadline as any).toISOString();
+				values.deadline = (values.deadline as Moment).startOf('day').add(1, 'hour').toISOString();
 			}
 
 			dispatch(

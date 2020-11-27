@@ -1,12 +1,4 @@
-import {
-	BarsOutlined,
-	ExperimentOutlined,
-	PartitionOutlined,
-	SettingFilled,
-	SettingOutlined,
-	SettingTwoTone,
-	TeamOutlined
-} from '@ant-design/icons';
+import { BarsOutlined, ExperimentOutlined, PartitionOutlined, SettingOutlined, TeamOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Descriptions, Divider, Dropdown, notification, Result, Row, Typography } from 'antd';
 import { WeddingForGetUserWeddings } from 'App/api/weddings/requests/GetUserWeddingsRequest';
 import Center from 'App/common/components/Center';
@@ -47,25 +39,23 @@ const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>
 	const shouldNotifyUser = useSelector((state: RootState) => state.weddings.notify);
 
 	useEffect(() => {
-		dispatch(getWeddingDetails(idWedding));
-		dispatch(getTasks(idWedding));
-		console.log(idWedding);
-	}, [dispatch]);
+		dispatch(getWeddingDetails(idWedding, () => dispatch(getTasks(idWedding))));
+	}, [dispatch, idWedding]);
 
 	useEffect(() => {
-		if (shouldNotifyUser && tasks && isStatusSuccess(tasksStatus) && !isStatusLoading(tasksStatus)) {
-			let inSevenDays = moment().add(1, 'week').endOf('day');
+		if (shouldNotifyUser && isStatusSuccess(tasksStatus) && tasks && tasks.some((t) => t.idWedding === idWedding)) {
+			let inSevenDays = moment().add(1, 'week').startOf('day');
 			let outdatted = [];
 			let isDue = [];
 
 			tasks.forEach((x) => {
 				let date = moment(x.deadline);
 
-				if (date.isValid() && date.isBefore(moment().startOf('day'))) {
+				if (date.isValid() && date.isBefore(moment().startOf('day')) && !x.isComplete) {
 					outdatted.push(`[${date.format('DD.MM.YYYY')}]: ${x.description}`);
 
 					console.log('is Outdated');
-				} else if (date.isValid() && date.isBefore(inSevenDays, 'week')) {
+				} else if (date.isValid() && date.isBefore(inSevenDays, 'days') && !x.isComplete) {
 					isDue.push(`[${date.format('DD.MM.YYYY')}]: ${x.description}`);
 				}
 			});
@@ -105,21 +95,23 @@ const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>
 		}
 	}, [shouldNotifyUser, tasks, tasksStatus]);
 
-	if (getWeddingDetailsStatus === StatusType.LOADING)
+	if (isStatusLoading(getWeddingDetailsStatus))
 		return (
 			<Center size='small'>
 				<LoadingScreen container='fill' />
 			</Center>
 		);
 
-	if (getWeddingDetailsStatus === StatusType.SUCCESS) {
+	if (isStatusSuccess(getWeddingDetailsStatus)) {
 		return (
 			<>
-				<GoToPreviousPageButton />
-				<Row justify='center'>
+				<Row justify='center' style={{ marginTop: '2em' }}>
 					<Col xs={22} sm={22} md={20} lg={16}>
 						<Row justify='space-between'>
-							<Col span={23}>
+							<Col span={1} style={{ paddingTop: '1.5em' }}>
+								<GoToPreviousPageButton />
+							</Col>
+							<Col span={22}>
 								<PageTitle title={`Dane szczegółowe wesela ${wedding.name}`} />
 							</Col>
 							<Col span={1}>

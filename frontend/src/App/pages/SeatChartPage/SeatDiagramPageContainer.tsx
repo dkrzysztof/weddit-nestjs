@@ -42,7 +42,6 @@ const SeatChartPageContainer: React.FC<RouteComponentProps<IdWeddingRouteParam>>
 				for (let g in x.guests) {
 					let key = x.guests[g];
 					if (!guestsFiltered.some((f) => f.key === key)) {
-						console.log('deleteing', key, x.guests[g]);
 						delete x.guests[g];
 					}
 				}

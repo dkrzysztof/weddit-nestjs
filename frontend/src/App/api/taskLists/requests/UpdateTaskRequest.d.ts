@@ -1,7 +1,7 @@
 export interface UpdateTaskRequest {
 	description: string;
 
-	deadline?: Date;
+	deadline?: Moment | string;
 
 	dutyHolderFullName?: string;
 

@@ -14,7 +14,7 @@ import { TaskListApi } from './taskLists/taskListsApi';
 import { ErrorHandledResponse } from 'App/types/error';
 import responseParser from './utils/responseParser';
 
-const baseURL = `http://localhost:5000/`;
+const baseURL = `http://localhost:5002/`;
 
 axios.defaults.baseURL = baseURL;
 

@@ -27,6 +27,7 @@ export var guestDiagram = null;
 export var myTables = null;
 let tableKey = 1;
 let guestKey = 1;
+let tableDiagramHasFocus = false;
 
 function initDiagram(onCreationSuccess: () => void, saveModel: (model: string) => void) {
 	return () => {
@@ -179,39 +180,45 @@ function initDiagram(onCreationSuccess: () => void, saveModel: (model: string) =
 
 				case 9:
 					return [
-						Seat(1, '0.5 0', '0.5 1'),
-						Seat(2, '0.885	0.82', '0.15 0'),
-						Seat(3, '0.585	0.99', '0 0'),
-						Seat(4, '0.25	0.935', '0 0'),
-						Seat(5, '0.03	0.67', '0 0'),
-						Seat(6, '0.03	0.33', '0 0'),
-						Seat(7, '0.25	0.065', '0 0'),
-						Seat(8, '0.57	0.01', '0 0'),
-						Seat(9, '0.885	0.18', '0 0')
+						Seat(1, '0.5 0'),
+						Seat(2, '0.82 0.12'),
+						Seat(3, '0.99 0.41'),
+						Seat(4, '0.93 0.75'),
+						Seat(5, '0.67 0.97'),
+						Seat(6, '0.33 0.97'),
+						Seat(7, '0.07 0.75'),
+						Seat(8, '0.01 0.41'),
+						Seat(9, '0.18 0.11')
 					];
 
 				case 10:
 					return [
-						Seat(1, '0.50 0', '0.5 1'),
-						Seat(2, '0.85 0.15', '0.15 0.85'),
-						Seat(3, '1 0.5', '0 0.5'),
-						Seat(4, '0.85 0.85', '0.15 0.15'),
-						Seat(5, '0.50 1', '0.5 0'),
-						Seat(6, '0.15 0.85', '0.85 0.15'),
-						Seat(7, '0 0.5', '1 0.5'),
-						Seat(8, '0.15 0.15', '0.85 0.85')
+						Seat(1, '0.5 0'),
+						Seat(2, '0.79 0.09'),
+						Seat(3, '0.98 0.35'),
+						Seat(4, '0.98 0.65'),
+						Seat(5, '0.79 0.91'),
+						Seat(6, '0.5 1'),
+						Seat(7, '0.2 0.9'),
+						Seat(8, '0.02 0.65'),
+						Seat(9, '0.03 0.34'),
+						Seat(10, '0.21 0.09')
 					];
 
-				case 11:
+				case 12:
 					return [
-						Seat(1, '0.50 0', '0.5 1'),
-						Seat(2, '0.85 0.15', '0.15 0.85'),
-						Seat(3, '1 0.5', '0 0.5'),
-						Seat(4, '0.85 0.85', '0.15 0.15'),
-						Seat(5, '0.50 1', '0.5 0'),
-						Seat(6, '0.15 0.85', '0.85 0.15'),
-						Seat(7, '0 0.5', '1 0.5'),
-						Seat(8, '0.15 0.15', '0.85 0.85')
+						Seat(1, '0.5 0'),
+						Seat(2, '0.75 0.07'),
+						Seat(3, '0.93 0.25'),
+						Seat(4, '1 0.5'),
+						Seat(5, '0.93 0.75'),
+						Seat(6, '0.75 0.93'),
+						Seat(7, '0.5 1'),
+						Seat(8, '0.25 0.93'),
+						Seat(9, '0.07 0.75'),
+						Seat(10, '0 0.5'),
+						Seat(11, '0.07 0.25'),
+						Seat(12, '0.25 0.06')
 					];
 
 				default:
@@ -270,7 +277,7 @@ function initDiagram(onCreationSuccess: () => void, saveModel: (model: string) =
 			)
 		);
 
-		function Seat(number, align, focus) {
+		function Seat(number, align, focus?) {
 			if (typeof align === 'string') align = go.Spot.parse(align);
 			if (!align || !align.isSpot()) align = go.Spot.Right;
 			if (typeof focus === 'string') focus = go.Spot.parse(focus);
@@ -355,7 +362,7 @@ function initDiagram(onCreationSuccess: () => void, saveModel: (model: string) =
 						$(
 							go.TextBlock,
 							{ editable: true, font: 'bold 11pt Verdana, sans-serif' },
-							new go.Binding('text', 'key').makeTwoWay(),
+							new go.Binding('text', 'name').makeTwoWay(),
 							new go.Binding('angle', 'angle', function (n) {
 								return -n;
 							})
@@ -363,6 +370,45 @@ function initDiagram(onCreationSuccess: () => void, saveModel: (model: string) =
 					)
 				),
 				...getSeatsRectOneSide(numberOfSeats)
+			);
+		}
+
+		function createTableRectCorner(numberOfSeats, width) {
+			return $(
+				go.Node,
+				'Spot',
+				tableStyle(),
+				$(
+					go.Panel,
+					'Spot',
+					$(
+						go.Shape,
+						'Square',
+						{
+							name: 'TABLESHAPE',
+							desiredSize: new go.Size(width, width),
+							fill: 'burlywood',
+							stroke: null
+						},
+						new go.Binding('desiredSize', 'size', go.Size.parse).makeTwoWay(go.Size.stringify),
+						new go.Binding('fill')
+					),
+					$(
+						go.Panel,
+						'Vertical',
+
+						$(
+							go.TextBlock,
+							{ editable: true, font: 'bold 11pt Verdana, sans-serif' },
+							new go.Binding('text', 'name').makeTwoWay(),
+							new go.Binding('angle', 'angle', function (n) {
+								return -n;
+							})
+						)
+					)
+				),
+				Seat(1, '0 0.5'),
+				Seat(2, '0.5 0')
 			);
 		}
 
@@ -480,44 +526,47 @@ function initDiagram(onCreationSuccess: () => void, saveModel: (model: string) =
 
 		seatDiagram.nodeTemplateMap.add(
 			'TableC10', // circular with 8 seats
-			createTableCircle(8, 120, 120)
-		);
-
-		seatDiagram.nodeTemplateMap.add(
-			'TableC11', // circular with 8 seats
-			createTableCircle(8, 120, 120)
+			createTableCircle(10, 120, 120)
 		);
 
 		seatDiagram.nodeTemplateMap.add(
 			'TableC12', // circular with 8 seats
-			createTableCircle(8, 120, 120)
+			createTableCircle(12, 120, 120)
+		);
+
+		seatDiagram.nodeTemplateMap.add(
+			'TableRC', // circular with 8 seats
+			createTableRectCorner(2, 60)
 		);
 
 		// what to do when a drag-drop occurs in the Diagram's background
 		seatDiagram.mouseDrop = function (e) {
-			// when the selection is dropped in the diagram's background,
-			// make sure the selected people no longer belong to any table
 			e.diagram.selection.each(function (n) {
 				if (isPerson(n)) unassignSeat(seatDiagram, n.data);
-				if (isTable(n)) {
-					let window1 = window as any;
-					window1.table = n;
-				}
 			});
-			if (isTable(e)) {
-				seatDiagram.nodeTemplateMap.add('TableRO2', createTableRectOneSide(2, 100, 60));
-			}
 		};
 
 		// to simulate a "move" from the Palette, the source Node must be deleted.
 		seatDiagram.addDiagramListener('ExternalObjectsDropped', function (e) {
 			// if any Tables were dropped, don't delete from guestDiagram
+			let selectedTable = myTables.selection.first();
 			if (!e.subject.any(isTable)) {
 				guestDiagram.commandHandler.deleteSelection();
 			}
-			if (isTable(e)) {
-				let newnode = myTables.selection.first();
-				seatDiagram.commandHandler.copySelection();
+			if (isTable(selectedTable && selectedTable.data) && tableDiagramHasFocus) {
+				let loc = '0 0';
+				e.subject.each((e) => {
+					if (isTable(e && e.data)) {
+						loc = e.data.loc;
+						seatDiagram.model.removeNodeData(e.data);
+					}
+				});
+				let newNodeData = { ...selectedTable.data, guests: {}, loc };
+				delete newNodeData.key;
+				seatDiagram.model.addNodeData(myTables.model.copyNodeData(newNodeData));
+				// myTables.commandHandler.copySelection();
+				// seatDiagram.model.addNodeData(myTables.model.copyNodeData(newnode));
+				// e.diagram.toolManager.draggingTool.transactionResult = null;
 			}
 		});
 
@@ -631,6 +680,22 @@ function initMenu() {
 
 	myTables.model.undoManager = seatDiagram.model.undoManager; // shared UndoManager!
 
+	// myTables.model.makeUniqueKeyFunction = (model: go.Model, data: go.ObjectData) => {
+	// 	tableKey = tableKey + 1;
+	// 	return tableKey;
+	// };
+	myTables.model.copiesKey = false;
+
+	myTables.addDiagramListener('GainedFocus', function (e) {
+		tableDiagramHasFocus = true;
+	});
+
+	myTables.addDiagramListener('LostFocus', function (e) {
+		setTimeout(() => {
+			tableDiagramHasFocus = false;
+		}, 100);
+	});
+
 	myTables.model = new go.Model([
 		{
 			key: 1,
@@ -711,6 +776,7 @@ function initMenu() {
 			guests: {}
 		}
 	]);
+
 	return myTables;
 }
 

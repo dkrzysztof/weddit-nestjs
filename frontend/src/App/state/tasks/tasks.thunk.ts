@@ -28,9 +28,11 @@ export const getTasks = (idWedding: number, onSuccess?: () => void): AppThunk =>
 	agent.TaskList.getTasks(idWedding)
 		.then((res) => {
 			dispatch(getTasksSuccess(res));
-			onSuccess();
+			if (onSuccess) onSuccess();
 		})
-		.catch((err) => dispatch(getTasksFailure(err)));
+		.catch((err) => {
+			dispatch(getTasksFailure(err));
+		});
 };
 
 export const createTask = (idWedding: number, body: CreateTaskRequest, onSuccess?: () => void): AppThunk => async (

@@ -24,7 +24,7 @@ const GuestsPageContainer: React.FC<RouteComponentProps<WeddingSubroute>> = ({ m
 
 	if (wedding) {
 		return (
-			<div>
+			<div style={{ maxWidth: '1200px', margin: '2em auto' }}>
 				<PageTitle title={`Lista Gości na weselu ${wedding.name}`} />
 				<GuestsPageMenuContainer idWedding={idWedding} />
 				<GetGuestsContainer idWedding={idWedding} />

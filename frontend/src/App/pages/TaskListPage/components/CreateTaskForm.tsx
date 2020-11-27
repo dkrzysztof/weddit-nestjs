@@ -1,21 +1,35 @@
-import { Form, Input, InputNumber } from 'antd';
+import { DatePicker, Form, Input, InputNumber } from 'antd';
 import { FormInstance, useForm } from 'antd/lib/form/Form';
 import { CreateTaskRequest } from 'App/api/taskLists/requests/CreateTaskRequest';
-import React from 'react';
+import plPL from 'antd/es/date-picker/locale/pl_PL';
+import moment, { Moment } from 'moment';
+import React, { useState } from 'react';
 
 interface CreateTaskFormProps {
 	form: FormInstance;
 	loading: boolean;
 }
 
+function disabledDate(current) {
+	return current && current < moment().endOf('day');
+}
+
 const CreateTaskForm: React.FC<CreateTaskFormProps> = ({ form, loading }) => {
+	const [selectedDate, changeSelectedDate] = useState<Moment>(moment());
+
+	const handleDateChange = (e: Moment) => {
+		console.log(e);
+		form.setFieldsValue({
+			deadline: e.startOf('day').add(2, 'hours').toISOString()
+		});
+	};
+
 	return (
 		<Form
 			form={form}
 			layout='vertical'
 			initialValues={{
 				description: 'Zamówić kwiaty',
-				deadline: '12.12.2020',
 				dutyHolderFullName: 'Adam Nowak',
 				cost: 120.0
 			}}
@@ -24,7 +38,13 @@ const CreateTaskForm: React.FC<CreateTaskFormProps> = ({ form, loading }) => {
 				<Input type='text' disabled={loading} />
 			</Form.Item>
 			<Form.Item label='Termin' name='deadline' rules={[{ required: true }]}>
-				<Input type='date' disabled={loading} min={new Date().toDateString()} />
+				<DatePicker
+					disabledDate={disabledDate}
+					format='DD MMMM YYYY'
+					style={{ width: '100%' }}
+					locale={plPL}
+					onChange={handleDateChange}
+				/>{' '}
 			</Form.Item>
 			<Form.Item label='Osoba odpowiedzialna' name='dutyHolderFullName' rules={[{ required: true }]}>
 				<Input type='text' disabled={loading} />

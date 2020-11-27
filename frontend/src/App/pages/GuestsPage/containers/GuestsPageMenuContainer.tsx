@@ -36,20 +36,19 @@ const GuestsPageMenuContainer: React.FC<GuestsPageMenuContainerProps> = ({ idWed
 
 	return (
 		<>
-			<Row justify='space-around'>
-				<Col span={6}>
+			<Row justify='space-between'>
+				<Col xs={4} sm={4} md={4} lg={4} style={{ marginTop: '1em' }}>
 					<GoToPreviousPageButton />
 				</Col>
-				<Col span={6}>
-					<Button onClick={openUploadGuestsFileModal} icon={<UploadOutlined />}>
+				<Col xs={14} sm={12} md={5} lg={4} style={{ marginTop: '1em' }}>
+					<Button onClick={openUploadGuestsFileModal} icon={<UploadOutlined />} style={{ width: '100%' }}>
 						Importuj listę gości
 					</Button>
 				</Col>
-				<Col span={6}>
-					<Button onClick={openCreateUserModal}>Dodaj nowego Uczestnika wesela</Button>
-				</Col>
-				<Col span={24}>
-					<br />
+				<Col xs={24} sm={24} md={7} lg={5} style={{ marginTop: '1em' }}>
+					<Button onClick={openCreateUserModal} style={{ width: '100%' }}>
+						Dodaj nowego Uczestnika wesela
+					</Button>
 				</Col>
 			</Row>
 			<UploadGuestsFileModal

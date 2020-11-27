@@ -58,10 +58,13 @@ export const createUserWedding = (body: CreateWeddingPlanRequest): AppThunk => a
 		.catch((err) => dispatch(createWeddingFailure(err)));
 };
 
-export const getWeddingDetails = (idWedding: number): AppThunk => async (dispatch) => {
+export const getWeddingDetails = (idWedding: number, onSuccess?: () => void): AppThunk => async (dispatch) => {
 	dispatch(getWeddingDetailsStart());
 	agent.Wedding.getWeddingDetails(idWedding)
-		.then((res) => dispatch(getWeddingDetailsSuccess(res)))
+		.then((res) => {
+			dispatch(getWeddingDetailsSuccess(res));
+			if (onSuccess) onSuccess();
+		})
 		.catch((err) => dispatch(getWeddingDetailsFailure(err)));
 };
 

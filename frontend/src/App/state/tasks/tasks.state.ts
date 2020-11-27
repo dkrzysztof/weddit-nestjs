@@ -12,6 +12,7 @@ export interface TaskState {
 	};
 	tasks: GetTasksResponse;
 	selectedTask: GetTaskResponse;
+	error: any;
 }
 
 export const initialTaskState: TaskState = {
@@ -23,5 +24,6 @@ export const initialTaskState: TaskState = {
 		updateTask: StatusType.INITIAL
 	},
 	selectedTask: null,
-	tasks: null
+	tasks: null,
+	error: null
 };

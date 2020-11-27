@@ -8,6 +8,7 @@ import { RootState } from 'App/state/root.reducer';
 import React, { Dispatch } from 'react';
 import { useSelector } from 'react-redux';
 import TagWithDropdown from '../components/TagWithDropdown';
+import '../styles/GetGuestsContainer.less';
 
 const GetGuestsContainer: React.FC<{ idWedding: number }> = ({ idWedding }) => {
 	const params = useSelector((state: RootState) => state.guests.guestsQueryParams);
@@ -92,7 +93,7 @@ const GetGuestsContainer: React.FC<{ idWedding: number }> = ({ idWedding }) => {
 	];
 
 	return (
-		<>
+		<div id='get-guests-container'>
 			<ConfiguredTable
 				rowKey='idGuest'
 				selectCollection={(state: RootState) => state.guests.guests}
@@ -101,7 +102,7 @@ const GetGuestsContainer: React.FC<{ idWedding: number }> = ({ idWedding }) => {
 				getCollectionThunkAction={(pagination) => getGuests(idWedding, pagination)}
 				selectCollectionGetQueryParams={(state: RootState) => state.guests.guestsQueryParams}
 			/>
-		</>
+		</div>
 	);
 };
 
