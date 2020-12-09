@@ -11,7 +11,6 @@ import { default as ResetPasswordPage } from './pages/ResetPasswordPage/ResetPas
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import ForbiddenPage from './pages/ForbiddenPage/ForbiddenPage';
 import WeddingPageContainer from './pages/WeddingPage/WeddingPageContainer';
-import CreateWeddingContainer from './pages/WeddingPage/containers/CreateWeddingContainer';
 
 const Routes: React.FC = () => {
 	return (

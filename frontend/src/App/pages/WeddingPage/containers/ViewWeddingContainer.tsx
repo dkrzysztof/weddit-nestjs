@@ -108,12 +108,16 @@ const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>
 				<Row justify='center' style={{ marginTop: '2em' }}>
 					<Col xs={22} sm={22} md={20} lg={16}>
 						<Row justify='space-between'>
-							<Col span={1} style={{ paddingTop: '1.5em' }}>
-								<GoToPreviousPageButton />
-							</Col>
 							<Col span={22}>
 								<PageTitle title={`Dane szczegółowe wesela ${wedding.name}`} />
 							</Col>
+						</Row>
+
+						<Row justify='space-between' style={{ marginBottom: '1em' }}>
+							<Col span={1} style={{ paddingTop: '0em' }}>
+								<GoToPreviousPageButton />
+							</Col>
+							<Col span={22}></Col>
 							<Col span={1}>
 								<Link to={`/weddings/${idWedding}/update`}>
 									<Button type='link' style={{ color: '#5923ef' }}>
@@ -138,7 +142,7 @@ const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>
 							<Descriptions.Item label='Godzina rozpoczęcia'>
 								{wedding.hourOfWedding || <em>--</em>}
 							</Descriptions.Item>
-							<Descriptions.Item label='Godzina mszy świętej'>
+							<Descriptions.Item label='Godzina ceremonii weselnej'>
 								{wedding.hourOfChurchService || <em>--</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Czy będą poprawiny?'>
@@ -149,9 +153,6 @@ const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>
 							</Descriptions.Item>
 							<Descriptions.Item label='Liczba stolików na sali'>
 								{wedding.tablesTotalCount || <em>--</em>}
-							</Descriptions.Item>
-							<Descriptions.Item label='Numer Stolika Pary młodej'>
-								{wedding.tableNumberOfMarried || <em>--</em>}
 							</Descriptions.Item>
 							<Descriptions.Item label='Koszt usług'>
 								{wedding.sumCostTask ? `${wedding.sumCostTask} zł` : <em>--</em>}

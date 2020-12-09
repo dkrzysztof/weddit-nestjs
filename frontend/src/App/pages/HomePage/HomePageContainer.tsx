@@ -1,40 +1,47 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
-import { Button, Col, Row } from 'antd';
-import { RootState } from 'App/state/root.reducer';
+import { Col, Row } from 'antd';
 
-import home_screen_wedding from './utils/home_screen_wedding.svg';
+import home_screen_logo from './utils/home_screen_wedding.svg';
 
 const HomePageContainer: React.FC<{}> = () => {
 	type MouseClickEvent = (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 
-	const state = useSelector((state: RootState) => state);
-
-	const logState: MouseClickEvent = () => {
-		console.log(state);
-	};
-
-	const getAllCokies: MouseClickEvent = () => {
-		console.log(document.cookie.split(';'));
-	};
-
 	return (
-		<div>
-			<Row justify='center' align='middle'>
-				<Col span={10}>
-					<img style={{ width: '100%' }} src={home_screen_wedding} />
-				</Col>
-				<Col
-					span={24}
-					style={{
-						textAlign: 'center'
-					}}
-				>
-					<h1 style={{ fontSize: '3rem' }}>Witaj na Organizerze imprez weselnych!</h1>
-				</Col>
-			</Row>
-		</div>
+		<Row justify='center' align='middle' className='back-image'>
+			<Col
+				xs={22}
+				sm={22}
+				md={20}
+				lg={14}
+				xl={14}
+				xxl={12}
+				style={{
+					backgroundColor: 'white',
+					borderRadius: '0.25rem',
+					border: '2px solid #5923ef',
+					margin: '2em auto',
+					width: 'fit-content',
+					boxShadow: '0 12px 18px 0 #333333ae'
+				}}
+			>
+				<Row justify='center' align='middle'>
+					<Col span={15}>
+						<img style={{ width: '100%', margin: '1em auto' }} src={home_screen_logo} />
+					</Col>
+					<Col
+						span={20}
+						style={{
+							textAlign: 'center'
+						}}
+					>
+						<h1 style={{ fontSize: '2.5rem', maxWidth: '12em', margin: '1em auto 1em' }}>
+							Witaj na Organizerze imprez weselnych!
+						</h1>
+					</Col>
+				</Row>
+			</Col>
+		</Row>
 	);
 };
 

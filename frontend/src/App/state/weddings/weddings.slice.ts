@@ -170,7 +170,8 @@ export const weddingSlice = createSlice({
 			if (action.payload) {
 				notification.success({
 					message: 'Sukces',
-					description: `Pomyślnie zapisano dane o sali weselnej!`
+					description: `Pomyślnie zapisano dane o sali weselnej!`,
+					duration: 0
 				});
 			} else {
 				notification.error({

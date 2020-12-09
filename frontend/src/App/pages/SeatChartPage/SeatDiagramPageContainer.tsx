@@ -20,7 +20,7 @@ const SeatChartPageContainer: React.FC<RouteComponentProps<IdWeddingRouteParam>>
 	const dispatch = useDispatch();
 	const getGuestsShortStatus = useSelector((state: RootState) => state.guests.status.getGuestsShortCollection);
 	const wedding = useSelector((state: RootState) => state.weddings.selectedWedding);
-	const initialModel = JSON.parse(wedding.seatChart) as any;
+	const initialModel = JSON.parse(wedding.seatChart || '{"nodeDataArray": []}') as any;
 	const guests = useSelector((state: RootState) => state.guests.guestsShort);
 	const idWedding = Number.parseInt(match.params.idWedding);
 
@@ -63,7 +63,8 @@ const SeatChartPageContainer: React.FC<RouteComponentProps<IdWeddingRouteParam>>
 					borderRadius: '0.25rem',
 					fontFamily: 'Consolas, serif',
 					maxWidth: '1000px',
-					margin: 'auto'
+					margin: 'auto',
+					display: 'none'
 				}}
 			>
 				<pre id='savedModel'></pre>

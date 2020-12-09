@@ -1,4 +1,4 @@
-import { CheckSquareOutlined, CloseSquareOutlined } from '@ant-design/icons';
+import { CheckSquareOutlined, CloseSquareOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { Typography, Tag, Row, Col, Button, Checkbox } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { GuestForGetGuestsResponse } from 'App/api/guests/responses';
@@ -59,7 +59,7 @@ const GetGuestsContainer: React.FC<{ idWedding: number }> = ({ idWedding }) => {
 			}
 		},
 		{
-			title: 'Potwierdził zaproszenie',
+			title: 'Potwierdził poprawiny',
 			width: 150,
 			render: (record: GuestForGetGuestsResponse) => {
 				const onChange = ({ target }: CheckboxChangeEvent) => {
@@ -84,8 +84,8 @@ const GetGuestsContainer: React.FC<{ idWedding: number }> = ({ idWedding }) => {
 					dispatch(deleteGuest(idWedding, record.idGuest, params));
 				};
 				return (
-					<Button onClick={handleDelete} type='link'>
-						X
+					<Button onClick={handleDelete} type='link' danger>
+						<MinusCircleOutlined />
 					</Button>
 				);
 			}
@@ -93,7 +93,7 @@ const GetGuestsContainer: React.FC<{ idWedding: number }> = ({ idWedding }) => {
 	];
 
 	return (
-		<div id='get-guests-container'>
+		<div id='get-guests-container' style={{ marginTop: '1em' }}>
 			<ConfiguredTable
 				rowKey='idGuest'
 				selectCollection={(state: RootState) => state.guests.guests}

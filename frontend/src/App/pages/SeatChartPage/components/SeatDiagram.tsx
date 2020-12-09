@@ -845,7 +845,7 @@ const SeatDiagram: React.FC<SeatDiagramProps> = ({ guests, idWedding, initialMod
 							dispatch(addSeatChart(idWedding, { model }));
 						}}
 					>
-						Save
+						Zapisz
 						<SaveOutlined />
 					</Button>
 				</Col>

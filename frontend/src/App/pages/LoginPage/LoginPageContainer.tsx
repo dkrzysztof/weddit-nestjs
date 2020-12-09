@@ -27,7 +27,7 @@ const LoginPageContainer: React.FC<LoginPageContainerProps> = ({ history }: Logi
 	const status = useSelector((state: RootState) => state.session.status.authentication);
 
 	const formInitialValues = {
-		email: 'user@user.com',
+		email: 'user@mail.com',
 		password: 'Admin123!'
 	};
 

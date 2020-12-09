@@ -6,8 +6,6 @@ import { ConfigProvider } from 'antd';
 
 import App from './App/App';
 import store from './App/state/store';
-import './i18n';
-
 import './index.less';
 
 function render(): void {

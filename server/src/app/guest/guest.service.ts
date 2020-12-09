@@ -163,7 +163,7 @@ export class GuestService {
 						...row,
 						confirmed: row.confirmed == 'true',
 						confirmedAfters: row.confirmedAfters == 'true',
-						idGuestType: 3,
+						idGuestType: 6,
 					}),
 				)
 				.on('end', rowsNumber => resolve(rowsNumber));
