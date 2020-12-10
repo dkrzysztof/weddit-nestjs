@@ -1,15 +1,13 @@
+import { Dispatch } from '@reduxjs/toolkit';
+import { Table } from 'antd';
+import { PaginationConfig } from 'antd/lib/pagination';
+import { TableProps } from 'antd/lib/table';
+import defaultPageQueryParams from 'App/common/utils/defaultPageQueryParams';
+import { RootState } from 'App/state/root.reducer';
+import { IPageQueryParams } from 'App/types/pagination/pagination';
+import { StatusType } from 'App/types/requestStatus';
 import React, { CSSProperties, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { Table } from 'antd';
-
-import defaultPageQueryParams from 'App/common/utils/defaultPageQueryParams';
-import { StatusType } from 'App/types/requestStatus';
-import { IPageQueryParams } from 'App/types/pagination/pagination';
-import { TableProps } from 'antd/lib/table';
-import { PaginationConfig } from 'antd/lib/pagination';
-import { RootState } from 'App/state/root.reducer';
-import { Dispatch } from '@reduxjs/toolkit';
 
 const { LOADING } = StatusType;
 
@@ -46,6 +44,7 @@ const ConfiguredTable: React.FC<ConfiguredTableProps> = ({
 		showSizeChanger: true
 	};
 
+	/*eslint-disable react-hooks/exhaustive-deps */
 	useEffect(() => {
 		dispatch(
 			getCollectionThunkAction({
@@ -53,7 +52,7 @@ const ConfiguredTable: React.FC<ConfiguredTableProps> = ({
 				pageSize: pageSize || defaultPageQueryParams.pageSize
 			})
 		);
-	}, [dispatch, pageNumber, pageSize]);
+	}, [dispatch]);
 
 	const handleTableChange = (pagination: PaginationConfig): any => {
 		const { pageNumber: defaultPageNumber, pageSize: defaultPageSize, ...others } = defaultPageQueryParams;

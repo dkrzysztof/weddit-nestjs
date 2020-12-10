@@ -236,7 +236,7 @@ const SeatDiagram: React.FC<SeatDiagramProps> = ({ guests, idWedding, initialMod
 				}
 			}
 		});
-	}, [isGuestDiagramCreated]);
+	}, [isGuestDiagramCreated, initialModel, initialModel.nodeDataArray]);
 
 	return (
 		<div style={{ margin: '1em' }}>

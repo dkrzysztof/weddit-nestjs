@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Button, Col, Descriptions, Divider, Row, Tag } from 'antd';
+import { Col, Descriptions, Divider, Row } from 'antd';
 import LoadingScreen from 'App/common/components/LoadingScreen';
 import { getUser, cleanUpUserStatus } from 'App/state/admin/users/users.thunk';
 import { RootState } from 'App/state/root.reducer';

@@ -1,9 +1,6 @@
 import agent from 'App/api/agent';
-import { CreateGuestTypeRequest } from 'App/api/guestTypes/requests';
 import { CreateTaskRequest } from 'App/api/taskLists/requests/CreateTaskRequest';
 import { UpdateTaskRequest } from 'App/api/taskLists/requests/UpdateTaskRequest';
-import { GetTasksResponse } from 'App/api/taskLists/responses/GetAllTasks';
-import { createGuestTypeStart, createGuestTypeSuccess, createGuestTypeFailure } from '../guests/guests.slice';
 import { AppThunk } from '../store';
 import {
 	getTasksStart,
@@ -59,7 +56,7 @@ export const updateTask = (
 			setTimeout(() => {
 				dispatch(updateTaskSuccess(res));
 				onSuccess();
-			}, 2000);
+			}, 1000);
 		})
 		.catch((err) => dispatch(updateTaskFailure(err)));
 };

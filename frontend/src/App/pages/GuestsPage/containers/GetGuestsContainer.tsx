@@ -1,5 +1,5 @@
-import { CheckSquareOutlined, CloseSquareOutlined, MinusCircleOutlined } from '@ant-design/icons';
-import { Typography, Tag, Row, Col, Button, Checkbox } from 'antd';
+import { MinusCircleOutlined } from '@ant-design/icons';
+import { Typography, Button, Checkbox } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { GuestForGetGuestsResponse } from 'App/api/guests/responses';
 import ConfiguredTable from 'App/common/components/ConfiguredTable';

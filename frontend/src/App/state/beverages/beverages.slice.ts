@@ -4,7 +4,7 @@ import { GetBeveragesResponse } from 'App/api/beverages/responses';
 import StatusType from 'App/types/requestStatus';
 import { BeveragesState, initialBeveragesState } from './beverages.state';
 
-const { INITIAL, FAILED, LOADING, SUCCESS } = StatusType;
+const { FAILED, LOADING, SUCCESS } = StatusType;
 
 const beveragesSlice = createSlice({
 	name: 'beverages',

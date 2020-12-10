@@ -5,7 +5,7 @@ import { GetTaskResponse } from 'App/api/taskLists/responses/GetTask';
 import StatusType from 'App/types/requestStatus';
 import { initialTaskState, TaskState } from './tasks.state';
 
-const { FAILED, SUCCESS, LOADING, INITIAL } = StatusType;
+const { FAILED, SUCCESS, LOADING } = StatusType;
 
 const tasksSlice = createSlice({
 	name: 'tasks',

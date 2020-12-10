@@ -3,8 +3,6 @@ import { useForm } from 'antd/lib/form/Form';
 import { UpdateWeddingDetailsRequest } from 'App/api/weddings/requests';
 import { GetWeddingDetailsResponse } from 'App/api/weddings/responses';
 import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { isBoolean } from 'util';
 
 interface UpdateWeddingFormProps {
 	onFinish: (values: UpdateWeddingDetailsRequest) => void;

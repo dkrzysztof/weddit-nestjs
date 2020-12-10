@@ -1,17 +1,15 @@
 import { Button, Col, notification, Row } from 'antd';
 import ConfiguredTable from 'App/common/components/ConfiguredTable';
-import { RootState } from 'App/state/root.reducer';
-import { getUserWeddings } from 'App/state/weddings/weddings.thunk';
-import React, { CSSProperties } from 'react';
-import { useHistory } from 'react-router';
-import { renderWeddingTableColumns } from '../utils/WeddingTable';
-
-import '../utils/GetUserWeddingsContainer.less';
 import PageTitle from 'App/common/components/PageTitle';
-import { ObjectOfStyles } from 'App/types/ObjectOfStyles.type';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { RootState } from 'App/state/root.reducer';
 import { deselectWedding } from 'App/state/weddings/weddings.slice';
+import { getUserWeddings } from 'App/state/weddings/weddings.thunk';
+import { ObjectOfStyles } from 'App/types/ObjectOfStyles.type';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
+import '../utils/GetUserWeddingsContainer.less';
+import { renderWeddingTableColumns } from '../utils/WeddingTable';
 
 const styles: ObjectOfStyles = {
 	table: {
@@ -35,11 +33,15 @@ const GetUserWeddingsContainer: React.FC<{}> = () => {
 		history.push('/weddings/create');
 	};
 
+	const handle = (pagination) => {
+		return getUserWeddings(pagination);
+	};
+
 	notification.destroy();
 
 	useEffect(() => {
 		dispatch(deselectWedding());
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<div id='get-user-weddings-container'>
@@ -55,7 +57,7 @@ const GetUserWeddingsContainer: React.FC<{}> = () => {
 			<ConfiguredTable
 				rowKey='idWedding'
 				columnsRenderMethod={renderWeddingTableColumns}
-				getCollectionThunkAction={(pagination) => getUserWeddings(pagination)}
+				getCollectionThunkAction={handle}
 				selectCollection={selectCollection}
 				selectCollectionGetQueryParams={selectCollectionGetQueryParams}
 				selectCollectionGetStatus={selectCollectionGetStatus}

@@ -1,12 +1,10 @@
-import { Row, Col, Button, Modal } from 'antd';
+import { Button, Col, Modal, Row } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { CreateTaskRequest } from 'App/api/taskLists/requests/CreateTaskRequest';
 import { RootState } from 'App/state/root.reducer';
 import { createTask, getTasks } from 'App/state/tasks/tasks.thunk';
-import { isStatusLoading, isStatusSuccess } from 'App/types/requestStatus';
-import { Moment } from 'moment';
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import { isStatusLoading } from 'App/types/requestStatus';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CreateTaskForm from '../components/CreateTaskForm';
 

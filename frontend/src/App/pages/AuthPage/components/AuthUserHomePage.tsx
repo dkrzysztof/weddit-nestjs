@@ -1,7 +1,6 @@
-import React from 'react';
+import { CalendarOutlined, PlusSquareOutlined } from '@ant-design/icons';
 import { Card, Col, Row } from 'antd';
-import { CSSProperties } from 'react';
-import { CalendarOutlined, PlusOutlined, PlusSquareOutlined } from '@ant-design/icons';
+import React, { CSSProperties } from 'react';
 import { useHistory } from 'react-router';
 import '../styles/AuthUserHomePage.less';
 
@@ -27,7 +26,7 @@ const cardTextStyle: CSSProperties = {
 
 interface AuthUserHomePageProps {}
 
-const AuthUserHomePage: React.FC<AuthUserHomePageProps> = ({}) => {
+const AuthUserHomePage: React.FC<AuthUserHomePageProps> = () => {
 	const history = useHistory();
 	return (
 		<Row justify='space-between' style={{ minHeight: '200px' }}>

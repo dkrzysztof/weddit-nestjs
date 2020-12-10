@@ -1,4 +1,3 @@
-import { GetUserWeddings } from 'App/api/weddings/requests';
 import { WeddingForGetUserWeddings } from 'App/api/weddings/requests/GetUserWeddingsRequest';
 import { GetUsersWithAccessToWeddingResponse, GetWeddingDetailsResponse } from 'App/api/weddings/responses';
 import defaultPageQueryParams from 'App/common/utils/defaultPageQueryParams';

@@ -1,15 +1,13 @@
 import { CheckCircleOutlined, CloseOutlined, EditOutlined, SyncOutlined } from '@ant-design/icons';
-import { Row, Col, Card, Modal, Checkbox, Button, Tag, Popconfirm, Typography } from 'antd';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
-import { List, useForm } from 'antd/lib/form/Form';
+import { Row, Col, Card, Modal, Button, Tag, Popconfirm, Typography } from 'antd';
+import { useForm } from 'antd/lib/form/Form';
 import { UpdateTaskRequest } from 'App/api/taskLists/requests/UpdateTaskRequest';
 import { TaskForGetTasksResponse } from 'App/api/taskLists/responses/GetAllTasks';
-import LoadingScreen from 'App/common/components/LoadingScreen';
 import { RootState } from 'App/state/root.reducer';
 import { deleteTask, getTaskDetails, getTasks, updateTask } from 'App/state/tasks/tasks.thunk';
 import { isStatusLoading } from 'App/types/requestStatus';
 import { Moment } from 'moment';
-import React, { CSSProperties, ReactElement, useEffect, useState } from 'react';
+import React, { CSSProperties, ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TaskDetailsForm from '../components/TaskDetailsForm';
 

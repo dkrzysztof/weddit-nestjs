@@ -1,6 +1,5 @@
 import { BarsOutlined, ExperimentOutlined, PartitionOutlined, SettingOutlined, TeamOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Descriptions, Divider, Dropdown, notification, Result, Row, Typography } from 'antd';
-import { WeddingForGetUserWeddings } from 'App/api/weddings/requests/GetUserWeddingsRequest';
+import { Button, Col, Descriptions, Divider, notification, Result, Row, Typography } from 'antd';
 import Center from 'App/common/components/Center';
 import ConfiguredCard from 'App/common/components/ConfiguredCard';
 import GoToPreviousPageButton from 'App/common/components/handleGoBack';
@@ -8,12 +7,12 @@ import LoadingScreen from 'App/common/components/LoadingScreen';
 import PageTitle from 'App/common/components/PageTitle';
 import { RootState } from 'App/state/root.reducer';
 import { getTasks } from 'App/state/tasks/tasks.thunk';
-import { deselectWedding, userWasNotified } from 'App/state/weddings/weddings.slice';
+import { userWasNotified } from 'App/state/weddings/weddings.slice';
 import { getWeddingDetails } from 'App/state/weddings/weddings.thunk';
 import { ObjectOfStyles } from 'App/types/ObjectOfStyles.type';
-import StatusType, { isStatusLoading, isStatusSuccess } from 'App/types/requestStatus';
+import { isStatusLoading, isStatusSuccess } from 'App/types/requestStatus';
 import moment from 'moment';
-import React, { CSSProperties, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -93,7 +92,7 @@ const ViewWeddingContainer: React.FC<RouteComponentProps<ViewWeddingRouteParams>
 			}
 			dispatch(userWasNotified());
 		}
-	}, [shouldNotifyUser, tasks, tasksStatus]);
+	}, [dispatch, idWedding, shouldNotifyUser, tasks, tasksStatus]);
 
 	if (isStatusLoading(getWeddingDetailsStatus))
 		return (

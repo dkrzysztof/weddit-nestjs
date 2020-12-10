@@ -1,5 +1,5 @@
 import { HomeOutlined, LogoutOutlined } from '@ant-design/icons';
-import { Col, Menu, Row } from 'antd';
+import { Menu } from 'antd';
 import { RootState } from 'App/state/root.reducer';
 import React from 'react';
 import { useSelector } from 'react-redux';

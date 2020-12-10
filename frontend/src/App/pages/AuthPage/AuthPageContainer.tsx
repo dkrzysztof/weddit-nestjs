@@ -1,13 +1,11 @@
-import React from 'react';
-import { RouteChildrenProps } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-
 import { Descriptions, Divider, PageHeader } from 'antd';
-
+import Center from 'App/common/components/Center';
 import LoadingScreen from 'App/common/components/LoadingScreen';
 import { RootState } from 'App/state/root.reducer';
 import { StatusType } from 'App/types/requestStatus';
-import Center from 'App/common/components/Center';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { RouteChildrenProps } from 'react-router';
 import AuthUserHomePage from './components/AuthUserHomePage';
 
 interface AuthPageContainerProps extends RouteChildrenProps {
@@ -16,8 +14,7 @@ interface AuthPageContainerProps extends RouteChildrenProps {
 
 const { LOADING } = StatusType;
 
-const AuthPageContainer: React.FC<AuthPageContainerProps> = ({ history, text }: AuthPageContainerProps) => {
-	const dispatch = useDispatch();
+const AuthPageContainer: React.FC<AuthPageContainerProps> = () => {
 	const session = useSelector((state: RootState) => state.session.user);
 
 	const sessionStatus = useSelector((state: RootState) => state.session.status);

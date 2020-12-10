@@ -1,6 +1,4 @@
-import appConfig from 'app.config';
 import { IPageQueryParams } from 'App/types/pagination/pagination';
-import { request } from 'http';
 import { requests } from '../agent';
 import {
 	AddSeatChartRequest,

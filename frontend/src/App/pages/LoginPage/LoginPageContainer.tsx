@@ -1,19 +1,17 @@
+import { Alert, PageHeader } from 'antd';
+import { Store } from 'antd/lib/form/interface';
+import { LoginRequest } from 'App/api/auth/requests';
+import Center from 'App/common/components/Center';
+import LoadingScreen from 'App/common/components/LoadingScreen';
+import { RootState } from 'App/state/root.reducer';
+import { authenticateUser } from 'App/state/session/session.thunk';
+import { ErrorHandledResponse } from 'App/types/error';
+import StatusType from 'App/types/requestStatus';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteChildrenProps } from 'react-router';
-
-import { PageHeader, Alert, Row, Col } from 'antd';
-import { Store } from 'antd/lib/form/interface';
-
 import LoginForm from './components/LoginForm';
 import './LoginPageContainer.less';
-import { LoginRequest } from 'App/api/auth/requests';
-import { authenticateUser } from 'App/state/session/session.thunk';
-import { RootState } from 'App/state/root.reducer';
-import LoadingScreen from 'App/common/components/LoadingScreen';
-import StatusType from 'App/types/requestStatus';
-import Center from 'App/common/components/Center';
-import { ErrorHandledResponse } from 'App/types/error';
 
 interface LoginPageContainerProps extends RouteChildrenProps {
 	name?: string;

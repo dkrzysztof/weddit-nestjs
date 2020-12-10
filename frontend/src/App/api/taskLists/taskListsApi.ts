@@ -1,4 +1,3 @@
-import { request } from 'http';
 import { requests } from '../agent';
 import { CreateTaskRequest } from './requests/CreateTaskRequest';
 import { UpdateTaskRequest } from './requests/UpdateTaskRequest';

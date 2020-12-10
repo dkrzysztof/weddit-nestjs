@@ -1,4 +1,3 @@
-import { GetBeveragesResponse } from 'App/api/beverages/responses';
 import { BeverageForGetBeveragesResponse } from 'App/api/beverages/responses/GetAllBeveragesResponse';
 import defaultPageQueryParams from 'App/common/utils/defaultPageQueryParams';
 import { IPageQueryParams } from 'App/types/pagination/pagination';

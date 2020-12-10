@@ -1,5 +1,5 @@
-import { EllipsisOutlined, SettingFilled } from '@ant-design/icons';
-import { Dropdown, Button, Menu, Tag } from 'antd';
+import { SettingFilled } from '@ant-design/icons';
+import { Dropdown, Button, Tag } from 'antd';
 import { BeverageForGetBeveragesResponse } from 'App/api/beverages/responses/GetAllBeveragesResponse';
 import ConfiguredTable from 'App/common/components/ConfiguredTable';
 import defaultPageQueryParams from 'App/common/utils/defaultPageQueryParams';

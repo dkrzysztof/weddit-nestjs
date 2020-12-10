@@ -1,10 +1,7 @@
-import { Button, Checkbox, Col, DatePicker, Form, Input, Row } from 'antd';
+import { Button, Col, DatePicker, Form, Input, Row } from 'antd';
 import { CreateWeddingPlanRequest } from 'App/api/weddings/requests';
 import PageTitle from 'App/common/components/PageTitle';
-import { RootState } from 'App/state/root.reducer';
-import StatusType from 'App/types/requestStatus';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 
 interface CreateWeddingFormProps {
 	onFinish: (values: CreateWeddingPlanRequest) => void;

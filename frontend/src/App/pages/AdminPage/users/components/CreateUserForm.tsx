@@ -1,10 +1,8 @@
 import React from 'react';
-import { Form, Input, Select, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox } from 'antd';
 import FormItem from 'antd/lib/form/FormItem';
 import { createUserFormRules } from '../utils/usersFormRules';
 import { CreateUserRequest } from 'App/api/admin/requests';
-import { UserAddOutlined } from '@ant-design/icons';
-import PageTitle from 'App/common/components/PageTitle';
 
 interface CreateUserFormProps {
 	onFinish: (values: CreateUserRequest) => void;

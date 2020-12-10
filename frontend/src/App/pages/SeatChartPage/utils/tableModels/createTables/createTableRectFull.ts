@@ -1,5 +1,4 @@
 import * as go from 'gojs';
-import Seat from '../../seatsFunctions/Seat';
 import getSeatsRectFull from '../getSeats/getSeatsRectFull';
 import tableStyle from '../getTableStyle/tableStyle';
 

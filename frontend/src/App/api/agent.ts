@@ -52,6 +52,7 @@ axios.interceptors.response.use(undefined, (error: AxiosError<{ code: number; me
 	const { message } = error;
 
 	if (message.toUpperCase() === 'NETWORK ERROR') {
+		/*eslint-disable no-throw-literal*/
 		throw {
 			message: 'Błąd połączenia z serwerem',
 			description: 'Nie można nawiązać połączenia z serwerem',
@@ -102,12 +103,12 @@ axios.interceptors.response.use(undefined, (error: AxiosError<{ code: number; me
 
 	if (status === 400) {
 		if (data.message) {
-			let description: any = '';
-			if (data.message && Array.isArray(data.message)) {
-				description = data.message.join(' || \n');
-			} else {
-				description = data.message;
-			}
+			// let description: any = '';
+			// if (data.message && Array.isArray(data.message)) {
+			// 	description = data.message.join(' || \n');
+			// } else {
+			// 	description = data.message;
+			// }
 		}
 		if (data.code) {
 			throw data.code;

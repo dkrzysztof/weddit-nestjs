@@ -1,4 +1,3 @@
-import { request } from 'http';
 import { requests } from '../agent';
 import { CreateGuestRequest, UpdateGuestRequest } from './requests';
 import { GetGuestsRequest } from './requests/GetGuestsRequest';

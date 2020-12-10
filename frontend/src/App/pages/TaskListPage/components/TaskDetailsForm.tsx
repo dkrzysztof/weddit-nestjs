@@ -1,11 +1,10 @@
-import React from 'react';
 import { Descriptions } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import { GetTaskResponse } from 'App/api/taskLists/responses/GetTask';
 import LoadingScreen from 'App/common/components/LoadingScreen';
-import { dateLocale } from 'App/types/dateLocale';
-import UpdateTaskForm from './UpdateTaskForm';
 import moment from 'moment';
+import React from 'react';
+import UpdateTaskForm from './UpdateTaskForm';
 
 interface TaskDetailsFormProps {
 	task: GetTaskResponse;

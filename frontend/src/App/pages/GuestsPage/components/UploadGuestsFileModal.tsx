@@ -1,11 +1,11 @@
 import { InboxOutlined } from '@ant-design/icons';
-import { Modal, notification, Typography } from 'antd';
+import { Modal, notification } from 'antd';
 import { Upload } from 'antd';
 import agent from 'App/api/agent';
 import PageTitle from 'App/common/components/PageTitle';
 import { getGuests } from 'App/state/guests/guests.thunk';
 import { RootState } from 'App/state/root.reducer';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 

@@ -1,9 +1,8 @@
-import React from 'react';
-
-import { Link } from 'react-router-dom';
+import { UserOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
-import { UserOutlined, FileTextOutlined } from '@ant-design/icons';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const AdminNavbarContainer: React.FC<{}> = () => {
 	const usersSubMenu = (

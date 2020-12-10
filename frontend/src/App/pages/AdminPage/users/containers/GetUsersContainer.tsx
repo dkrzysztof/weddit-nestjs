@@ -39,7 +39,7 @@ const GetUsersContainer = () => {
 				pageSize: pageSize || defaultPageQueryParams.pageSize
 			})
 		);
-	}, [dispatch]);
+	}, [dispatch, pageNumber, pageSize]);
 
 	const handleTableChange = (pagination: PaginationConfig): any => {
 		const { pageNumber: defaultPageNumber, pageSize: defaultPageSize, ...others } = defaultPageQueryParams;

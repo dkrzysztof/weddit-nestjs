@@ -26,7 +26,7 @@ const GuestsPageMenuContainer: React.FC<GuestsPageMenuContainerProps> = ({ idWed
 
 	useEffect(() => {
 		dispatch(getGuestTypes());
-	}, []);
+	}, [dispatch]);
 
 	const openCreateUserModal = () => setCreateUserModalVisible(true);
 	const closeCreateUserModal = () => setCreateUserModalVisible(false);

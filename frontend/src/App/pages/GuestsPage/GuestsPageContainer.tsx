@@ -20,7 +20,7 @@ const GuestsPageContainer: React.FC<RouteComponentProps<WeddingSubroute>> = ({ m
 
 	useEffect(() => {
 		dispatch(getGuests(idWedding, defaultPageQueryParams));
-	}, [dispatch, idWedding, defaultPageQueryParams]);
+	}, [dispatch, idWedding]);
 
 	if (wedding) {
 		return (

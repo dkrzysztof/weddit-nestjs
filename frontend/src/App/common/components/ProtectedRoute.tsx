@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect, DispatchProp } from 'react-redux';
-import { Route, Redirect, RouteChildrenProps, RouteComponentProps } from 'react-router-dom';
+import { Route, Redirect, RouteChildrenProps } from 'react-router-dom';
 
 import LoadingScreen from './LoadingScreen';
-import agent from 'App/api/agent';
 import { RootState } from 'App/state/root.reducer';
 import { mapStateToProps } from 'App/state/utils/connect';
 

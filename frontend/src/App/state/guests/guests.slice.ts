@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ErrorApi } from 'App/api/agent';
-import { DeleteGuestResponse, GetGuestsResponse, GuestForGetGuestsResponse } from 'App/api/guests/responses';
+import { GetGuestsResponse } from 'App/api/guests/responses';
 import { GetGuestsShortCollectionResponse } from 'App/api/guests/responses/GetGuestsShortCollectionResponse';
 import { GetGuestTypesResponse } from 'App/api/guestTypes/responses';
 import StatusType from 'App/types/requestStatus';
 import { GuestState, initialGuestState } from './guests.state';
 
-const { FAILED, INITIAL, LOADING, SUCCESS } = StatusType;
+const { FAILED, LOADING, SUCCESS } = StatusType;
 
 const guestsSlice = createSlice({
 	name: 'guests',

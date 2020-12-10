@@ -1,6 +1,5 @@
 import { AxiosResponse } from 'axios';
 import { GetUserWeddings } from '../weddings/requests';
-import { WeddingForGetUserWeddings } from '../weddings/requests/GetUserWeddingsRequest';
 
 export default function responseParser(response: AxiosResponse) {
 	switch (response.config.url) {

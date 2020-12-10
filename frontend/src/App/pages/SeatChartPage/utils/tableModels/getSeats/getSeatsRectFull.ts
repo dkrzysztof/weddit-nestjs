@@ -13,7 +13,7 @@ function getSeatsRectFull(number) {
 				Seat(7, '0.2 1', '0.5 0'),
 				Seat(8, '0 0.5', '1 0.5')
 			];
-			break;
+
 		case 10:
 			return [
 				Seat(1, '0.12 0', '0.5 1'),
@@ -30,7 +30,7 @@ function getSeatsRectFull(number) {
 
 				Seat(10, '0 0.4', '1 0.5')
 			];
-			break;
+
 		case 12:
 			return [
 				Seat(1, '0.1 0', '0.5 1'),
@@ -49,7 +49,7 @@ function getSeatsRectFull(number) {
 
 				Seat(12, '0 0.4', '1 0.5')
 			];
-			break;
+
 		case 14:
 			return [
 				Seat(1, '0.10 0', '0.5 1'),
@@ -70,7 +70,6 @@ function getSeatsRectFull(number) {
 
 				Seat(14, '0 0.4', '1 0.5')
 			];
-			break;
 
 		default:
 			return [

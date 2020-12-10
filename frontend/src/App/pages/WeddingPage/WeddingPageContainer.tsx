@@ -1,10 +1,9 @@
 import React from 'react';
-import { Button, Layout, Modal } from 'antd';
+import { Layout } from 'antd';
 
 import { RouteComponentProps, Switch } from 'react-router';
 import ProtectedRoute from 'App/common/components/ProtectedRoute';
 import CreateWeddingContainer from './containers/CreateWeddingContainer';
-import { getUserWeddings } from 'App/state/weddings/weddings.thunk';
 import GetUserWeddingsContainer from './containers/GetUserWeddingsContainer';
 import ViewWeddingContainer from './containers/ViewWeddingContainer';
 import SettingsWeddingContainer from './containers/SettingsWeddingContainer';

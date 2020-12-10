@@ -1,13 +1,11 @@
 import React, { Dispatch } from 'react';
 
 import { Link } from 'react-router-dom';
-import { Tag, Button, Modal, Dropdown, Menu, Checkbox } from 'antd';
+import { Button, Modal, Dropdown, Menu } from 'antd';
 import { CheckSquareOutlined, CloseSquareOutlined, ExclamationCircleOutlined, SettingFilled } from '@ant-design/icons';
 
 import { UserForGetUsersResponse } from 'App/api/admin/responses/getUsersResponse';
 import { deleteUser } from 'App/state/admin/users/users.thunk';
-import { RootState } from 'App/state/root.reducer';
-import { useSelector } from 'react-redux';
 import store from 'App/state/store';
 
 const squareOutlineStyle = {

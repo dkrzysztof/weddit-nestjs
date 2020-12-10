@@ -1,15 +1,13 @@
-import React, { useEffect, useLayoutEffect } from 'react';
-import { Input, Row, Col, DatePicker, Form } from 'antd';
-import { FormInstance } from 'antd/lib/form';
+import { Col, DatePicker, Form, Input, Row } from 'antd';
 import plPL from 'antd/es/date-picker/locale/pl_PL';
-import moment from 'moment';
-
+import { FormInstance } from 'antd/lib/form';
 import { GetTaskResponse } from 'App/api/taskLists/responses/GetTask';
 import { RootState } from 'App/state/root.reducer';
-import { connect, DispatchProp, useSelector } from 'react-redux';
-import { isStatusLoading } from 'App/types/requestStatus';
-import ProtectedRoute from 'App/common/components/ProtectedRoute';
 import { mapStateToProps } from 'App/state/utils/connect';
+import { isStatusLoading } from 'App/types/requestStatus';
+import moment from 'moment';
+import React from 'react';
+import { connect, DispatchProp } from 'react-redux';
 
 function disabledDate(current) {
 	return current && current < moment().endOf('day');

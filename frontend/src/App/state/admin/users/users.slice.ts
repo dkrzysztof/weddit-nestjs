@@ -1,9 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-import { adminUsersInitialState, AdminUsersState } from './users.state';
-import { GetUsersResponse, GetUserResponse, UpdateUserResponse } from 'App/api/admin/responses';
+import { GetUserResponse, GetUsersResponse, UpdateUserResponse } from 'App/api/admin/responses';
 import { StatusType } from 'App/types/requestStatus';
-import { ICollectionResponse } from 'App/types/pagination/pagination';
+import { adminUsersInitialState, AdminUsersState } from './users.state';
 
 const { FAILED, LOADING, SUCCESS } = StatusType;
 

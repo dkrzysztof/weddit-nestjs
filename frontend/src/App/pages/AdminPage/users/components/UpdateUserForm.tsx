@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 
-import { Input, Select, Button, Form, Checkbox } from 'antd';
+import { Input, Button, Form, Checkbox } from 'antd';
 import FormItem from 'antd/lib/form/FormItem';
 
 import { updateUserFormRules } from '../utils/usersFormRules';
 import { UpdateUserRequest } from 'App/api/admin/requests';
-import Role from 'App/types/role';
-import { useForm } from 'antd/lib/form/util';
-import CheckboxGroup from 'antd/lib/checkbox/Group';
 
 interface UpdateUserFormProps {
 	initialValues: {

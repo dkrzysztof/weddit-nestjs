@@ -1,5 +1,3 @@
-import { Row } from 'antd';
-import GoToPreviousPageButton from 'App/common/components/handleGoBack';
 import LoadingScreen from 'App/common/components/LoadingScreen';
 import { getGuestsShort } from 'App/state/guests/guests.thunk';
 import { RootState } from 'App/state/root.reducer';

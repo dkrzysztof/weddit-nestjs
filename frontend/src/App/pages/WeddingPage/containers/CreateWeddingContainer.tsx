@@ -1,19 +1,16 @@
-import React from 'react';
-
-import Center from 'App/common/components/Center';
-import CreateWeddingForm from '../components/CreateWeddingForm';
-import { CreateWeddingPlanRequest } from 'App/api/weddings/requests';
-import { useDispatch, useSelector } from 'react-redux';
-import { createUserWedding } from 'App/state/weddings/weddings.thunk';
-import { RootState } from 'App/state/root.reducer';
-import StatusType from 'App/types/requestStatus';
-import GoToPreviousPageButton from 'App/common/components/handleGoBack';
-import { useHistory } from 'react-router';
 import { Col, Row } from 'antd';
+import { CreateWeddingPlanRequest } from 'App/api/weddings/requests';
+import Center from 'App/common/components/Center';
+import GoToPreviousPageButton from 'App/common/components/handleGoBack';
+import { RootState } from 'App/state/root.reducer';
+import { createUserWedding } from 'App/state/weddings/weddings.thunk';
+import StatusType from 'App/types/requestStatus';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import CreateWeddingForm from '../components/CreateWeddingForm';
 
 const CreateWeddingContainer: React.FC<{}> = () => {
 	const dispatch = useDispatch();
-	const history = useHistory();
 	const createWeddingStatus = useSelector((state: RootState) => state.weddings.status.createWedding);
 
 	const handleCreateWeddingFormFinish = (values: CreateWeddingPlanRequest) => {

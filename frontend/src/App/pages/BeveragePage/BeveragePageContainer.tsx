@@ -1,7 +1,7 @@
-import { Button, Col, Row } from 'antd';
+import { Col, Row } from 'antd';
 import GoToPreviousPageButton from 'App/common/components/handleGoBack';
 import PageTitle from 'App/common/components/PageTitle';
-import React, { useState } from 'react';
+import React from 'react';
 import { RouteComponentProps } from 'react-router';
 import CreateBeverageContainer from './containers/CreateBeverageContainer';
 import GetBeveragesContainer from './containers/GetBeveragesContainer';

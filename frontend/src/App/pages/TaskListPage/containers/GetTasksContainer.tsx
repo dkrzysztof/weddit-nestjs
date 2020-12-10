@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Button, List } from 'antd';
+import React, { useEffect } from 'react';
+import { List } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
 import LoadingScreen from 'App/common/components/LoadingScreen';
-import PageTitle from 'App/common/components/PageTitle';
 import { RootState } from 'App/state/root.reducer';
 import { getTasks } from 'App/state/tasks/tasks.thunk';
 import { isStatusLoading } from 'App/types/requestStatus';

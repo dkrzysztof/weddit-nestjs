@@ -1,4 +1,4 @@
-import { GetGuestsResponse, GuestForGetGuestsResponse } from 'App/api/guests/responses';
+import { GuestForGetGuestsResponse } from 'App/api/guests/responses';
 import { GetGuestsShortCollectionResponse } from 'App/api/guests/responses/GetGuestsShortCollectionResponse';
 import { GetGuestTypesResponse } from 'App/api/guestTypes/responses';
 import defaultPageQueryParams from 'App/common/utils/defaultPageQueryParams';

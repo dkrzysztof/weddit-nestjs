@@ -27,7 +27,7 @@ const HomePageContainer: React.FC<{}> = () => {
 			>
 				<Row justify='center' align='middle'>
 					<Col span={15}>
-						<img style={{ width: '100%', margin: '1em auto' }} src={home_screen_logo} />
+						<img style={{ width: '100%', margin: '1em auto' }} alt='tlo strony' src={home_screen_logo} />
 					</Col>
 					<Col
 						span={20}

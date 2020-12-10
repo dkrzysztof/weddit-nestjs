@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Checkbox, Button } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { FormProps } from 'antd/lib/form/Form';
 import './LoginForm.less';

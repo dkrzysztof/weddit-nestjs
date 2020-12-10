@@ -1,6 +1,5 @@
 import React from 'react';
-import { Menu } from 'antd';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'App/state/root.reducer';
 

@@ -2,15 +2,9 @@ import React, { useEffect } from 'react';
 import { Button, Checkbox, Col, Form, Input, List, Modal, notification, Row, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'App/state/root.reducer';
-import { RouteComponentProps } from 'react-router';
-import {
-	removeUserAccessToWedding,
-	getUsersWithAccessToWedding,
-	updateUserAccessToWedding
-} from 'App/state/weddings/weddings.thunk';
+import { removeUserAccessToWedding, getUsersWithAccessToWedding } from 'App/state/weddings/weddings.thunk';
 import StatusType from 'App/types/requestStatus';
 import { useState } from 'react';
-import { FormProvider } from 'antd/lib/form/context';
 import { UpdateUserAccessToWeddingRequest } from 'App/api/weddings/requests';
 import agent from 'App/api/agent';
 import AppConstants from 'App/constants/app.constants';

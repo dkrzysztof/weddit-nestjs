@@ -1,6 +1,5 @@
 import { Button } from 'antd';
 import React from 'react';
-import { History } from 'history';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
 

@@ -1,9 +1,8 @@
 import { DatePicker, Form, Input, InputNumber } from 'antd';
-import { FormInstance, useForm } from 'antd/lib/form/Form';
-import { CreateTaskRequest } from 'App/api/taskLists/requests/CreateTaskRequest';
 import plPL from 'antd/es/date-picker/locale/pl_PL';
+import { FormInstance } from 'antd/lib/form/Form';
 import moment, { Moment } from 'moment';
-import React, { useState } from 'react';
+import React from 'react';
 
 interface CreateTaskFormProps {
 	form: FormInstance;
@@ -15,8 +14,6 @@ function disabledDate(current) {
 }
 
 const CreateTaskForm: React.FC<CreateTaskFormProps> = ({ form, loading }) => {
-	const [selectedDate, changeSelectedDate] = useState<Moment>(moment());
-
 	const handleDateChange = (e: Moment) => {
 		console.log(e);
 		form.setFieldsValue({
