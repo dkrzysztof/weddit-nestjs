@@ -21,8 +21,6 @@ const { LOADING } = StatusType;
 const correctAnswerStyle = {
 	fontSize: '1.3em',
 	color: '#52c41a'
-	// marginLeft: '1.5em',
-	// marginRight: '0.3em'
 };
 
 const GetUserContainer: React.FC<GetUserContainerProps> = ({ match, history }: GetUserContainerProps) => {

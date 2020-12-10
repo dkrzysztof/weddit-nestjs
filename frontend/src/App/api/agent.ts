@@ -84,20 +84,11 @@ axios.interceptors.response.use(undefined, (error: AxiosError<{ code: number; me
 	}
 
 	if (status === 401) {
-		// if (headers['www-authenticate'] === 'Bearer error="invalid_token", error_description="The token is expired"') {
-		// 	console.log('TOKEN EXPIRED');
-		// store.dispatch(devalidateSession());
-		// }
 		notification['error']({
 			message: 'Błąd',
 			description: 'Nie jesteś autoryzowany. Zaloguj się ponownie'
 		});
 
-		// wyślij refresh tokena pod logowanie
-		// jesli znów 401, to znaczy że refresh token wygasł - trzeba zalogować ponownie.
-		// if (error.config.url === '/auth/login') {
-		// 	console.log('Wrong credentials');
-		// }
 		console.log('401: ' + error);
 	}
 
@@ -117,11 +108,6 @@ axios.interceptors.response.use(undefined, (error: AxiosError<{ code: number; me
 			} else {
 				description = data.message;
 			}
-
-			// notification['error']({
-			// 	message: 'Błąd',
-			// 	description
-			// });
 		}
 		if (data.code) {
 			throw data.code;

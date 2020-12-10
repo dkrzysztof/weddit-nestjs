@@ -20,7 +20,6 @@ const sessionSlice = createSlice({
 			state.status.authentication = SUCCESS;
 			state.info = action.payload;
 
-			// TODO usunac token z local Storage
 			localStorage.setItem('token', action.payload.token);
 		},
 		authenticationFailure: (state: SessionState, action: PayloadAction<ErrorHandledResponse>) => {
@@ -60,7 +59,6 @@ const sessionSlice = createSlice({
 			state.error = null;
 			state.info = null;
 
-			// TODO usunac token z local Storage
 			localStorage.removeItem('token');
 		},
 

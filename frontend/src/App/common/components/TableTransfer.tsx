@@ -2,7 +2,6 @@ import { Transfer, Table } from 'antd';
 import React from 'react';
 import difference from 'lodash/difference';
 
-// TODO USUNAC
 export const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
 	<Transfer {...restProps} showSelectAll={false}>
 		{({

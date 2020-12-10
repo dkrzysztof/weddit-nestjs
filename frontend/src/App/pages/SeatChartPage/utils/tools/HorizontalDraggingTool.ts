@@ -1,6 +1,6 @@
 import * as go from 'gojs';
-import positionPeopleAtSeats from './positionPeopleAtSeats';
-import { seatDiagram } from '../components/SeatDiagram';
+import { positionPeopleAtSeats } from '../stylingFunctions/repositionElements';
+import { seatDiagram } from '../../components/SeatDiagram';
 
 export default class HorizontalTextRotatingTool extends go.RotatingTool {
 	constructor() {

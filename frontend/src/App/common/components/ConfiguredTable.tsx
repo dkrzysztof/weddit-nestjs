@@ -6,10 +6,10 @@ import { Table } from 'antd';
 import defaultPageQueryParams from 'App/common/utils/defaultPageQueryParams';
 import { StatusType } from 'App/types/requestStatus';
 import { IPageQueryParams } from 'App/types/pagination/pagination';
-import { ColumnsType, TableProps } from 'antd/lib/table';
+import { TableProps } from 'antd/lib/table';
 import { PaginationConfig } from 'antd/lib/pagination';
 import { RootState } from 'App/state/root.reducer';
-import { Dispatch, ThunkAction } from '@reduxjs/toolkit';
+import { Dispatch } from '@reduxjs/toolkit';
 
 const { LOADING } = StatusType;
 
@@ -53,7 +53,7 @@ const ConfiguredTable: React.FC<ConfiguredTableProps> = ({
 				pageSize: pageSize || defaultPageQueryParams.pageSize
 			})
 		);
-	}, [dispatch]);
+	}, [dispatch, pageNumber, pageSize]);
 
 	const handleTableChange = (pagination: PaginationConfig): any => {
 		const { pageNumber: defaultPageNumber, pageSize: defaultPageSize, ...others } = defaultPageQueryParams;

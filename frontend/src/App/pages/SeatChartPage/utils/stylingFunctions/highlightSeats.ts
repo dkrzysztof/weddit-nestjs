@@ -1,16 +1,14 @@
-import isPerson from './isPerson';
-import isTable from './isTable';
+import isPerson from '../isPerson';
+import isTable from '../isTable';
 
 export default function highlightSeats(node, coll, show) {
 	if (isPerson(node)) {
-		// refer to the person's table instead
 		node = node.diagram.findNodeForKey(node.data.table);
 		if (node === null) return;
 	}
 	var it = coll.iterator;
 	while (it.next()) {
 		var n = it.key;
-		// if dragging a Table, don't do any highlighting
 		if (isTable(n)) return;
 	}
 	var guests = node.data.guests;

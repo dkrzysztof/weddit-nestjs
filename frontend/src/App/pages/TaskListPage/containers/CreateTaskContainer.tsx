@@ -31,7 +31,6 @@ const CreateTaskContainer: React.FC<CreateTaskContainerProps> = ({ idWedding }) 
 					}
 				}
 
-				// values.deadline = ((values.deadline as any) as Moment).toISOString();
 				dispatch(
 					createTask(idWedding, values, () => {
 						dispatch(getTasks(idWedding));

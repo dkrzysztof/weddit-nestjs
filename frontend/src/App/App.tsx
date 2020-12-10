@@ -1,16 +1,11 @@
-// react
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-
-// third-party
 import { Layout } from 'antd';
 
-// local direct
 import Routes from './routes';
 import './common/styles/bootstrap-utilities.less';
 import NavbarContainer from './common/containers/Navbar/NavbarContainer';
 
-// styles
 import './App.less';
 import './common/styles/bootstrap-utilities.less';
 

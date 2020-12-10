@@ -37,13 +37,6 @@ class ProtectedRoute extends React.Component<ProtectedRouteProps, ProtectedRoute
 	componentDidMount() {
 		if (!this.checkIfUserIsAuthenticated()) {
 			this.setState({ redirectToSignInPage: true });
-			// agent.Auth.refreshToken()
-			// 	.then((result) => {
-			// 		console.log(result);
-			// 	})
-			// 	.catch((err) => {
-			// 		console.log(err);
-			// 	});
 		}
 	}
 

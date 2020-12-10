@@ -7,7 +7,6 @@ import { default as HomePage } from './pages/HomePage/HomePageContainer';
 import { default as LoginPage } from './pages/LoginPage/LoginPageContainer';
 import { default as AuthPage } from './pages/AuthPage/AuthPageContainer';
 import { default as AdminPage } from './pages/AdminPage/AdminPageContainer';
-import { default as ResetPasswordPage } from './pages/ResetPasswordPage/ResetPasswordPageContainer';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import ForbiddenPage from './pages/ForbiddenPage/ForbiddenPage';
 import WeddingPageContainer from './pages/WeddingPage/WeddingPageContainer';
@@ -18,7 +17,6 @@ const Routes: React.FC = () => {
 			<Route exact path='/' component={HomePage} />
 			<Route exact path='/signin' component={LoginPage} />
 			<Route exact path='/register' component={RegisterPage} />
-			<Route exact path='/reset-password' component={ResetPasswordPage} />
 			<ProtectedRoute path='/auth' exact component={AuthPage} adminRestriced />
 			<ProtectedRoute exact path='/user' component={AuthPage} />
 			<ProtectedRoute path='/weddings' component={WeddingPageContainer} />

@@ -9,7 +9,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 
-// import init from './utils/initDiagram';
 import SeatDiagram from './components/SeatDiagram';
 
 interface IdWeddingRouteParam {

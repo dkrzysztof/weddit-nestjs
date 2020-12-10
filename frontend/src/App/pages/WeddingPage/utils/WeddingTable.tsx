@@ -9,12 +9,6 @@ import { WeddingForGetUserWeddings } from 'App/api/weddings/requests/GetUserWedd
 import { deleteWedding } from 'App/state/weddings/weddings.thunk';
 import { dateLocale } from 'App/types/dateLocale';
 
-const squareOutlineStyle = {
-	fontSize: '1.3em',
-	marginLeft: '1.5em',
-	marginRight: '0.3em'
-};
-
 export const renderWeddingTableColumns = (weddings: WeddingForGetUserWeddings[], dispatch: Dispatch<any>) => [
 	{
 		title: 'Wesele',
